@@ -110,11 +110,7 @@
 				7F4CB57B24A42AAB00CC0889 /* SceneDelegate.m */,
 				7F4CB57D24A42AAB00CC0889 /* ViewController.h */,
 				7F4CB57E24A42AAB00CC0889 /* ViewController.m */,
-				7F4CB58024A42AAB00CC0889 /* Main.storyboard */,
-				7F4CB58324A42AAD00CC0889 /* Assets.xcassets */,
-				7F4CB58524A42AAD00CC0889 /* LaunchScreen.storyboard */,
-				7F4CB58824A42AAD00CC0889 /* Info.plist */,
-				7F4CB58924A42AAD00CC0889 /* main.m */,
+				7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */,
 			);
 			path = "PythonForVideoMemos-Demo";
 			sourceTree = "<group>";
@@ -135,6 +131,18 @@
 				7F4CB5A024A42AAD00CC0889 /* Info.plist */,
 			);
 			path = "PythonForVideoMemos-DemoUITests";
+			sourceTree = "<group>";
+		};
+		7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7F4CB58024A42AAB00CC0889 /* Main.storyboard */,
+				7F4CB58324A42AAD00CC0889 /* Assets.xcassets */,
+				7F4CB58524A42AAD00CC0889 /* LaunchScreen.storyboard */,
+				7F4CB58824A42AAD00CC0889 /* Info.plist */,
+				7F4CB58924A42AAD00CC0889 /* main.m */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,7 +449,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-Demo/Info.plist";
+				INFOPLIST_FILE = "PythonForVideoMemos-Demo/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -458,7 +466,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-Demo/Info.plist";
+				INFOPLIST_FILE = "PythonForVideoMemos-Demo/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
