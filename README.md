@@ -45,6 +45,11 @@ README.txt under "site-packages" folder:
 > This directory exists so that 3rd party packages can be installed here.
 > Read the source for site.py for more details. 
 
+And if need to test Python package, suggest using `venv`:
+
+  $ python3 -m venv venv
+  $ . venv/bin/activate
+
 ---
 
 ## Further Reading
