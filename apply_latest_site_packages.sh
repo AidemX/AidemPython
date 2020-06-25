@@ -64,7 +64,7 @@ echo -e 3. Copying latest site packages from \"${cyan}$SRC_ROOT${nc}\" to \"${cy
 # 3.1. Copy pkg: "ky_source_downloader"
 #
 pkg_name="ky_source_downloader"
-echo -e  - Copying pkg: \"${y}$pkg_name${nc}\" ...
+echo -e  - Copying pkg: ${y}$pkg_name${nc} ...
 
 pkg_dest="$DEST_ROOT/$pkg_name"
 mkdir -p $pkg_dest
@@ -75,15 +75,25 @@ cp $SRC_ROOT/$pkg_name/*.py $pkg_dest/
 # 3.2. Copy pkg: "you_get"
 #
 pkg_name="you_get"
-echo -e  - Copying pkg: \"${y}$pkg_name${nc}\" ...
+echo -e  - Copying pkg: ${y}$pkg_name${nc} ...
 
-pkg_dest="$DEST_ROOT/$pkg_name"
 mkdir -p $pkg_dest
 
-pkg_src="$SRC_ROOT/you-get/src"
+pkg_src="$SRC_ROOT/you-get/src/you_get"
 cd $pkg_src
-pwd
-find . -name '*.py' | cpio -pdm $pkg_dest
+echo -e Enter folder: ${cyan}$pkg_src${nc}
+
+pkg_dest="../../../../$DEST_ROOT/$pkg_name"
+
+for file in `find . ! -name '*.pyo' | sed 's/^.\///'`
+  do if [ -d "./$file" ]; then
+    mkdir -p "$pkg_dest/$file"
+    echo "- d: $file > $pkg_dest/$file"
+  else
+    cp $file $pkg_dest/$file
+    echo "- f: $file > $pkg_dest/$file"
+  fi
+done
 
 #cp $pkg_src_root/*.py $DEST_ROOT/$pkg_name/
 
