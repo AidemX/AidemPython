@@ -21,8 +21,8 @@ def check_source(url, proxy=None, username=None, password=None, path=None):
     result='[ky_source_downloader.py]: Check source w/ %s\n' % info
 
     #sys.argv=['you-get','-h'] # Show help
-    sys.argv = ['you-get','-i',url] # List available video w/ formats
-    #sys.argv=['you-get','-i','--debug',url] # List available video w/ formats in debug mode
+    #sys.argv = ['you-get','-i',url] # List available video w/ formats
+    sys.argv=['you-get','-i','--debug',url] # List available video w/ formats in debug mode
     you_get.main()
 
     return result
