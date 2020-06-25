@@ -23,6 +23,8 @@
 		7F4CBD5924A42CBB00CC0889 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CBD5824A42CBB00CC0889 /* python */; };
 		7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */; };
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
+		7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */; };
+		7F4CBD6524A43ECA00CC0889 /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CBD6424A43ECA00CC0889 /* VMPython.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,10 @@
 		7F4CBD5824A42CBB00CC0889 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
 		7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F4CBD5D24A42D6800CC0889 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonRemoteSourceDownloader.h; sourceTree = "<group>"; };
+		7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPythonRemoteSourceDownloader.m; sourceTree = "<group>"; };
+		7F4CBD6324A43ECA00CC0889 /* VMPython.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
+		7F4CBD6424A43ECA00CC0889 /* VMPython.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +184,7 @@
 		7F4CB5AE24A42CAA00CC0889 /* PythonForVideoMemos */ = {
 			isa = PBXGroup;
 			children = (
+				7F4CBD5F24A43DAF00CC0889 /* VMPython */,
 				7F4CBD5824A42CBB00CC0889 /* python */,
 				7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */,
 				7F4CB5B024A42CAA00CC0889 /* libpython3.a */,
@@ -195,6 +202,17 @@
 				7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F4CBD5F24A43DAF00CC0889 /* VMPython */ = {
+			isa = PBXGroup;
+			children = (
+				7F4CBD6324A43ECA00CC0889 /* VMPython.h */,
+				7F4CBD6424A43ECA00CC0889 /* VMPython.m */,
+				7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */,
+				7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */,
+			);
+			path = VMPython;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +346,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F4CBD6524A43ECA00CC0889 /* VMPython.m in Sources */,
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
+				7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
