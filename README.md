@@ -4,24 +4,32 @@ Python iOS framework for Video Memos app.
 
 ## Usage
 
-1. Add libs folder "PythonForVideoMemos" to Xcode project w/ "Create groups" option.
+1. Enter folder "site_packages" to pull latest source for each package.
 
-2. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos" (just leave those *.a files there).
+  **NOTE**: For 3rd party package repos, make sure their branch is `video_memos_ios`.
 
-3. Re-add "python" folder back w/ "Create folder references" option.
+2. Copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages"
+
+  $ ./apply_latest_site_packages.sh
+
+3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "Create groups" option.
+
+4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos" (just leave those *.a files there).
+
+5. Re-add "python" folder back w/ "Create folder references" option.
 
   Tips:
   - This step makes sure those included lib files will be grouped under compiled app package.
   - Make sure no *.pyc files added.
 
-4. Add required *.tbd files:
+6. Add required *.tbd files:
 
   4.1. Select project target
   4.2. Select "Build Phases"
   4.3. Extend "Link Binary With Libraries" section
   4.4. Add files: libsqlite3.tbd, libz.tbd
 
-5. Update Project Settings:
+7. Update Project Settings:
 
   - HEADER_SEARCH_PATHS:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
   - LIBRARY_SEARCH_PATHS: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
