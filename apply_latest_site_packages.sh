@@ -85,7 +85,7 @@ echo -e Enter folder: ${cyan}$pkg_src${nc}
 
 pkg_dest="../../../../$DEST_ROOT/$pkg_name"
 
-for file in `find . ! -name '*.pyo' | sed 's/^.\///'`
+for file in `find . ! -name '*.pyc' | sed 's/^.\///'`
   do if [ -d "./$file" ]; then
     mkdir -p "$pkg_dest/$file"
     echo "- d: $file > $pkg_dest/$file"
