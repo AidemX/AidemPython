@@ -24,5 +24,6 @@ profile
 
 PythonForVideoMemos-Demo/PythonForVideoMemos-Demo.xcodeproj/project.xcworkspace/xcuserdata
 
+PythonForVideoMemos/python/lib/python3.8/site-packages/*
 site_packages_backups/*
 
