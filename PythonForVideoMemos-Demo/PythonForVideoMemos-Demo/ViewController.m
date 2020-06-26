@@ -71,6 +71,11 @@
      [_tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
      [_tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
    ]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
   
   NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
   _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:docPath];
