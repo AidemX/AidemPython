@@ -113,7 +113,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
       NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
       NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
       if (error) {
-        NSLog(@"Parsing JSON failed: %@", [error localizedDescription]);
+        NSLog(@"Parsing JSON failed: %@\nresultJsonString: %@", [error localizedDescription], resultJsonString);
       } else {
         NSLog(@"Parsed JSON Dict: %@", jsonDict);
         

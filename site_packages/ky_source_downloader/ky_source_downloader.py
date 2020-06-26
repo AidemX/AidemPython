@@ -58,6 +58,7 @@ def check_source(url, proxy=None, username=None, password=None):
     #sys.stdout.flush()
 
     print('cmd: %s' % sys.argv)
+    print('[ky_source_downloader.py]:\nJSON RESULT: %s' % result)
     
     return result
 	
