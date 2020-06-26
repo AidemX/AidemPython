@@ -86,7 +86,28 @@
   if (result == NULL) {
     PyErr_Print();
   } else {
+    NSLog(@"Got result!");
     PyObject_Print(result, stdout, Py_PRINT_RAW);
+    /*
+    NSString *listInfo = CFBridgingRelease(PyObject_GetAttrString(result, nil));
+    PyObject *output = PyObject_GetAttrString(result, "value"); //get the stdout and stderr from our catchOutErr object
+    printf("Here's the output:\n %s", Pystring(output));
+    PyObject_Print(output, stdout, Py_PRINT_RAW);
+     */
+    
+    // Prase JSON from `result`.
+    char *resultCString = NULL;
+    PyArg_Parse(result, "s", &resultCString);
+    if (resultCString != NULL) {
+      NSError *error = nil;
+      NSString *resultJsonString = [NSString stringWithUTF8String:resultCString];
+      NSString *jsonPath = [self.savePath stringByAppendingPathComponent:@"my.json"];
+      [resultJsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+      NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
+      NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
+      NSLog(@"Parsed JSON Dict: %@", jsonDict);
+    }
+    
     Py_DECREF(result);
   }
   PyRun_SimpleString("print('\\n')");
