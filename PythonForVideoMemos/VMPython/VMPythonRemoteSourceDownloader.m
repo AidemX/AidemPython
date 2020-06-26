@@ -77,6 +77,58 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   }
 }
 
+- (NSString *)_errorMessageFromPyErrOccurred
+{
+  //PyObject *pErrString = PyObject_Str(pErr);
+  //if (pErrString != NULL) Py_DECREF(pErrString);
+  //Py_DECREF(pErr);
+  
+  // `pValue` contains error message
+  // `pTraceback` contains stack snapshot and many other information (see python traceback structure)
+  PyObject *pType, *pValue, *pTraceback;
+  PyErr_Fetch(&pType, &pValue, &pTraceback);
+  
+  NSMutableString *mutableErrorMessage = [NSMutableString string];
+  if (NULL != pType) {
+    NSString *errorTypeText = _stringFromPyObject(pType);
+    if (errorTypeText) [mutableErrorMessage appendFormat:@"%@\n", errorTypeText];
+    Py_DECREF(pType);
+  }
+  
+  if (NULL != pValue) {
+    NSString *errorValueText = _stringFromPyStringObject(pValue);
+    if (errorValueText) [mutableErrorMessage appendFormat:@"%@\n", errorValueText];
+    Py_DECREF(pValue);
+  }
+  
+  if (NULL != pTraceback) {
+    NSString *errorTrackbackText = _stringFromPyObject(pTraceback);
+    if (errorTrackbackText) [mutableErrorMessage appendString:errorTrackbackText];
+    Py_DECREF(pTraceback);
+  }
+  
+  return mutableErrorMessage;
+}
+
+static inline NSString *_stringFromPyObject(PyObject *pyObj)
+{
+  PyObject *pyStringObj = PyObject_Str(pyObj);
+  if (NULL == pyStringObj) {
+    return nil;
+  } else {
+    NSString *result = _stringFromPyStringObject(pyStringObj);
+    Py_DECREF(pyStringObj);
+    return result;
+  }
+}
+
+static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
+{
+  char *cString = NULL;
+  PyArg_Parse(pyStringObj, "s", &cString);
+  return (NULL == cString ? nil : [NSString stringWithUTF8String:cString]);
+}
+
 #pragma mark - Public
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
@@ -91,11 +143,20 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
                                          url, "a_proxy", "a_username", "a_pwd");
-  if (result == NULL) {
-    PyErr_Print();
+  if (NULL == result) {
+    //PyErr_Print();
+    if (PyErr_Occurred()) {
+      errorMessage = [self _errorMessageFromPyErrOccurred];
+    }
+    
+    if (0 == errorMessage.length) {
+      errorMessage = @"Empty Result";
+    }
+    NSLog(@"Error Msg:\n%@", errorMessage);
+    
   } else {
-    NSLog(@"Got result!");
-    PyObject_Print(result, stdout, Py_PRINT_RAW);
+    //NSLog(@"Got result!");
+    //PyObject_Print(result, stdout, Py_PRINT_RAW);
     /*
     NSString *listInfo = CFBridgingRelease(PyObject_GetAttrString(result, nil));
     PyObject *output = PyObject_GetAttrString(result, "value"); //get the stdout and stderr from our catchOutErr object
@@ -140,8 +201,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
       }
     }
   }
-  PyRun_SimpleString("print('\\n')");
-  NSLog(@"Reaches `-checkWithURLString:` End, Got sourceItem.options: %@", sourceItem.options);
+  //PyRun_SimpleString("print('\\n')");
+  NSLog(@"\nReaches `-checkWithURLString:` End, Got sourceItem.options: %@", sourceItem.options);
   completion(sourceItem, errorMessage);
 }
 
@@ -150,6 +211,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
+  
+  NSString *errorMessage = nil;
   
   const char *url  = [urlString UTF8String];
   const char *path = [self.savePath UTF8String];
@@ -166,12 +229,21 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   
   if (result == NULL) {
     PyErr_Print();
+    //PyErr_Print();
+    if (PyErr_Occurred()) {
+      errorMessage = [self _errorMessageFromPyErrOccurred];
+    }
+    
+    if (0 == errorMessage.length) {
+      errorMessage = [NSString stringWithFormat:@"Failed to download source w/ URL: %@", urlString];
+    }
+    
   } else {
     PyObject_Print(result, stdout, Py_PRINT_RAW);
     Py_DECREF(result);
   }
-  PyRun_SimpleString("print('\\n')");
-  NSLog(@"Reaches `-downloadWithURLString:` End.");
+  //PyRun_SimpleString("print('\\n')");
+  NSLog(@"\nReaches `-downloadWithURLString:` End.");
 }
 
 @end
