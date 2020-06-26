@@ -121,6 +121,12 @@ Kivy
 
 ---
 
+### Troubleshoots
+
+- [ld: warning: could not create compact unwind for _ffi_call_unix64](https://gitlab.haskell.org/ghc/ghc/-/issues/5019)
+
+---
+
 ## Others
 
 - ["Changes To Embedding Python Using Xcode 5.0"](https://developer.apple.com/library/archive/technotes/tn2328/_index.html)
