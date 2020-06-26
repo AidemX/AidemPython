@@ -85,6 +85,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
   
+  NSMutableArray <VMRemoteSourceOptionModel *> *items;
+  
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
                                          url, "a_proxy", "a_username", "a_pwd");
@@ -103,34 +105,31 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
     // Prase JSON from `result`.
     char *resultCString = NULL;
     PyArg_Parse(result, "s", &resultCString);
+    Py_DECREF(result);
+    
     if (resultCString != NULL) {
       NSError *error = nil;
       NSString *resultJsonString = [NSString stringWithUTF8String:resultCString];
-      NSString *jsonPath = [self.savePath stringByAppendingPathComponent:@"my.json"];
-      [resultJsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
       NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
       NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
-      NSLog(@"Parsed JSON Dict: %@", jsonDict);
-      
-      NSDictionary *streams = jsonDict[@"streams"];
-      if (nil == streams || ![streams isKindOfClass:[NSDictionary class]]) {
-        completion(nil);
+      if (error) {
+        NSLog(@"Parsing JSON failed: %@", [error localizedDescription]);
       } else {
-        NSMutableArray <VMRemoteSourceOptionModel *> *items = [NSMutableArray array];
-        for (NSString *key in [streams allKeys]) {
-          VMRemoteSourceOptionModel *item = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
-          [items addObject:item];
+        NSLog(@"Parsed JSON Dict: %@", jsonDict);
+        NSDictionary *streams = jsonDict[@"streams"];
+        if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
+          items = [NSMutableArray array];
+          for (NSString *key in [streams allKeys]) {
+            VMRemoteSourceOptionModel *item = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+            [items addObject:item];
+          }
         }
-        completion(items);
       }
-    } else {
-      completion(nil);
     }
-    
-    Py_DECREF(result);
   }
   PyRun_SimpleString("print('\\n')");
-  NSLog(@"Reaches `-checkWithURLString:` End.");
+  NSLog(@"Reaches `-checkWithURLString:` End, Got items: %@", items);
+  completion(items);
 }
 
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
