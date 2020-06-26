@@ -26,9 +26,9 @@ sys.stderr = vm_std()
 def check_source(url, proxy=None, username=None, password=None):
     info = {
 		'url':url,
-		'username': username,
-		'password': password,
-		'proxy':proxy
+		'proxy':proxy,
+		'username':username,
+		'password':password
 	}
     print('[ky_source_downloader.py]: Check source w/ args:\n%s\n' % info)
 
@@ -56,23 +56,25 @@ def check_source(url, proxy=None, username=None, password=None):
 
     #traceback.print_exc(file=sys.stdout)
     #sys.stdout.flush()
+
+    print('cmd: %s' % sys.argv)
     
     return result
 	
 
 def download_source(path, url, fmt=None, proxy=None, username=None, password=None):
     info = {
-        'path':path,
 		'url':url,
         'format':fmt,
-		'username': username,
-		'password': password,
-		'proxy':proxy
+		'proxy':proxy,
+		'username':username,
+		'password':password,
+        'path':path
 	}
     result = '[ky_source_downloader.py]: Download source w/ %s\n' % info
     #print('[ky_source_downloader.py]: Download source w/ args:\n%s\n' % info)
     print(result)
-
+    
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get', '-i', url] # List available video w/ formats
     #sys.argv = ['you-get','-i','--debug',url] # List available video w/ formats in debug mode
@@ -84,5 +86,7 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
         sys.argv = ['you-get','--debug','-F',fmt,'-o',path,url] # Download & save video to path in debug mode
 
     you_get.main()
+
+    print('cmd: %s' % sys.argv)
 
     return result

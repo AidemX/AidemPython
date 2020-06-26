@@ -73,6 +73,7 @@
   
   // Download directly w/ default format
   //[_downloader downloadWithURLString:self.urlString inFormat:nil];
+  //[_downloader downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
