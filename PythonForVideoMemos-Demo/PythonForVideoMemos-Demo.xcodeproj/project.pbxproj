@@ -25,6 +25,7 @@
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
 		7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */; };
 		7F4CBD6524A43ECA00CC0889 /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CBD6424A43ECA00CC0889 /* VMPython.m */; };
+		7FFEE23724A5C7480071144F /* VMRemoteSourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE23624A5C7480071144F /* VMRemoteSourceOptionModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPythonRemoteSourceDownloader.m; sourceTree = "<group>"; };
 		7F4CBD6324A43ECA00CC0889 /* VMPython.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
 		7F4CBD6424A43ECA00CC0889 /* VMPython.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
+		7FFEE23524A5C7480071144F /* VMRemoteSourceOptionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceOptionModel.h; sourceTree = "<group>"; };
+		7FFEE23624A5C7480071144F /* VMRemoteSourceOptionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMRemoteSourceOptionModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +214,8 @@
 				7F4CBD6424A43ECA00CC0889 /* VMPython.m */,
 				7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */,
 				7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */,
+				7FFEE23524A5C7480071144F /* VMRemoteSourceOptionModel.h */,
+				7FFEE23624A5C7480071144F /* VMRemoteSourceOptionModel.m */,
 			);
 			path = VMPython;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
+				7FFEE23724A5C7480071144F /* VMRemoteSourceOptionModel.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
