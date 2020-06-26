@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, copy) NSString *urlString;
-@property (nonatomic, copy) NSArray <VMRemoteSourceOptionModel *> *items;
+@property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
 
 @property (nonatomic, strong) VMPythonRemoteSourceDownloader *downloader;
 
@@ -77,8 +77,8 @@
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [_downloader checkWithURLString:self.urlString completion:^(NSArray *options) {
-    weakSelf.items = options;
+  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem) {
+    weakSelf.sourceItem = sourceItem;
     [weakSelf.tableView reloadData];
   }];
 }
@@ -94,7 +94,7 @@
 // Tells the data source to return the number of rows in a given section of a table view. (required)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [self.items count];
+  return [self.sourceItem.options count];
 }
 
 // Asks the data source for a cell to insert in a particular location of the table view.
@@ -106,7 +106,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
   }
   
-  VMRemoteSourceOptionModel *item = self.items[indexPath.row];
+  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   cell.textLabel.text = item.qualityText;
   cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", item.mediaTypeText, item.sizeText];
   
@@ -133,7 +133,7 @@
 // Tells the delegate that the specified row is now selected.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  VMRemoteSourceOptionModel *item = self.items[indexPath.row];
+  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   [_downloader downloadWithURLString:self.urlString inFormat:item.format];
 }
 

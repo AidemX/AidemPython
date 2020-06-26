@@ -79,13 +79,13 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(NSArray *))completion
+- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(VMRemoteSourceModel *))completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
   
-  NSMutableArray <VMRemoteSourceOptionModel *> *items;
+  VMRemoteSourceModel *sourceItem;
   
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
@@ -116,20 +116,27 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
         NSLog(@"Parsing JSON failed: %@", [error localizedDescription]);
       } else {
         NSLog(@"Parsed JSON Dict: %@", jsonDict);
+        
+        sourceItem = [[VMRemoteSourceModel alloc] init];
+        sourceItem.title     = jsonDict[@"title"];
+        sourceItem.site      = jsonDict[@"site"];
+        sourceItem.urlString = jsonDict[@"url"];
+        
         NSDictionary *streams = jsonDict[@"streams"];
         if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
-          items = [NSMutableArray array];
+          NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
           for (NSString *key in [streams allKeys]) {
-            VMRemoteSourceOptionModel *item = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
-            [items addObject:item];
+            VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+            [options addObject:option];
           }
+          sourceItem.options = options;
         }
       }
     }
   }
   PyRun_SimpleString("print('\\n')");
-  NSLog(@"Reaches `-checkWithURLString:` End, Got items: %@", items);
-  completion(items);
+  NSLog(@"Reaches `-checkWithURLString:` End, Got sourceItem.options: %@", sourceItem.options);
+  completion(sourceItem);
 }
 
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
