@@ -480,7 +480,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../PythonForVideoMemos/python/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../PythonForVideoMemos",
@@ -540,7 +540,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../PythonForVideoMemos/python/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../PythonForVideoMemos",
