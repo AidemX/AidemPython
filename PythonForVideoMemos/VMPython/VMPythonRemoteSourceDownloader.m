@@ -13,6 +13,10 @@
 #import "Python.h"
 
 
+static char * const kSourceDownloaderMethodOfCheckSource_    = "check_source";
+static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source";
+
+
 @interface VMPythonRemoteSourceDownloader ()
 
 @property (nonatomic, assign, getter=isModuleLoaded) BOOL moduleLoaded;
@@ -82,8 +86,8 @@
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
   
   const char *url = [urlString UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, "check_source", "(ssss)", url, "a_proxy", "a_username", "a_pwd");
-  
+  PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
+                                         url, "a_proxy", "a_username", "a_pwd");
   if (result == NULL) {
     PyErr_Print();
   } else {
@@ -140,10 +144,12 @@
   
   PyObject *result;
   if (nil == format) {
-    result = PyObject_CallMethod(self.pyObj, "download_source", "(ssssss)", path, url, "",       "a_proxy", "a_username", "a_pwd");
+    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
+                                 path, url, "",       "a_proxy", "a_username", "a_pwd");
   } else {
     const char *formatArg = [format UTF8String];
-    result = PyObject_CallMethod(self.pyObj, "download_source", "(ssssss)", path, url, formatArg, "a_proxy", "a_username", "a_pwd");
+    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
+                                 path, url, formatArg, "a_proxy", "a_username", "a_pwd");
   }
   
   if (result == NULL) {
