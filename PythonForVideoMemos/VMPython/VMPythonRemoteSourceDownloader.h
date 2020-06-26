@@ -12,12 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^VMPythonRemoteSourceDownloaderCheckingCompletion)(VMRemoteSourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
+
+
 @interface VMPythonRemoteSourceDownloader : NSObject
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithSavePath:(NSString *)savePath;
 
-- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(VMRemoteSourceModel *_Nullable sourceItem))completion;
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
 
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
 

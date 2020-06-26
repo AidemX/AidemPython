@@ -24,6 +24,12 @@
 
 @property (nonatomic, strong) VMPythonRemoteSourceDownloader *downloader;
 
+#ifdef DEBUG
+
+- (void)_presentAlertWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
+
+#endif // END #ifdef DEBUG
+
 @end
 
 
@@ -77,10 +83,27 @@
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem) {
-    weakSelf.sourceItem = sourceItem;
-    [weakSelf.tableView reloadData];
+  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+    if (nil == errorMessage) {
+      weakSelf.sourceItem = sourceItem;
+      [weakSelf.tableView reloadData];
+    } else {
+      [weakSelf _presentAlertWithTitle:nil message:errorMessage];
+    }
   }];
+}
+
+#pragma mark - Private
+
+- (void)_presentAlertWithTitle:(NSString *)title message:(NSString *)message
+{
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:(title ?: @"Alert")
+                                                                           message:message
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+  [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:nil]];
+  [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

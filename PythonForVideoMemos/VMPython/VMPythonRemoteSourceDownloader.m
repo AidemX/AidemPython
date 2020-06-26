@@ -79,13 +79,14 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(VMRemoteSourceModel *))completion
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
   
-  VMRemoteSourceModel *sourceItem;
+  VMRemoteSourceModel *sourceItem = nil;
+  NSString *errorMessage = nil;
   
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
@@ -107,13 +108,18 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
     PyArg_Parse(result, "s", &resultCString);
     Py_DECREF(result);
     
-    if (resultCString != NULL) {
+    if (NULL == resultCString) {
+      errorMessage = @"Empty Result";
+      
+    } else {
       NSError *error = nil;
       NSString *resultJsonString = [NSString stringWithUTF8String:resultCString];
       NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
       NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
       if (error) {
-        NSLog(@"Parsing JSON failed: %@\nresultJsonString: %@", [error localizedDescription], resultJsonString);
+        errorMessage = [NSString stringWithFormat:@"Parsing JSON failed: %@\nThe String to Parse: %@", [error localizedDescription], resultJsonString];
+        NSLog(@"%@", errorMessage);
+        
       } else {
         NSLog(@"Parsed JSON Dict: %@", jsonDict);
         
@@ -136,7 +142,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   }
   PyRun_SimpleString("print('\\n')");
   NSLog(@"Reaches `-checkWithURLString:` End, Got sourceItem.options: %@", sourceItem.options);
-  completion(sourceItem);
+  completion(sourceItem, errorMessage);
 }
 
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
