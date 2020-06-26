@@ -75,14 +75,15 @@
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString
+- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(NSArray *))completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
+  
   const char *url = [urlString UTF8String];
-  const char *path = [self.savePath UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, "check_source", "(sssss)", url, "a_proxy", "a_username", "a_pwd", path);
+  PyObject *result = PyObject_CallMethod(self.pyObj, "check_source", "(ssss)", url, "a_proxy", "a_username", "a_pwd");
+  
   if (result == NULL) {
     PyErr_Print();
   } else {
@@ -106,6 +107,20 @@
       NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
       NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
       NSLog(@"Parsed JSON Dict: %@", jsonDict);
+      
+      NSDictionary *streams = jsonDict[@"streams"];
+      if (nil == streams || ![streams isKindOfClass:[NSDictionary class]]) {
+        completion(nil);
+      } else {
+        NSMutableArray <VMRemoteSourceOptionModel *> *items = [NSMutableArray array];
+        for (NSString *key in [streams allKeys]) {
+          VMRemoteSourceOptionModel *item = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+          [items addObject:item];
+        }
+        completion(items);
+      }
+    } else {
+      completion(nil);
     }
     
     Py_DECREF(result);
@@ -114,14 +129,23 @@
   NSLog(@"Reaches `-checkWithURLString:` End.");
 }
 
-- (void)downloadWithURLString:(NSString *)urlString
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
-  const char *url = [urlString UTF8String];
+  
+  const char *url  = [urlString UTF8String];
   const char *path = [self.savePath UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, "download_source", "(sssss)", url, "a_proxy", "a_username", "a_pwd", path);
+  
+  PyObject *result;
+  if (nil == format) {
+    result = PyObject_CallMethod(self.pyObj, "download_source", "(ssssss)", path, url, "",       "a_proxy", "a_username", "a_pwd");
+  } else {
+    const char *formatArg = [format UTF8String];
+    result = PyObject_CallMethod(self.pyObj, "download_source", "(ssssss)", path, url, formatArg, "a_proxy", "a_username", "a_pwd");
+  }
+  
   if (result == NULL) {
     PyErr_Print();
   } else {

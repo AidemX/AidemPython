@@ -6,7 +6,9 @@
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-@import Foundation;
+// Model
+#import "VMRemoteSourceOptionModel.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithSavePath:(NSString *)savePath;
 
-- (void)checkWithURLString:(NSString *)urlString;
-- (void)downloadWithURLString:(NSString *)urlString;
+- (void)checkWithURLString:(NSString *)urlString completion:(void (^)(NSArray *_Nullable options))completion;
+
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
 
 @end
 
