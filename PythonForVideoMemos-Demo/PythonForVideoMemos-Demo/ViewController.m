@@ -108,7 +108,7 @@
   
   VMRemoteSourceOptionModel *item = self.items[indexPath.row];
   cell.textLabel.text = item.qualityText;
-  cell.detailTextLabel.text = [NSString stringWithFormat:@"TYPE: %@, SIZE: %@", item.mediaTypeText, item.sizeText];
+  cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", item.mediaTypeText, item.sizeText];
   
   return cell;
 }
