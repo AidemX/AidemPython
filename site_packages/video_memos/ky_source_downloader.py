@@ -24,20 +24,14 @@ sys.stderr = vm_std()
 
 
 def check_source(url, proxy=None, username=None, password=None, debug=0):
-    '''
     if debug:
-        debug_text = 'YES'
-    else
-        debug_text = 'NO'
-    '''
-
-    info = {
-		'url':url,
-		'proxy':proxy,
-		'username':username,
-		'password':password
-	}
-    print('[ky_source_downloader.py]: Check source w/ args:\n%s\n' % info)
+        info = {
+		    'url':url,
+		    'proxy':proxy,
+		    'username':username,
+		    'password':password
+	    }
+        print('[ky_source_downloader.py]: Check source w/ args:\n%s\n' % info)
 
     # Store the reference, in case you want to show things again in standard output
     old_stdout = sys.stdout
@@ -69,8 +63,9 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     #traceback.print_exc(file=sys.stdout)
     #sys.stdout.flush()
 
-    print('cmd: %s' % sys.argv)
-    print('[ky_source_downloader.py]:\nJSON RESULT: %s' % result)
+    if debug:
+        print('cmd: %s' % sys.argv)
+        print('[ky_source_downloader.py]:\nJSON RESULT: %s' % result)
     
     return result
 	
@@ -105,7 +100,8 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
             sys.argv = ['you-get','-F',fmt,'-o',path,url]
 
     you_get.main()
-
-    print('cmd: %s' % sys.argv)
+    
+    if debug:
+        print('cmd: %s' % sys.argv)
 
     return result
