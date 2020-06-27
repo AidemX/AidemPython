@@ -6,11 +6,11 @@ Python iOS framework for Video Memos app.
 
 1. Enter folder "site_packages" to pull latest source for each package.
 
-  **NOTE**: For 3rd party package repos, make sure their branch is `video_memos_ios`.
+    **NOTE**: For 3rd party package repos, make sure their branch is `video_memos_ios`.
 
 2. Copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages"
 
-  $ ./apply_latest_site_packages.sh
+    $ ./apply_latest_site_packages.sh
 
 3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "Create groups" option.
 
@@ -18,29 +18,27 @@ Python iOS framework for Video Memos app.
 
 5. Re-add "python" folder back w/ "Create folder references" option.
 
-  Tips:
-  - This step makes sure those included lib files will be grouped under compiled app package.
-  - Make sure no *.pyc files added.
+    Tips:
+    - This step makes sure those included lib files will be grouped under compiled app package.
+    - Make sure no *.pyc files added.
 
 6. Add required *.tbd files:
 
-  4.1. Select project target
-  4.2. Select "Build Phases"
-  4.3. Extend "Link Binary With Libraries" section
-  4.4. Add files: libsqlite3.tbd, libz.tbd
+    6.1. Select project target  
+    6.2. Select "Build Phases"  
+    6.3. Extend "Link Binary With Libraries" section  
+    6.4. Add files: libsqlite3.tbd, libz.tbd  
 
 7. Update Project Settings:
 
-  - HEADER_SEARCH_PATHS:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
-  - LIBRARY_SEARCH_PATHS: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
+    - HEADER_SEARCH_PATHS:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
+    - LIBRARY_SEARCH_PATHS: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
 
-8. Disable bitcode for iOS target:
+8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in project settings.
 
-Go to project settings, set `ENABLE_BITCODE` to NO.
-
-Note: For iOS apps, bitcode is the default, but optional. For watchOS and tvOS apps, bitcode
-is required. If you provide bitcode, all apps and frameworks in the app bundle (all targets 
-in the project) need to include bitcode.
+    **Note**: For iOS apps, bitcode is the default, but optional. For watchOS and tvOS apps, bitcode
+    is required. If you provide bitcode, all apps and frameworks in the app bundle (all targets 
+    in the project) need to include bitcode.
 
 [Further Reading about bitcode](https://help.apple.com/xcode/mac/current/#/devbbdc5ce4f)
 
@@ -57,8 +55,8 @@ README.txt under "site-packages" folder:
 
 And if need to test Python package, suggest using `venv`:
 
-  $ python3 -m venv venv
-  $ . venv/bin/activate
+    $ python3 -m venv venv  
+    $ . venv/bin/activate  
 
 ---
 
@@ -76,7 +74,7 @@ These static libs will be compile-time-linked.
 
 Tips: If want to take look at *.a file, use cmd (refer to ["Contents of a static library"](https://stackoverflow.com/questions/3757108/contents-of-a-static-library)):
 
-  $ nm libxxx.a | less
+    $ nm libxxx.a | less
 
 ### About *.tbd file
 
