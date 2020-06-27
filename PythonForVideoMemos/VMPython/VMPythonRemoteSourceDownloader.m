@@ -220,7 +220,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   PyObject *result;
   if (nil == format) {
     result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
-                                 path, url, "",       "a_proxy", "a_username", "a_pwd");
+                                 path, url, "",        "a_proxy", "a_username", "a_pwd");
   } else {
     const char *formatArg = [format UTF8String];
     result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
@@ -228,7 +228,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   
   if (result == NULL) {
-    PyErr_Print();
     //PyErr_Print();
     if (PyErr_Occurred()) {
       errorMessage = [self _errorMessageFromPyErrOccurred];
