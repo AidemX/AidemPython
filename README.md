@@ -8,21 +8,21 @@ Python iOS framework for Video Memos app.
 
     **NOTE**: For 3rd party package repos, make sure their branch is `video_memos_ios`.
 
-2. Copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages"
+2. Use script to copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages":
 
         $ ./apply_latest_site_packages.sh
 
-3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "Create groups" option.
+3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "**Create groups**" option.
 
 4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos" (just leave those *.a files there).
 
-5. Re-add "python" folder back w/ "Create folder references" option.
+5. Re-add "python" folder back w/ "**Create folder references**" option.
 
     Tips:
     - This step makes sure those included lib files will be grouped under compiled app package.
     - Make sure no *.pyc files added.
 
-6. Add required *.tbd files:
+6. Add required ***.tbd** files:
 
     6.1. Select project target  
     6.2. Select "Build Phases"  
@@ -31,8 +31,8 @@ Python iOS framework for Video Memos app.
 
 7. Update Project Settings:
 
-    - HEADER_SEARCH_PATHS:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
-    - LIBRARY_SEARCH_PATHS: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
+    - **HEADER_SEARCH_PATHS**:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
+    - **LIBRARY_SEARCH_PATHS((: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
 
 8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in project settings.
 
@@ -66,7 +66,7 @@ And if need to test Python package, suggest using `venv`:
 
 These static libs will be compile-time-linked.
 
-- libpython3.a: Main cross-compiled Python lib for iOS, its related header & resource files are stored in "python" folder.
+- **libpython3.a**: Main cross-compiled Python lib for iOS, its related header & resource files are stored in "python" folder.
 
 - [libffi.a](https://sourceware.org/libffi/): FFI stands for Foreign Function Interface. It is the popular name for the interface that allows code written in one language to call code written in another language.
 
