@@ -19,6 +19,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 @interface VMPythonRemoteSourceDownloader ()
 
+@property (nonatomic, assign) int debug;
+
 @property (nonatomic, assign, getter=isModuleLoaded) BOOL moduleLoaded;
 @property (nonatomic, copy) NSString *savePath;
 
@@ -40,9 +42,10 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   [[VMPython sharedInstance] quitPythonEnv];
 }
 
-- (instancetype)initWithSavePath:(NSString *)savePath
+- (instancetype)initWithSavePath:(NSString *)savePath inDebugMode:(BOOL)debugMode
 {
   if (self = [super init]) {
+    self.debug = (debugMode ? 1 : 0);
     self.savePath = savePath;
     NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
   }
@@ -78,27 +81,55 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   
   // `pValue` contains error message
   // `pTraceback` contains stack snapshot and many other information (see python traceback structure)
-  PyObject *pType, *pValue, *pTraceback;
-  PyErr_Fetch(&pType, &pValue, &pTraceback);
+  PyObject *pyErrType, *pyErrValue, *pyErrTraceback;
+  PyErr_Fetch(&pyErrType, &pyErrValue, &pyErrTraceback);
   
   NSMutableString *mutableErrorMessage = [NSMutableString string];
-  if (NULL != pType) {
-    NSString *errorTypeText = _stringFromPyObject(pType);
-    if (errorTypeText) [mutableErrorMessage appendFormat:@"%@\n", errorTypeText];
-    Py_DECREF(pType);
+  
+  if (NULL != pyErrType) {
+    //NSString *errorTypeText = _stringFromPyObject(pyErrType);
+    //if (errorTypeText) [mutableErrorMessage appendFormat:@"%@\n", errorTypeText];
+    PyTypeObject *errorTypeObj = (PyTypeObject *)pyErrType;
+    [mutableErrorMessage appendFormat:@"%s\n%s\n", errorTypeObj->tp_name, errorTypeObj->tp_doc];
   }
   
-  if (NULL != pValue) {
-    NSString *errorValueText = _stringFromPyStringObject(pValue);
+  if (NULL != pyErrValue) {
+    NSString *errorValueText = _stringFromPyObject(pyErrValue);
     if (errorValueText) [mutableErrorMessage appendFormat:@"%@\n", errorValueText];
-    Py_DECREF(pValue);
   }
   
-  if (NULL != pTraceback) {
-    NSString *errorTrackbackText = _stringFromPyObject(pTraceback);
-    if (errorTrackbackText) [mutableErrorMessage appendString:errorTrackbackText];
-    Py_DECREF(pTraceback);
+  if (NULL != pyErrTraceback && [self inDebugMode]) {
+    //PyTracebackObject *tracebackObj = (PyTracebackObject*)pTraceback;
+    //NSString *errorTrackbackText = _stringFromPyObject(pTraceback);
+    //if (errorTrackbackText) [mutableErrorMessage appendString:errorTrackbackText];
+    // See if we can get a full traceback
+    static const char *moduleName = "traceback";
+    PyObject *pyTrackbackModule = PyImport_ImportModule(moduleName);
+    if (NULL != pyTrackbackModule) {
+      PyObject *pyTrackbackModuleFunc = PyObject_GetAttrString(pyTrackbackModule, "format_exception");
+      if (NULL != pyTrackbackModuleFunc && PyCallable_Check(pyTrackbackModuleFunc)) {
+        PyObject *pyTrackbackValue = PyObject_CallFunctionObjArgs(pyTrackbackModuleFunc, pyErrType, pyErrValue, pyErrTraceback, NULL);
+        //NSString *trackbackValue = _stringFromPyObject(pyTrackbackValue);
+        NSMutableString *trackbackValue = [NSMutableString string];
+        Py_ssize_t listSize = PyList_Size(pyTrackbackValue);
+        for (Py_ssize_t i = 0; i < listSize; ++i) {
+          PyObject *line = PyList_GetItem(pyTrackbackValue, i);
+          if (NULL != line) {
+            [trackbackValue appendString:_stringFromPyObject(line)];
+            Py_DECREF(line);
+          }
+        }
+        NSLog(@"TRACEKBACK: %@", trackbackValue);
+        Py_DECREF(pyTrackbackModuleFunc);
+        Py_DECREF(pyTrackbackValue);
+      }
+      Py_DECREF(pyTrackbackModule);
+    }
   }
+  
+  if (NULL != pyErrType)      Py_DECREF(pyErrType);
+  if (NULL != pyErrValue)     Py_DECREF(pyErrValue);
+  if (NULL != pyErrTraceback) Py_DECREF(pyErrTraceback);
   
   return mutableErrorMessage;
 }
@@ -124,6 +155,11 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 #pragma mark - Public
 
+- (BOOL)inDebugMode
+{
+  return (1 == self.debug);
+}
+
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
@@ -134,8 +170,8 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   NSString *errorMessage = nil;
   
   const char *url = [urlString UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssss)",
-                                         url, "a_proxy", "a_username", "a_pwd");
+  PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssssi)",
+                                         url, "a_proxy", "a_username", "a_pwd", self.debug);
   if (NULL == result) {
     //PyErr_Print();
     if (PyErr_Occurred()) {
@@ -212,12 +248,12 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   PyObject *result;
   if (nil == format) {
-    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
-                                 path, url, "",        "a_proxy", "a_username", "a_pwd");
+    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
+                                 path, url, "",        "a_proxy", "a_username", "a_pwd", self.debug);
   } else {
     const char *formatArg = [format UTF8String];
-    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssss)",
-                                 path, url, formatArg, "a_proxy", "a_username", "a_pwd");
+    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
+                                 path, url, formatArg, "a_proxy", "a_username", "a_pwd", self.debug);
   }
   
   if (result == NULL) {

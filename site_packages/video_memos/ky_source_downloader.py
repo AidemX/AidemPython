@@ -23,7 +23,14 @@ sys.stderr = vm_std()
 '''
 
 
-def check_source(url, proxy=None, username=None, password=None):
+def check_source(url, proxy=None, username=None, password=None, debug=0):
+    '''
+    if debug:
+        debug_text = 'YES'
+    else
+        debug_text = 'NO'
+    '''
+
     info = {
 		'url':url,
 		'proxy':proxy,
@@ -44,7 +51,12 @@ def check_source(url, proxy=None, username=None, password=None):
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get','-i',url] # List available video w/ formats
     #sys.argv = ['you-get','-i','--debug',url] # List available video w/ formats in debug mode
-    sys.argv = ['you-get','--json','--debug',url] # Print extracted URLs in JSON format in debug mode
+
+    # Print extracted URLs in JSON format in debug mode
+    if debug:
+        sys.argv = ['you-get','--json','--debug',url] 
+    else:
+        sys.argv = ['you-get','--json',          url]
     you_get.main()
 
     # Get the stdout like a string and process it
@@ -63,7 +75,7 @@ def check_source(url, proxy=None, username=None, password=None):
     return result
 	
 
-def download_source(path, url, fmt=None, proxy=None, username=None, password=None):
+def download_source(path, url, fmt=None, proxy=None, username=None, password=None, debug=0):
     info = {
 		'url':url,
         'format':fmt,
@@ -75,16 +87,22 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
     result = '[ky_source_downloader.py]: Download source w/ %s\n' % info
     #print('[ky_source_downloader.py]: Download source w/ args:\n%s\n' % info)
     print(result)
-    
+   
+    # Download & save video to path
     #sys.argv = ['you-get','-h'] # Show help
-    #sys.argv = ['you-get', '-i', url] # List available video w/ formats
-    #sys.argv = ['you-get','-i','--debug',url] # List available video w/ formats in debug mode
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
-    if not fmt:
-        sys.argv = ['you-get','--debug',         '-o',path,url] # Download & save video to path in debug mode
+
+    if debug:
+        if not fmt:
+            sys.argv = ['you-get','--debug',         '-o',path,url] 
+        else:
+            sys.argv = ['you-get','--debug','-F',fmt,'-o',path,url]
     else:
-        sys.argv = ['you-get','--debug','-F',fmt,'-o',path,url] # Download & save video to path in debug mode
+        if not fmt:
+            sys.argv = ['you-get',         '-o',path,url] 
+        else:
+            sys.argv = ['you-get','-F',fmt,'-o',path,url]
 
     you_get.main()
 

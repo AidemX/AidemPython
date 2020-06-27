@@ -18,7 +18,9 @@ typedef void (^VMPythonRemoteSourceDownloaderCheckingCompletion)(VMRemoteSourceM
 @interface VMPythonRemoteSourceDownloader : NSObject
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithSavePath:(NSString *)savePath;
+- (instancetype)initWithSavePath:(NSString *)savePath inDebugMode:(BOOL)debugMode;
+
+- (BOOL)inDebugMode;
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
 

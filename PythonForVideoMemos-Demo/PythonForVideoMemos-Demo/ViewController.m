@@ -78,13 +78,14 @@
   [super viewDidAppear:animated];
   
   NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:docPath];
+  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:docPath inDebugMode:YES];
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
   // Download directly w/ default format
   //[_downloader downloadWithURLString:self.urlString inFormat:nil];
-  //[_downloader downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
+//  [_downloader downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
+//  return;
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
