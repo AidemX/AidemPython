@@ -106,7 +106,7 @@ Some related repos:
 - [iOS-Python-Project](https://github.com/clowwindy/iOS-Python-Project)
 - [rubicon-objc](https://github.com/beeware/rubicon-objc)
 
-Kivy
+About Kivy:
 
 - [kivy-ios](https://github.com/kivy/kivy-ios)
 - ["Programming Guide » IOS Prerequisites"](https://kivy.org/doc/stable/guide/packaging-ios-prerequisites.html#packaging-ios-prerequisites)
@@ -114,6 +114,22 @@ Kivy
 - ["Create a package for IOS"](https://kivy.org/doc/stable/guide/packaging-ios.html)
 - ["Kivy-Installation"](https://www.bookstack.cn/read/Kivy-CN/01-Kivy-Installation.md)
 
+About reducing the application size:
+
+- ["Reducing the application size"](https://github.com/kivy/kivy-ios#reducing-the-application-size)
+- ["Are there any ways to to decrease the size of the kivy app?"](https://github.com/kivy/kivy-ios/issues/226)
+- ["Cleaning site-packages directory"](https://github.com/kivy/kivy-ios/issues/397)
+
+Issues about adding 3rd party pkgs:
+
+- ["Add external libraries to ios app"](https://github.com/kivy/kivy-ios/issues/497)
+- ["Build with Custom Package (no recipe)"](https://github.com/kivy/kivy-ios/issues/431)
+
+Isseus about App Store Validation:
+
+- ["App store validation fails due to .so.o files"](https://github.com/kivy/kivy-ios/issues/315)
+- ["Invalid Bundle Structure caused by .so files when uploading to App Store"](https://github.com/kivy/kivy-ios/issues/306)
+- [""]
 
 ---
 
