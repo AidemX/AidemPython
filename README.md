@@ -125,7 +125,8 @@ Kivy
 
 ### Troubleshoots
 
-- [ld: warning: could not create compact unwind for _ffi_call_unix64](https://gitlab.haskell.org/ghc/ghc/-/issues/5019)
+- ["ld: warning: could not create compact unwind for _ffi_call_unix64"](https://gitlab.haskell.org/ghc/ghc/-/issues/5019)
+- ["certificate verify failed: unable to get local issuer certificate"](https://stackoverflow.com/questions/52805115/certificate-verify-failed-unable-to-get-local-issuer-certificate)
 
 ---
 
