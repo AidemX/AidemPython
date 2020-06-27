@@ -26,4 +26,5 @@ PythonForVideoMemos-Demo/PythonForVideoMemos-Demo.xcodeproj/project.xcworkspace/
 
 PythonForVideoMemos/python/lib/python3.8/site-packages/*
 site_packages_backups/*
+python_backups/*
 
