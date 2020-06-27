@@ -129,7 +129,6 @@ Isseus about App Store Validation:
 
 - ["App store validation fails due to .so.o files"](https://github.com/kivy/kivy-ios/issues/315)
 - ["Invalid Bundle Structure caused by .so files when uploading to App Store"](https://github.com/kivy/kivy-ios/issues/306)
-- [""]
 
 ---
 
