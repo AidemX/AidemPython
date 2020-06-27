@@ -14,7 +14,11 @@ Python iOS framework for Video Memos app.
 
 3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "**Create groups**" option.
 
-4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos" (just leave those *.a files there).
+4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos".
+
+    Files left:  
+    - **VMPython** folder  
+    - ***.a** files  
 
 5. Re-add "python" folder back w/ "**Create folder references**" option.
 
