@@ -10,7 +10,7 @@ Python iOS framework for Video Memos app.
 
 2. Copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages"
 
-    $ ./apply_latest_site_packages.sh
+        $ ./apply_latest_site_packages.sh
 
 3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "Create groups" option.
 
