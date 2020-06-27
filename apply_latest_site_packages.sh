@@ -61,9 +61,9 @@ echo
 echo -e 3. Copying latest site packages from \"${cyan}$SRC_ROOT${nc}\" to \"${cyan}$DEST_ROOT${nc}\" ...
 
 #
-# 3.1. Copy pkg: "ky_source_downloader"
+# 3.1. Copy pkg: "video_memos"
 #
-pkg_name="ky_source_downloader"
+pkg_name="video_memos"
 echo -e  - Copying pkg: ${y}$pkg_name${nc} ...
 
 pkg_dest="$DEST_ROOT/$pkg_name"
