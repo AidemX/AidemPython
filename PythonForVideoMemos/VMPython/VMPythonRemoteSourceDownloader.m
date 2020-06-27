@@ -59,13 +59,6 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   
   [[VMPython sharedInstance] enterPythonEnv];
   
-  putenv("PYTHONDONTWRITEBYTECODE=1");
-//  NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-//  NSString *resourcePath = [docPath stringByAppendingString:@"/Python.framework/Resources"];
-//  NSString *python_path = [NSString stringWithFormat:@"PYTHONPATH=%@/python_scripts:%@/Resources/lib/python3.4/site-packages/", resourcePath, resourcePath, nil];
-//  NSLog(@"PYTHONPATH is: %@", python_path);
-//  putenv((char *)[python_path UTF8String]);
-  
   static const char *moduleName = "ky_source_downloader.ky_source_downloader";
   self.pyObj = PyImport_ImportModule(moduleName);
   if (self.pyObj == NULL) {
