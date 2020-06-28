@@ -79,10 +79,11 @@
   
   NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
   _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:docPath inDebugMode:YES];
+  _downloader.cacheJSONFile = YES;
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
-  // Test downloading progress
+  /*/ Test downloading progress
   [_downloader debug_downloadWithURLString:self.urlString
                                   progress:^(float progress) {
     NSLog(@"Get progress: %f", progress);
@@ -90,15 +91,16 @@
     NSLog(@"Did complete downloading, error: %@", errorMessage);
   }];
   return;
+   */
   
   // Download directly w/ default format
-  //[_downloader downloadWithURLString:self.urlString inFormat:nil];
-//  [_downloader downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
-//  return;
+  //[_downloader py_downloadWithURLString:self.urlString inFormat:nil];
+  //[_downloader py_downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
+  //return;
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+  [_downloader py_checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
@@ -172,7 +174,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
-  [_downloader downloadWithURLString:self.urlString inFormat:item.format];
+  //[_downloader py_downloadWithURLString:self.urlString inFormat:item.format];
+  [_downloader objc_downloadWithSourceOptionItem:item];
 }
 
 @end

@@ -30,6 +30,10 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 - (void)_loadKYVideoDownloaderModuleIfNeeded;
 
+- (NSString *)_errorMessageFromPyErrOccurred;
+
+- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
+
 #endif // END #ifdef DEBUG
 
 @end
@@ -109,19 +113,21 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
       PyObject *pyTrackbackModuleFunc = PyObject_GetAttrString(pyTrackbackModule, "format_exception");
       if (NULL != pyTrackbackModuleFunc && PyCallable_Check(pyTrackbackModuleFunc)) {
         PyObject *pyTrackbackValue = PyObject_CallFunctionObjArgs(pyTrackbackModuleFunc, pyErrType, pyErrValue, pyErrTraceback, NULL);
-        //NSString *trackbackValue = _stringFromPyObject(pyTrackbackValue);
-        NSMutableString *trackbackValue = [NSMutableString string];
-        Py_ssize_t listSize = PyList_Size(pyTrackbackValue);
-        for (Py_ssize_t i = 0; i < listSize; ++i) {
-          PyObject *line = PyList_GetItem(pyTrackbackValue, i);
-          if (NULL != line) {
-            [trackbackValue appendString:_stringFromPyObject(line)];
-            Py_DECREF(line);
+        if (NULL != pyTrackbackValue) {
+          //NSString *trackbackValue = _stringFromPyObject(pyTrackbackValue);
+          NSMutableString *trackbackValue = [NSMutableString string];
+          Py_ssize_t listSize = PyList_Size(pyTrackbackValue);
+          for (Py_ssize_t i = 0; i < listSize; ++i) {
+            PyObject *line = PyList_GetItem(pyTrackbackValue, i);
+            if (NULL != line) {
+              [trackbackValue appendString:_stringFromPyObject(line)];
+              Py_DECREF(line);
+            }
           }
+          NSLog(@"TRACEKBACK: %@", trackbackValue);
+          Py_DECREF(pyTrackbackValue);
         }
-        NSLog(@"TRACEKBACK: %@", trackbackValue);
         Py_DECREF(pyTrackbackModuleFunc);
-        Py_DECREF(pyTrackbackValue);
       }
       Py_DECREF(pyTrackbackModule);
     }
@@ -153,6 +159,26 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return (NULL == cString ? nil : [NSString stringWithUTF8String:cString]);
 }
 
+- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json
+{
+  VMRemoteSourceModel *sourceItem = [[VMRemoteSourceModel alloc] init];
+  sourceItem.title     = json[@"title"];
+  sourceItem.site      = json[@"site"];
+  sourceItem.urlString = json[@"url"];
+  
+  NSDictionary *streams = json[@"streams"];
+  if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
+    NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
+    for (NSString *key in [streams allKeys]) {
+      VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+      [options addObject:option];
+    }
+    sourceItem.options = options;
+  }
+  
+  return sourceItem;
+}
+
 #pragma mark - Public
 
 - (BOOL)inDebugMode
@@ -160,7 +186,9 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return (1 == self.debug);
 }
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
+#pragma mark - Public (Python Related)
+
+- (void)py_checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
@@ -168,6 +196,29 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   VMRemoteSourceModel *sourceItem = nil;
   NSString *errorMessage = nil;
+  
+  NSString *jsonPath;
+  if (self.cacheJSONFile) {
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
+    NSString *filename = [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
+    jsonPath = [self.savePath stringByAppendingPathComponent:[filename stringByAppendingPathExtension:@"json"]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:jsonPath]) {
+      NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+      NSError *error = nil;
+      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+      if (error) {
+        // Can't parse the json file, let's rm it & reload from remote.
+        [fileManager removeItemAtPath:jsonPath error:NULL];
+        
+      } else {
+        sourceItem = [self _newRemoteSourceItemFromJSON:json];
+        NSLog(@"\nGot cached JSON file at %@\nsourceItem.options: %@", jsonPath, sourceItem.options);
+        completion(sourceItem, nil);
+        return;
+      }
+    }
+  }
   
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssssi)",
@@ -205,28 +256,17 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
       NSError *error = nil;
       NSString *resultJsonString = [NSString stringWithUTF8String:resultCString];
       NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
-      NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
+      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
       if (error) {
         errorMessage = [NSString stringWithFormat:@"Parsing JSON failed: %@\nThe String to Parse: %@", [error localizedDescription], resultJsonString];
         NSLog(@"%@", errorMessage);
         
       } else {
-        NSLog(@"Parsed JSON Dict: %@", jsonDict);
-        
-        sourceItem = [[VMRemoteSourceModel alloc] init];
-        sourceItem.title     = jsonDict[@"title"];
-        sourceItem.site      = jsonDict[@"site"];
-        sourceItem.urlString = jsonDict[@"url"];
-        
-        NSDictionary *streams = jsonDict[@"streams"];
-        if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
-          NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
-          for (NSString *key in [streams allKeys]) {
-            VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
-            [options addObject:option];
-          }
-          sourceItem.options = options;
+        NSLog(@"Parsed JSON Dict: %@", json);
+        if (self.cacheJSONFile && jsonPath) {
+          [resultJsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
+        sourceItem = [self _newRemoteSourceItemFromJSON:json];
       }
     }
   }
@@ -235,7 +275,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   completion(sourceItem, errorMessage);
 }
 
-- (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
+- (void)py_downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
@@ -303,6 +343,13 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
+}
+
+#pragma mark - Public (ObjC Related)
+
+- (void)objc_downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item
+{
+  
 }
 
 @end

@@ -20,18 +20,25 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 
 @interface VMPythonRemoteSourceDownloader : NSObject
 
+@property (nonatomic, assign) BOOL cacheJSONFile; ///< Whether cached parsed json file, default: NO.
+
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithSavePath:(NSString *)savePath inDebugMode:(BOOL)debugMode;
 
 - (BOOL)inDebugMode;
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
+#pragma mark - Python Related
 
-- (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
+- (void)py_checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
+- (void)py_downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
 
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
+
+#pragma mark - ObjC Related
+
+- (void)objc_downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item;
 
 @end
 
