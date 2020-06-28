@@ -1,3 +1,9 @@
 [submodule "site_packages/you-get"]
 	path = site_packages/you-get
 	url = git@github.com:soimort/you-get.git
+[submodule "Carthage/Checkouts/MBProgressHUD"]
+	path = Carthage/Checkouts/MBProgressHUD
+	url = https://github.com/jdg/MBProgressHUD.git
+[submodule "Carthage/Checkouts/AFNetworking"]
+	path = Carthage/Checkouts/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
