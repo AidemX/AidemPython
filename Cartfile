@@ -1,0 +1,27 @@
+#
+# $ carthage update --use-submodules
+#
+# or
+#
+# $ carthage update fmdb --use-submodules
+#
+# REF: https://github.com/Carthage/Carthage
+# REF: https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile
+#
+# Carthage supports several kinds of version requirements:
+#
+#   >= 1.0 for “at least version 1.0”
+#   ~> 1.0 for “compatible with version 1.0”
+#   == 1.0 for “exactly version 1.0”
+#   "some-branch-or-tag-or-commit" for a specific Git object (anything allowed by
+#      git rev-parse). Note: This form of requirement is not supported for binary origins.
+#
+# If no version requirement is given, any version of the dependency is allowed.
+#
+
+#
+# Frameworks for PythonForVideoMemos-Demo
+#
+github "AFNetworking/AFNetworking" ~> 4.0
+github "jdg/MBProgressHUD" ~> 1.2.0
+
