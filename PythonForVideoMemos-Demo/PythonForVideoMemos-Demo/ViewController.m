@@ -10,6 +10,8 @@
 
 // Lib
 #import "VMPythonRemoteSourceDownloader.h"
+#import "VMRemoteSourceDownloader.h"
+#import "VMRemoteSourceModel.h"
 
 
 @interface ViewController () <
@@ -175,7 +177,9 @@
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  [_downloader downloadWithSourceOptionItem:item];
+  //[_downloader downloadWithSourceOptionItem:item];
+  
+  [[VMRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
 }
 
 @end

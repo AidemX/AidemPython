@@ -6,8 +6,10 @@
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-// Model
-#import "VMRemoteSourceModel.h"
+@import Foundation;
+
+@class VMRemoteSourceModel;
+@class VMRemoteSourceOptionModel;
 
 
 NS_ASSUME_NONNULL_BEGIN

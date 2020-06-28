@@ -9,6 +9,8 @@
 #import "VMPythonRemoteSourceDownloader.h"
 
 #import "VMPython.h"
+// Model
+#import "VMRemoteSourceModel.h"
 // Lib
 #import "Python.h"
 
@@ -165,6 +167,9 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   sourceItem.title     = json[@"title"];
   sourceItem.site      = json[@"site"];
   sourceItem.urlString = json[@"url"];
+  
+  sourceItem.referer   = json[@"referer"];
+  sourceItem.userAgent = json[@"ua"];
   
   NSDictionary *streams = json[@"streams"];
   if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {

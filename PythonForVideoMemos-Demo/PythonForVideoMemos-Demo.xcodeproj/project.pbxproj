@@ -27,6 +27,7 @@
 		7F4CBD6524A43ECA00CC0889 /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CBD6424A43ECA00CC0889 /* VMPython.m */; };
 		7FFEE24024A5EB450071144F /* VMRemoteSourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE23C24A5EB450071144F /* VMRemoteSourceModel.m */; };
 		7FFEE24124A5EB450071144F /* VMRemoteSourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE23D24A5EB450071144F /* VMRemoteSourceOptionModel.m */; };
+		7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		7FFEE23D24A5EB450071144F /* VMRemoteSourceOptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMRemoteSourceOptionModel.m; sourceTree = "<group>"; };
 		7FFEE23E24A5EB450071144F /* VMRemoteSourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceOptionModel.h; sourceTree = "<group>"; };
 		7FFEE23F24A5EB450071144F /* VMRemoteSourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceModel.h; sourceTree = "<group>"; };
+		7FFEE24224A878F10071144F /* VMRemoteSourceDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceDownloader.h; sourceTree = "<group>"; };
+		7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMRemoteSourceDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 				7F4CBD6424A43ECA00CC0889 /* VMPython.m */,
 				7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */,
 				7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */,
+				7FFEE24224A878F10071144F /* VMRemoteSourceDownloader.h */,
+				7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */,
 				7FFEE23B24A5EB450071144F /* Model */,
 			);
 			path = VMPython;
@@ -370,6 +375,7 @@
 				7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
+				7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */,
 				7FFEE24024A5EB450071144F /* VMRemoteSourceModel.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
 			);
