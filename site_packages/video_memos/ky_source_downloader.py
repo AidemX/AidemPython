@@ -37,8 +37,8 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     old_stdout = sys.stdout
 
     # This variable will store everything that is sent to the standard output
-    temp_result = StringIO()
-    sys.stdout = temp_result
+    io_buffer = StringIO()
+    sys.stdout = io_buffer
 
     # Here we can call anything we like, like external modules, and everything
     #   that they will send to standard output will be stored on "temp_result"
@@ -52,14 +52,15 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     else:
         sys.argv = ['you-get','--json',          url]
     you_get.main()
-
-    # Get the stdout like a string and process it
-    temp_result.seek(0) # jump to the start
-    result = temp_result.read()
     
     # Redirect again the std output to screen
     sys.stdout = old_stdout
 
+    # Get the stdout like a string and process it
+    ioBuffer.seek(0) # jump to the start
+    result = io_buffer.read()
+
+    io_buffer.close()
     #traceback.print_exc(file=sys.stdout)
     #sys.stdout.flush()
 
