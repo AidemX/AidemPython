@@ -100,7 +100,7 @@
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [_downloader py_checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
@@ -174,8 +174,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
-  //[_downloader py_downloadWithURLString:self.urlString inFormat:item.format];
-  [_downloader objc_downloadWithSourceOptionItem:item];
+  //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
+  [_downloader downloadWithSourceOptionItem:item];
 }
 
 @end

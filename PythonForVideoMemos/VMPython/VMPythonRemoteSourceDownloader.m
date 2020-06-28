@@ -188,7 +188,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 #pragma mark - Public (Python Related)
 
-- (void)py_checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
@@ -275,7 +275,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   completion(sourceItem, errorMessage);
 }
 
-- (void)py_downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
@@ -314,6 +314,11 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
 }
 
+- (void)downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item
+{
+  // ...
+}
+
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion
@@ -343,13 +348,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
-}
-
-#pragma mark - Public (ObjC Related)
-
-- (void)objc_downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item
-{
-  
 }
 
 @end

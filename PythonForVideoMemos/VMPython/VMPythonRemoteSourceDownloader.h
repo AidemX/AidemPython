@@ -27,18 +27,13 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 
 - (BOOL)inDebugMode;
 
-#pragma mark - Python Related
-
-- (void)py_checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
-- (void)py_downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
+- (void)downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item;
 
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
-
-#pragma mark - ObjC Related
-
-- (void)objc_downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item;
 
 @end
 
