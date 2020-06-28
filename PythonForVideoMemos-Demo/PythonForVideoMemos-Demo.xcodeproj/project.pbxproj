@@ -28,6 +28,8 @@
 		7FFEE24024A5EB450071144F /* VMRemoteSourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE23C24A5EB450071144F /* VMRemoteSourceModel.m */; };
 		7FFEE24124A5EB450071144F /* VMRemoteSourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE23D24A5EB450071144F /* VMRemoteSourceOptionModel.m */; };
 		7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */; };
+		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
+		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,8 @@
 		7FFEE23F24A5EB450071144F /* VMRemoteSourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceModel.h; sourceTree = "<group>"; };
 		7FFEE24224A878F10071144F /* VMRemoteSourceDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMRemoteSourceDownloader.h; sourceTree = "<group>"; };
 		7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMRemoteSourceDownloader.m; sourceTree = "<group>"; };
+		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +94,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */,
 				7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */,
 				7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */,
+				7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */,
 				7F4CB9E424A42CAE00CC0889 /* libcrypto.a in Frameworks */,
 				7F4CB9E524A42CAE00CC0889 /* libpython3.a in Frameworks */,
 				7F4CBD5624A42CAF00CC0889 /* libssl.a in Frameworks */,
@@ -123,7 +129,6 @@
 				7F4CB59224A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */,
 				7F4CB59D24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */,
 				7F4CB57524A42AAB00CC0889 /* Products */,
-				7F4CBD5A24A42D6200CC0889 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,6 +153,7 @@
 				7F4CB57E24A42AAB00CC0889 /* ViewController.m */,
 				7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */,
 				7F4CB5AD24A42C7E00CC0889 /* Libs */,
+				7F4CBD5A24A42D6200CC0889 /* Frameworks */,
 			);
 			path = "PythonForVideoMemos-Demo";
 			sourceTree = "<group>";
@@ -207,10 +213,13 @@
 		7F4CBD5A24A42D6200CC0889 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FFEE24924A883E10071144F /* MBProgressHUD.framework */,
+				7FFEE24524A883DE0071144F /* AFNetworking.framework */,
 				7F4CBD5D24A42D6800CC0889 /* libz.tbd */,
 				7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		7F4CBD5F24A43DAF00CC0889 /* VMPython */ = {
@@ -248,6 +257,7 @@
 				7F4CB57024A42AAB00CC0889 /* Sources */,
 				7F4CB57124A42AAB00CC0889 /* Frameworks */,
 				7F4CB57224A42AAB00CC0889 /* Resources */,
+				7FFEE24C24A884270071144F /* Run Script (Copy Frameworks) */,
 			);
 			buildRules = (
 			);
@@ -364,6 +374,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7FFEE24C24A884270071144F /* Run Script (Copy Frameworks) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../Carthage/Build/iOS/AFNetworking.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/MBProgressHUD.framework",
+			);
+			name = "Run Script (Copy Frameworks)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/AFNetworking.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MBProgressHUD.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7F4CB57024A42AAB00CC0889 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -468,6 +503,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -534,6 +573,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
