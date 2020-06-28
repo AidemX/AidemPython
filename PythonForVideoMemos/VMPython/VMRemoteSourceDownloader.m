@@ -39,8 +39,10 @@
   if (sourceItem.userAgent) [request addValue:sourceItem.referer forHTTPHeaderField:@"User-Agent"];
   if (sourceItem.referer)   [request addValue:sourceItem.referer forHTTPHeaderField:@"Referer"];
   
+  NSString *filename = [sourceItem.title stringByAppendingPathExtension:optionItem.mediaTypeText];
+  NSURL *destinationURL = [self.baseSavePathURL URLByAppendingPathComponent:filename];
+  
   NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-    NSURL *destinationURL = [self.baseSavePathURL URLByAppendingPathComponent:[response suggestedFilename]];
     return destinationURL;
   } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
     NSLog(@"File downloaded to: %@", filePath);
