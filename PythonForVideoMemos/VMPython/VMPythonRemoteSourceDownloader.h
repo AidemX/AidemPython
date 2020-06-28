@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^VMPythonRemoteSourceDownloaderCheckingCompletion)(VMRemoteSourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
 
+typedef void (^VMPythonRemoteSourceDownloaderProgress)(float progress);
+typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable errorMessage);
+
 
 @interface VMPythonRemoteSourceDownloader : NSObject
 
@@ -25,6 +28,10 @@ typedef void (^VMPythonRemoteSourceDownloaderCheckingCompletion)(VMRemoteSourceM
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
 
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
+
+- (void)debug_downloadWithURLString:(NSString *)urlString
+                           progress:(VMPythonRemoteSourceDownloaderProgress)progress
+                         completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
 
 @end
 

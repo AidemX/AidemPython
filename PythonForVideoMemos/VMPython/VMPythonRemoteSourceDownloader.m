@@ -274,4 +274,35 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
 }
 
+- (void)debug_downloadWithURLString:(NSString *)urlString
+                           progress:(VMPythonRemoteSourceDownloaderProgress)progress
+                         completion:(VMPythonRemoteSourceDownloaderCompletion)completion
+{
+  [self _loadKYVideoDownloaderModuleIfNeeded];
+  
+  NSLog(@"Test Downloading Progress w/ URL: %@ ...", urlString);
+  
+  NSString *errorMessage = nil;
+  
+  const char *url = [urlString UTF8String];
+  PyObject *result = PyObject_CallMethod(self.pyObj, "debug_download_progress", "(s)", url);
+  
+  if (result == NULL) {
+    //PyErr_Print();
+    if (PyErr_Occurred()) {
+      errorMessage = [self _errorMessageFromPyErrOccurred];
+    }
+    
+    if (0 == errorMessage.length) {
+      errorMessage = [NSString stringWithFormat:@"Failed to download source w/ URL: %@", urlString];
+    }
+    
+  } else {
+    PyObject_Print(result, stdout, Py_PRINT_RAW);
+    Py_DECREF(result);
+  }
+  //PyRun_SimpleString("print('\\n')");
+  NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
+}
+
 @end

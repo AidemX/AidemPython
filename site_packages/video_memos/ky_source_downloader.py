@@ -106,3 +106,8 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
         print('cmd: %s' % sys.argv)
 
     return result
+
+
+def debug_download_progress(url):
+    result = '[ky_source_downloader.py]: Debug download progress w/ %s\n' % url
+    print(result)

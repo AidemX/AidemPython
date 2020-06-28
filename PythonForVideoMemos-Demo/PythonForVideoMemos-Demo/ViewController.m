@@ -82,6 +82,15 @@
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
+  // Test downloading progress
+  [_downloader debug_downloadWithURLString:self.urlString
+                                  progress:^(float progress) {
+    NSLog(@"Get progress: %f", progress);
+  } completion:^(NSString * _Nullable errorMessage) {
+    NSLog(@"Did complete downloading, error: %@", errorMessage);
+  }];
+  return;
+  
   // Download directly w/ default format
   //[_downloader downloadWithURLString:self.urlString inFormat:nil];
 //  [_downloader downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
