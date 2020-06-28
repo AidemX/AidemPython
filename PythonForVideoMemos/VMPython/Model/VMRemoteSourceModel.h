@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *site;
 @property (nonatomic, copy, nullable) NSString *urlString;
 
-@property (nonatomic, copy, nullable) NSString *referer;
 @property (nonatomic, copy, nullable) NSString *userAgent;
+@property (nonatomic, copy, nullable) NSString *referer;
 
 @property (nonatomic, copy, nullable) NSArray <VMRemoteSourceOptionModel *> *options;
 

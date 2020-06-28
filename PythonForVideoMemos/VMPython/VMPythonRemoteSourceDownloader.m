@@ -168,8 +168,8 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   sourceItem.site      = json[@"site"];
   sourceItem.urlString = json[@"url"];
   
-  sourceItem.referer   = json[@"referer"];
   sourceItem.userAgent = json[@"ua"];
+  sourceItem.referer   = json[@"referer"];
   
   NSDictionary *streams = json[@"streams"];
   if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {

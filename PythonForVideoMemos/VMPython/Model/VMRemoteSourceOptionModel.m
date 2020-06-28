@@ -25,6 +25,18 @@
   if (size < 1048576) item.sizeText = [NSString stringWithFormat:@"%.2f KB", (double)(size / 1024.f)];
   else                item.sizeText = [NSString stringWithFormat:@"%.2f MB", (double)(size / 1048576.f)];
   
+  NSArray *sources = (NSArray *)value[@"src"];
+  if ([sources isKindOfClass:[NSArray class]]) {
+    NSMutableArray *urls = [NSMutableArray array];
+    for (NSArray *source in sources) {
+      NSString *url = ([source isKindOfClass:[NSArray class]] ? [source firstObject] : source);
+      if ([url isKindOfClass:[NSString class]]) {
+        [urls addObject:url];
+      }
+    }
+    item.urls = urls;
+  }
+  
   return item;
 }
 

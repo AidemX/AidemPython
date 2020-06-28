@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger size;          ///< Media size
 @property (nonatomic, copy)   NSString *sizeText;      ///< Media size in text
 
+@property (nonatomic, copy) NSArray <NSString *> *urls; ///< Urls in string
+
 + (instancetype)newWithKey:(NSString *)key andValue:(NSDictionary *)value;
 
 @end

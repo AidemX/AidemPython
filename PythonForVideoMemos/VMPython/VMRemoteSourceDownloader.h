@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VMRemoteSourceDownloader : NSObject
 
+@property (nonatomic, copy) NSURL *baseSavePathURL;
+@property (nonatomic, assign, getter=isDebugMode) BOOL debugMode;
+
 + (instancetype)sharedInstance;
 
 - (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem;

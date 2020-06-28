@@ -79,8 +79,14 @@
 {
   [super viewDidAppear:animated];
   
-  NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:docPath inDebugMode:YES];
+  BOOL debugMode = YES;
+  
+  NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+  [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = documentsDirectoryURL;
+  [VMRemoteSourceDownloader sharedInstance].debugMode = debugMode;
+  
+  NSString *documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:documentsDirectoryPath inDebugMode:debugMode];
   _downloader.cacheJSONFile = YES;
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
