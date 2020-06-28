@@ -57,7 +57,7 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     sys.stdout = old_stdout
 
     # Get the stdout like a string and process it
-    ioBuffer.seek(0) # jump to the start
+    io_buffer.seek(0) # jump to the start
     result = io_buffer.read()
 
     io_buffer.close()
