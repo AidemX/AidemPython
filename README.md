@@ -44,6 +44,8 @@ Python iOS framework for Video Memos app.
     is required. If you provide bitcode, all apps and frameworks in the app bundle (all targets 
     in the project) need to include bitcode.
 
+9. (Optional) Add [AFNetworking](https://github.com/AFNetworking/AFNetworking#installation-with-carthage) framework if need to use VMRemoteSourceDownloader to download source.
+
 [Further Reading about bitcode](https://help.apple.com/xcode/mac/current/#/devbbdc5ce4f)
 
 ## 3rd Party Packages for Python
