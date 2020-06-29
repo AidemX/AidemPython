@@ -76,6 +76,8 @@ These static libs will be compile-time-linked.
 
 - **libpython3.a**: Main cross-compiled Python lib for iOS, its related header & resource files are stored in "python" folder.
 
+- [libpyobjus.a](https://github.com/kivy/pyobjus): Access Objective-C classes from Python. [Pyobjus Doc](https://pyobjus.readthedocs.io/en/latest/index.html).
+
 - [libffi.a](https://sourceware.org/libffi/): FFI stands for Foreign Function Interface. It is the popular name for the interface that allows code written in one language to call code written in another language.
 
 - [libcrypto.a & libssl.a](https://wiki.openssl.org/index.php/Libcrypto_API): OpenSSL provides two primary libraries: libssl and libcrypto. The libcrypto library provides the fundamental cryptographic routines used by libssl. You can however use libcrypto without using libssl.
