@@ -24,8 +24,6 @@
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
 
-@property (nonatomic, strong) VMPythonRemoteSourceDownloader *downloader;
-
 #ifdef DEBUG
 
 - (void)_presentAlertWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
@@ -80,14 +78,17 @@
   [super viewDidAppear:animated];
   
   NSString *documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:documentsDirectoryPath inDebugMode:YES];
-  _downloader.cacheJSONFile = YES;
+  
+  VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
+  downloader.savePath      = documentsDirectoryPath;
+  downloader.debugMode     = YES;
+  downloader.cacheJSONFile = YES;
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
   // Test downloading progress
-  [_downloader debug_downloadWithURLString:self.urlString
-                                  progress:^(float progress) {
+  [downloader debug_downloadWithURLString:self.urlString
+                                 progress:^(float progress) {
     NSLog(@"Get progress: %f", progress);
   } completion:^(NSString * _Nullable errorMessage) {
     NSLog(@"Did complete downloading, error: %@", errorMessage);
@@ -95,13 +96,13 @@
   return;
   
   // Download directly w/ default format
-  //[_downloader py_downloadWithURLString:self.urlString inFormat:nil];
-  //[_downloader py_downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
+  //[[VMPythonRemoteSourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:nil];
+  //[[VMPythonRemoteSourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
   //return;
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [_downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+  [[VMPythonRemoteSourceDownloader sharedInstance] checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
@@ -176,7 +177,7 @@
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  [_downloader downloadWithSourceOptionItem:item];
+  [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceOptionItem:item];
   
   /*
   if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
