@@ -51,7 +51,9 @@ echo
 #
 echo -e 2. Deleting files at destination \"${cyan}$DEST_ROOT${nc}\" ...
 
-trash $backup_from
+#trash $backup_from
+trash "$DEST_ROOT/video_memos"
+trash "$DEST_ROOT/you-get"
 echo -e ${g}Delete Succeed.${nc}
 echo
 
