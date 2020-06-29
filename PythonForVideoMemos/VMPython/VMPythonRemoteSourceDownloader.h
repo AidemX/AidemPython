@@ -22,12 +22,11 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 
 @interface VMPythonRemoteSourceDownloader : NSObject
 
+@property (nonatomic, copy) NSString *savePath; ///< Path to save the downloaed source.
 @property (nonatomic, assign) BOOL cacheJSONFile; ///< Whether cached parsed json file, default: NO.
+@property (nonatomic, assign, getter=inDebugMode) BOOL debugMode;
 
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithSavePath:(NSString *)savePath inDebugMode:(BOOL)debugMode;
-
-- (BOOL)inDebugMode;
++ (instancetype)sharedInstance;
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;

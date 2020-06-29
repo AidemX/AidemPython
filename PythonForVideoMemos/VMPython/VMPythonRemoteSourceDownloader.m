@@ -24,7 +24,6 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 @property (nonatomic, assign) int debug;
 
 @property (nonatomic, assign, getter=isModuleLoaded) BOOL moduleLoaded;
-@property (nonatomic, copy) NSString *savePath;
 
 @property (nonatomic, assign) PyObject *pyObj;
 
@@ -48,14 +47,31 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   [[VMPython sharedInstance] quitPythonEnv];
 }
 
-- (instancetype)initWithSavePath:(NSString *)savePath inDebugMode:(BOOL)debugMode
++ (instancetype)sharedInstance
 {
-  if (self = [super init]) {
-    self.debug = (debugMode ? 1 : 0);
-    self.savePath = savePath;
-    NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
-  }
-  return self;
+  static VMPythonRemoteSourceDownloader *_sharedVMPythonRemoteSourceDownloader = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    _sharedVMPythonRemoteSourceDownloader = [[VMPythonRemoteSourceDownloader alloc] init];
+  });
+  
+  return _sharedVMPythonRemoteSourceDownloader;
+}
+
+#pragma mark - Setter
+
+- (void)setSavePath:(NSString *)savePath
+{
+  _savePath = savePath;
+  
+  NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
+}
+
+- (void)setDebugMode:(BOOL)debugMode
+{
+  _debugMode = debugMode;
+  
+  _debug = (debugMode ? 1 : 0);
 }
 
 #pragma mark - Private
@@ -104,7 +120,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
     if (errorValueText) [mutableErrorMessage appendFormat:@"%@\n", errorValueText];
   }
   
-  if (NULL != pyErrTraceback && [self inDebugMode]) {
+  if (NULL != pyErrTraceback && self.inDebugMode) {
     //PyTracebackObject *tracebackObj = (PyTracebackObject*)pTraceback;
     //NSString *errorTrackbackText = _stringFromPyObject(pTraceback);
     //if (errorTrackbackText) [mutableErrorMessage appendString:errorTrackbackText];
@@ -182,13 +198,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   
   return sourceItem;
-}
-
-#pragma mark - Public
-
-- (BOOL)inDebugMode
-{
-  return (1 == self.debug);
 }
 
 #pragma mark - Public (Python Related)
