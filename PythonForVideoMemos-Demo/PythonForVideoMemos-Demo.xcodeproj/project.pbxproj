@@ -31,6 +31,7 @@
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
 		7FFEE24E24A98B810071144F /* libpyobjus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24D24A98B810071144F /* libpyobjus.a */; };
+		7FFEE25124A9C74C0071144F /* VMPythonDownloadingTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE25024A9C74C0071144F /* VMPythonDownloadingTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE24D24A98B810071144F /* libpyobjus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpyobjus.a; sourceTree = "<group>"; };
+		7FFEE24F24A9C74C0071144F /* VMPythonDownloadingTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadingTask.h; sourceTree = "<group>"; };
+		7FFEE25024A9C74C0071144F /* VMPythonDownloadingTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPythonDownloadingTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,8 @@
 				7F4CBD6424A43ECA00CC0889 /* VMPython.m */,
 				7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */,
 				7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */,
+				7FFEE24F24A9C74C0071144F /* VMPythonDownloadingTask.h */,
+				7FFEE25024A9C74C0071144F /* VMPythonDownloadingTask.m */,
 				7FFEE24224A878F10071144F /* VMRemoteSourceDownloader.h */,
 				7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */,
 				7FFEE23B24A5EB450071144F /* Model */,
@@ -412,6 +417,7 @@
 				7F4CBD6524A43ECA00CC0889 /* VMPython.m in Sources */,
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
 				7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */,
+				7FFEE25124A9C74C0071144F /* VMPythonDownloadingTask.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
 				7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */,
