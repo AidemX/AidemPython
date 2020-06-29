@@ -324,7 +324,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   // ...
 }
 
-/*
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion
@@ -354,6 +353,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
-}*/
+}
 
 @end

@@ -79,19 +79,13 @@
 {
   [super viewDidAppear:animated];
   
-  BOOL debugMode = YES;
-  
-  NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-  [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = documentsDirectoryURL;
-  [VMRemoteSourceDownloader sharedInstance].debugMode = debugMode;
-  
   NSString *documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:documentsDirectoryPath inDebugMode:debugMode];
+  _downloader = [[VMPythonRemoteSourceDownloader alloc] initWithSavePath:documentsDirectoryPath inDebugMode:YES];
   _downloader.cacheJSONFile = YES;
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
-  /*/ Test downloading progress
+  // Test downloading progress
   [_downloader debug_downloadWithURLString:self.urlString
                                   progress:^(float progress) {
     NSLog(@"Get progress: %f", progress);
@@ -99,7 +93,6 @@
     NSLog(@"Did complete downloading, error: %@", errorMessage);
   }];
   return;
-   */
   
   // Download directly w/ default format
   //[_downloader py_downloadWithURLString:self.urlString inFormat:nil];
@@ -183,9 +176,16 @@
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  //[_downloader downloadWithSourceOptionItem:item];
+  [_downloader downloadWithSourceOptionItem:item];
   
+  /*
+  if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
+    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = documentsDirectoryURL;
+    [VMRemoteSourceDownloader sharedInstance].debugMode = debugMode;
+  }
   [[VMRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+   */
 }
 
 @end
