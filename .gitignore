@@ -26,7 +26,8 @@ PythonForVideoMemos-Demo/PythonForVideoMemos-Demo.xcodeproj/project.xcworkspace/
 
 Carthage/Build/*
 
-PythonForVideoMemos/python/lib/python3.8/site-packages/*
+PythonForVideoMemos/python/lib/python3.8/site-packages/video_memos/*
+PythonForVideoMemos/python/lib/python3.8/site-packages/you_get/*
 site_packages_backups/*
 python_backups/*
 

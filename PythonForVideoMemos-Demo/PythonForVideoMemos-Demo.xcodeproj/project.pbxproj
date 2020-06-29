@@ -30,6 +30,7 @@
 		7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */; };
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
+		7FFEE24E24A98B810071144F /* libpyobjus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24D24A98B810071144F /* libpyobjus.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMRemoteSourceDownloader.m; sourceTree = "<group>"; };
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
+		7FFEE24D24A98B810071144F /* libpyobjus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpyobjus.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				7F4CB9E424A42CAE00CC0889 /* libcrypto.a in Frameworks */,
 				7F4CB9E524A42CAE00CC0889 /* libpython3.a in Frameworks */,
 				7F4CBD5624A42CAF00CC0889 /* libssl.a in Frameworks */,
+				7FFEE24E24A98B810071144F /* libpyobjus.a in Frameworks */,
 				7F4CBD5724A42CAF00CC0889 /* libffi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,8 +204,9 @@
 			children = (
 				7F4CBD5F24A43DAF00CC0889 /* VMPython */,
 				7F4CBD5824A42CBB00CC0889 /* python */,
-				7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */,
 				7F4CB5B024A42CAA00CC0889 /* libpython3.a */,
+				7FFEE24D24A98B810071144F /* libpyobjus.a */,
+				7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */,
 				7F4CB9E224A42CAE00CC0889 /* libssl.a */,
 				7F4CB9E324A42CAE00CC0889 /* libffi.a */,
 			);
