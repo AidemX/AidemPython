@@ -342,19 +342,29 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
+  static const char *moduleName = "test_source_downloader";
+  PyObject *pyObj = PyImport_ImportModule(moduleName);
+  if (pyObj == NULL) {
+    PyErr_Print();
+    return;
+    
+  } else {
+    NSLog(@"Importing %s module succeeded", moduleName);
+  }
+  
   NSLog(@"Test Downloading Progress w/ URL: %@ ...", urlString);
   
   NSString *errorMessage = nil;
   
   const char *url = [urlString UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, "debug_download_progress", "(s)", url);
+  PyObject *result = PyObject_CallMethod(pyObj, "debug_download_progress", "(s)", url);
   
   if (result == NULL) {
     //PyErr_Print();
     if (PyErr_Occurred()) {
       errorMessage = [self _errorMessageFromPyErrOccurred];
     }
-    
+
     if (0 == errorMessage.length) {
       errorMessage = [NSString stringWithFormat:@"Failed to download source w/ URL: %@", urlString];
     }
