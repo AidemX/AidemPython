@@ -33,6 +33,7 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(nullable NSString *)format
+                        title:(nullable NSString *)title
                      progress:(nullable VMPythonRemoteSourceDownloaderProgress)progress
                    completion:(nullable VMPythonRemoteSourceDownloaderCompletion)completion;
 

@@ -30,6 +30,9 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 @property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
 
+@property (nonatomic, strong) NSTimer *progressTimer;
+@property (nonatomic, copy) NSString *progressFilePath;
+
 #ifdef DEBUG
 
 - (void)_loadKYVideoDownloaderModuleIfNeeded;
@@ -37,6 +40,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 - (NSString *)_errorMessageFromPyErrOccurred;
 
 - (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
+
+- (void)_checkProgress;
 
 #endif // END #ifdef DEBUG
 
@@ -48,6 +53,11 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 - (void)dealloc
 {
   [[VMPython sharedInstance] quitPythonEnv];
+  
+  if (self.progressTimer) {
+    [self.progressTimer invalidate];
+    self.progressTimer = nil;
+  }
 }
 
 + (instancetype)sharedInstance
@@ -203,6 +213,12 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return sourceItem;
 }
 
+- (void)_checkProgress
+{
+  NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
+  NSLog(@"GET CONTENT \"%@\" from .progress file", content);
+}
+
 #pragma mark - Public (Python Related)
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
@@ -294,12 +310,31 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(NSString *)format
+                        title:(NSString *)title
                      progress:(VMPythonRemoteSourceDownloaderProgress)progress
                    completion:(VMPythonRemoteSourceDownloaderCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
+  
+  if (title && progress) {
+    NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
+    self.progressFilePath = [self.savePath stringByAppendingPathComponent:preogresFileName];
+    NSLog(@"self.progressFilePath: %@", self.progressFilePath);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (self.progressTimer) {
+        [self.progressTimer invalidate];
+        self.progressTimer = nil;
+      }
+      self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                            target:self
+                                                          selector:@selector(_checkProgress)
+                                                          userInfo:nil
+                                                           repeats:YES];
+    });
+  }
   
   NSString *errorMessage = nil;
   
@@ -333,6 +368,12 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
   
+  if (self.progressTimer) {
+    [self.progressTimer invalidate];
+    self.progressTimer = nil;
+    self.progressFilePath = nil;
+  }
+  
   if (completion) {
     completion(errorMessage);
   }
@@ -343,7 +384,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
                       progress:(VMPythonRemoteSourceDownloaderProgress)progress
                     completion:(VMPythonRemoteSourceDownloaderCompletion)completion
 {
-  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format progress:progress completion:completion];
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title progress:progress completion:completion];
 }
 
 - (void)debug_downloadWithURLString:(NSString *)urlString
