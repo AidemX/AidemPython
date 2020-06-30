@@ -1,8 +1,8 @@
 //
-//  VMPythonRemoteSourceDownloader.h
-//  PythonForVideoMemos
+//  VMPythonVideoMemosModule.h
+//  PythonForVideoMemos-Demo
 //
-//  Created by Kjuly on 25/6/2020.
+//  Created by Kjuly on 30/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
@@ -13,9 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMPythonRemoteSourceDownloader : NSObject
-
-+ (instancetype)sharedInstance;
+@interface VMPythonVideoMemosModule : NSObject
 
 - (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode;
 
@@ -31,10 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
                     optionItem:(nullable VMRemoteSourceOptionModel *)optionItem
                       progress:(nullable VMPythonVideoMemosModuleDownloadingProgress)progress
                     completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
-
-//- (void)debug_downloadWithURLString:(NSString *)urlString
-//                           progress:(VMPythonRemoteSourceDownloaderProgress)progress
-//                         completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
 
 @end
 

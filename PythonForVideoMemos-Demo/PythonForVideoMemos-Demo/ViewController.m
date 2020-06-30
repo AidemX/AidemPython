@@ -87,9 +87,7 @@ static NSString * const kVideosFolderName_ = @"videos";
     [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
   }
   VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
-  downloader.savePath      = savePath;
-  downloader.debugMode     = YES;
-  downloader.cacheJSONFile = YES;
+  [downloader setupWithSavePath:savePath cacheJSONFile:YES inDebugMode:YES];
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
@@ -187,11 +185,11 @@ static NSString * const kVideosFolderName_ = @"videos";
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
   
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    VMPythonRemoteSourceDownloaderProgress progress = ^(float progress) {
+    VMPythonVideoMemosModuleDownloadingProgress progress = ^(float progress) {
       NSLog(@"Current progress: %f", progress);
     };
     
-    VMPythonRemoteSourceDownloaderCompletion completion = ^(NSString *errorMessage) {
+    VMPythonVideoMemosModuleDownloadingCompletion completion = ^(NSString *errorMessage) {
       if (errorMessage) {
         dispatch_async(dispatch_get_main_queue(), ^{
           [self _presentAlertWithTitle:nil message:errorMessage];
