@@ -11,6 +11,7 @@
 #import "VMPython.h"
 // Model
 #import "VMRemoteSourceModel.h"
+#import "VMPythonDownloadingTask.h"
 // Lib
 #import "Python.h"
 
@@ -26,6 +27,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 @property (nonatomic, assign, getter=isModuleLoaded) BOOL moduleLoaded;
 
 @property (nonatomic, assign) PyObject *pyObj;
+
+@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
 
 #ifdef DEBUG
 
@@ -362,6 +365,19 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
+}
+
+#pragma mark - Downloading Task
+
+- (void)enqueueDownloadingTask:(VMPythonDownloadingTask *)task
+{
+  if (!self.taskRef) {
+    self.taskRef = [NSMutableDictionary dictionary];
+  }
+  
+  if (nil == self.taskRef[task.urlString]) {
+    self.taskRef[task.urlString] = task;
+  }
 }
 
 @end

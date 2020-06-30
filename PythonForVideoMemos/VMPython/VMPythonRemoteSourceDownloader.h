@@ -10,6 +10,7 @@
 
 @class VMRemoteSourceModel;
 @class VMRemoteSourceOptionModel;
+@class VMPythonDownloadingTask;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -35,6 +36,10 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
+
+#pragma mark - Downloading Task
+
+- (void)enqueueDownloadingTask:(VMPythonDownloadingTask *)task;
 
 @end
 
