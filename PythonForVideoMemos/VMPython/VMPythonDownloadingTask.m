@@ -103,11 +103,4 @@
   }
 }
 
-- (void)updateWithProgress:(float)progress
-{
-  self.progress = progress;
-  
-  NSLog(@"VMPythonDownloadingTask [%@] progress: %f", self.urlString, progress);
-}
-
 @end

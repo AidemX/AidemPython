@@ -30,8 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pause;
 - (void)finish;
 
-- (void)updateWithProgress:(float)progress;
-
 @end
 
 NS_ASSUME_NONNULL_END
