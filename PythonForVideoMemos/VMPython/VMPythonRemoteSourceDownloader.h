@@ -30,8 +30,16 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 + (instancetype)sharedInstance;
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
-- (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(nullable VMRemoteSourceOptionModel *)optionItem;
+
+- (void)downloadWithURLString:(NSString *)urlString
+                     inFormat:(nullable NSString *)format
+                     progress:(nullable VMPythonRemoteSourceDownloaderProgress)progress
+                   completion:(nullable VMPythonRemoteSourceDownloaderCompletion)completion;
+
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
+                    optionItem:(nullable VMRemoteSourceOptionModel *)optionItem
+                      progress:(nullable VMPythonRemoteSourceDownloaderProgress)progress
+                    completion:(nullable VMPythonRemoteSourceDownloaderCompletion)completion;
 
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress

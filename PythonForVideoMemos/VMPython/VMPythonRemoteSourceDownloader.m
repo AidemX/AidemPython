@@ -292,7 +292,10 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   completion(sourceItem, errorMessage);
 }
 
-- (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
+- (void)downloadWithURLString:(NSString *)urlString
+                     inFormat:(NSString *)format
+                     progress:(VMPythonRemoteSourceDownloaderProgress)progress
+                   completion:(VMPythonRemoteSourceDownloaderCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
@@ -329,11 +332,18 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
+  
+  if (completion) {
+    completion(errorMessage);
+  }
 }
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
+                    optionItem:(VMRemoteSourceOptionModel *)optionItem
+                      progress:(VMPythonRemoteSourceDownloaderProgress)progress
+                    completion:(VMPythonRemoteSourceDownloaderCompletion)completion
 {
-  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format];
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format progress:progress completion:completion];
 }
 
 - (void)debug_downloadWithURLString:(NSString *)urlString

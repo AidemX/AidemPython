@@ -185,7 +185,27 @@ static NSString * const kVideosFolderName_ = @"videos";
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+  
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    VMPythonRemoteSourceDownloaderProgress progress = ^(float progress) {
+      NSLog(@"Current progress: %f", progress);
+    };
+    
+    VMPythonRemoteSourceDownloaderCompletion completion = ^(NSString *errorMessage) {
+      if (errorMessage) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self _presentAlertWithTitle:nil message:errorMessage];
+        });
+      } else {
+        NSLog(@"Did complete downloading.");
+      }
+    };
+    
+    [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+                                                                 optionItem:item
+                                                                   progress:progress
+                                                                 completion:completion];
+  });
   
   /*
   if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
