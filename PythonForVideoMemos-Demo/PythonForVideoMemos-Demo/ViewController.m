@@ -14,6 +14,9 @@
 #import "VMRemoteSourceModel.h"
 
 
+static NSString * const kVideosFolderName_ = @"videos";
+
+
 @interface ViewController () <
   UITableViewDataSource,
   UITableViewDelegate
@@ -78,15 +81,19 @@
   [super viewDidAppear:animated];
   
   NSString *documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-  
+  NSString *savePath = [documentsDirectoryPath stringByAppendingPathComponent:kVideosFolderName_];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (![fileManager fileExistsAtPath:savePath]) {
+    [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
+  }
   VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
-  downloader.savePath      = documentsDirectoryPath;
+  downloader.savePath      = savePath;
   downloader.debugMode     = YES;
   downloader.cacheJSONFile = YES;
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   
-  // Test downloading progress
+  /*/ Test downloading progress
   [downloader debug_downloadWithURLString:self.urlString
                                  progress:^(float progress) {
     NSLog(@"Get progress: %f", progress);
@@ -94,6 +101,7 @@
     NSLog(@"Did complete downloading, error: %@", errorMessage);
   }];
   return;
+   */
   
   // Download directly w/ default format
   //[[VMPythonRemoteSourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:nil];
@@ -177,12 +185,13 @@
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceOptionItem:item];
+  [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
   
   /*
   if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
     NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = documentsDirectoryURL;
+    NSURL *baseSavePathURL = [documentsDirectoryURL URLByAppendingPathComponent:kVideosFolderName_];
+    [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = baseSavePathURL;
     [VMRemoteSourceDownloader sharedInstance].debugMode = debugMode;
   }
   [[VMRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];

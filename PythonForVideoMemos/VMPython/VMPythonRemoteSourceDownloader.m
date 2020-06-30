@@ -331,9 +331,9 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
 }
 
-- (void)downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
 {
-  // ...
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format];
 }
 
 - (void)debug_downloadWithURLString:(NSString *)urlString

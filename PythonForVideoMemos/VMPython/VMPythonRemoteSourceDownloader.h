@@ -31,7 +31,7 @@ typedef void (^VMPythonRemoteSourceDownloaderCompletion)(NSString *_Nullable err
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion;
 - (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
-- (void)downloadWithSourceOptionItem:(VMRemoteSourceOptionModel *)item;
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(nullable VMRemoteSourceOptionModel *)optionItem;
 
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
