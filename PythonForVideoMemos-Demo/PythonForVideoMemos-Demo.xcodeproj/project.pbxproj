@@ -30,8 +30,9 @@
 		7FFEE24424A878F10071144F /* VMRemoteSourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE24324A878F10071144F /* VMRemoteSourceDownloader.m */; };
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
-		7FFEE24E24A98B810071144F /* libpyobjus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24D24A98B810071144F /* libpyobjus.a */; };
 		7FFEE25124A9C74C0071144F /* VMPythonDownloadingTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE25024A9C74C0071144F /* VMPythonDownloadingTask.m */; };
+		7FFEE25324A9DE8C0071144F /* libpyobjus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24D24A98B810071144F /* libpyobjus.a */; };
+		7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE25924AADB9C0071144F /* libbz2.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		7FFEE24D24A98B810071144F /* libpyobjus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpyobjus.a; sourceTree = "<group>"; };
 		7FFEE24F24A9C74C0071144F /* VMPythonDownloadingTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadingTask.h; sourceTree = "<group>"; };
 		7FFEE25024A9C74C0071144F /* VMPythonDownloadingTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMPythonDownloadingTask.m; sourceTree = "<group>"; };
+		7FFEE25924AADB9C0071144F /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */,
 				7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */,
 				7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */,
 				7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */,
@@ -106,7 +109,7 @@
 				7F4CB9E424A42CAE00CC0889 /* libcrypto.a in Frameworks */,
 				7F4CB9E524A42CAE00CC0889 /* libpython3.a in Frameworks */,
 				7F4CBD5624A42CAF00CC0889 /* libssl.a in Frameworks */,
-				7FFEE24E24A98B810071144F /* libpyobjus.a in Frameworks */,
+				7FFEE25324A9DE8C0071144F /* libpyobjus.a in Frameworks */,
 				7F4CBD5724A42CAF00CC0889 /* libffi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +138,7 @@
 				7F4CB59224A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */,
 				7F4CB59D24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */,
 				7F4CB57524A42AAB00CC0889 /* Products */,
+				7FFEE25824AADB9C0071144F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -254,6 +258,14 @@
 				7FFEE23D24A5EB450071144F /* VMRemoteSourceOptionModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		7FFEE25824AADB9C0071144F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FFEE25924AADB9C0071144F /* libbz2.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
