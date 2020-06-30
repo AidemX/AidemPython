@@ -26,7 +26,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 @property (nonatomic, assign, getter=isModuleLoaded) BOOL moduleLoaded;
 
-@property (nonatomic, assign) PyObject *pyObj;
+@property (nonatomic, assign) PyObject *pySourceDownloaderModule;
 
 @property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
 
@@ -89,8 +89,8 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   [[VMPython sharedInstance] enterPythonEnv];
   
   static const char *moduleName = "video_memos.vm_source_downloader";
-  self.pyObj = PyImport_ImportModule(moduleName);
-  if (self.pyObj == NULL) {
+  self.pySourceDownloaderModule = PyImport_ImportModule(moduleName);
+  if (self.pySourceDownloaderModule == NULL) {
     PyErr_Print();
     
   } else {
@@ -244,7 +244,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
   
   const char *url = [urlString UTF8String];
-  PyObject *result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfCheckSource_, "(ssssi)",
+  PyObject *result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfCheckSource_, "(ssssi)",
                                          url, "a_proxy", "a_username", "a_pwd", self.debug);
   if (NULL == result) {
     //PyErr_Print();
@@ -324,11 +324,11 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   PyObject *result;
   if (nil == format) {
-    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
+    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
                                  path, url, "",        "a_proxy", "a_username", "a_pwd", self.debug);
   } else {
     const char *formatArg = [format UTF8String];
-    result = PyObject_CallMethod(self.pyObj, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
+    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
                                  path, url, formatArg, "a_proxy", "a_username", "a_pwd", self.debug);
   }
   
