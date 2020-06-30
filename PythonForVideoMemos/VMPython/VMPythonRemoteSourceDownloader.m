@@ -30,18 +30,14 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 @property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
 
-@property (nonatomic, strong) NSTimer *progressTimer;
-@property (nonatomic, copy) NSString *progressFilePath;
-
 #ifdef DEBUG
 
 - (void)_loadKYVideoDownloaderModuleIfNeeded;
 
 - (NSString *)_errorMessageFromPyErrOccurred;
 
+- (NSString *)_filenameFromURLString:(NSString *)urlString;
 - (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
-
-- (void)_checkProgress;
 
 #endif // END #ifdef DEBUG
 
@@ -53,11 +49,6 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 - (void)dealloc
 {
   [[VMPython sharedInstance] quitPythonEnv];
-  
-  if (self.progressTimer) {
-    [self.progressTimer invalidate];
-    self.progressTimer = nil;
-  }
 }
 
 + (instancetype)sharedInstance
@@ -190,6 +181,12 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return (NULL == cString ? nil : [NSString stringWithUTF8String:cString]);
 }
 
+- (NSString *)_filenameFromURLString:(NSString *)urlString
+{
+  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
+  return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
+}
+
 - (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json
 {
   VMRemoteSourceModel *sourceItem = [[VMRemoteSourceModel alloc] init];
@@ -213,12 +210,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return sourceItem;
 }
 
-- (void)_checkProgress
-{
-  NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
-  NSLog(@"GET CONTENT \"%@\" from .progress file", content);
-}
-
 #pragma mark - Public (Python Related)
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderCheckingCompletion)completion
@@ -232,8 +223,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   NSString *jsonPath;
   if (self.cacheJSONFile) {
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
-    NSString *filename = [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
+    NSString *filename = [self _filenameFromURLString:urlString];
     jsonPath = [self.savePath stringByAppendingPathComponent:[filename stringByAppendingPathExtension:@"json"]];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:jsonPath]) {
@@ -318,22 +308,13 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
   
+  VMPythonDownloadingTask *task;
   if (title && progress) {
-    NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
-    self.progressFilePath = [self.savePath stringByAppendingPathComponent:preogresFileName];
-    NSLog(@"self.progressFilePath: %@", self.progressFilePath);
+    task = [[VMPythonDownloadingTask alloc] initWithBaseSavePath:self.savePath title:title];
+    task.urlString = urlString;
+    [self enqueueDownloadingTask:task];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if (self.progressTimer) {
-        [self.progressTimer invalidate];
-        self.progressTimer = nil;
-      }
-      self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                            target:self
-                                                          selector:@selector(_checkProgress)
-                                                          userInfo:nil
-                                                           repeats:YES];
-    });
+    [task resume];
   }
   
   NSString *errorMessage = nil;
@@ -368,10 +349,10 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
   
-  if (self.progressTimer) {
-    [self.progressTimer invalidate];
-    self.progressTimer = nil;
-    self.progressFilePath = nil;
+  
+  if (task) {
+    [task finish];
+    [self.taskRef removeObjectForKey:task.urlString];
   }
   
   if (completion) {

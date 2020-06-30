@@ -8,6 +8,10 @@
 
 @import Foundation;
 
+@class VMRemoteSourceModel;
+@class VMRemoteSourceOptionModel;
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VMPythonDownloadingTask : NSObject
@@ -19,7 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *errorMessage;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithURLString:(NSString *)urlString;
+//- (instancetype)initWithURLString:(NSString *)urlString;
+- (instancetype)initWithBaseSavePath:(NSString *)baseSavePath title:(NSString *)title;
+
+- (void)resume;
+- (void)pause;
+- (void)finish;
 
 - (void)updateWithProgress:(float)progress;
 
