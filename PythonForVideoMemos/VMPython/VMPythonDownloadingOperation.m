@@ -15,6 +15,15 @@
 #import "VMRemoteSourceModel.h"
 
 
+NSString * const kVMPythonDownloadingOperationPropertyOfName = @"name";
+
+NSString * const kVMPythonDownloadingOperationPropertyOfIsExecuting = @"isExecuting";
+NSString * const kVMPythonDownloadingOperationPropertyOfIsFinished  = @"isFinished";
+NSString * const kVMPythonDownloadingOperationPropertyOfIsCancelled = @"isCancelled";
+
+NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
+
+
 @interface VMPythonDownloadingOperation ()
 
 @property (nonatomic, weak) VMPythonVideoMemosModule *pythonVideoMemosModule;
@@ -69,7 +78,11 @@
 - (void)_checkProgress
 {
   NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
-  NSLog(@"GET CONTENT \"%f\" from .progress file", content.floatValue);
+  float progress = content.floatValue;
+  NSLog(@"GET CONTENT \"%f\" from .progress file", progress);
+  if (self.progress != progress) {
+    self.progress = progress;
+  }
 }
 
 #pragma mark - Public (Override NSOperation)
@@ -91,13 +104,6 @@
   
   typeof(self) __weak weakSelf = self;
   VMPythonVideoMemosModuleDownloadingCompletion completion = ^(NSString *errorMessage) {
-//    if (errorMessage) {
-//      dispatch_async(dispatch_get_main_queue(), ^{
-//        [self _presentAlertWithTitle:nil message:errorMessage];
-//      });
-//    } else {
-//      NSLog(@"Did complete downloading.");
-//    }
     [weakSelf.progressTimer invalidate];
     weakSelf.progressTimer = nil;
   };

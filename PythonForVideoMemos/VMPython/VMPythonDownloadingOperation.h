@@ -13,10 +13,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString * const kVMPythonDownloadingOperationPropertyOfName;
+
+extern NSString * const kVMPythonDownloadingOperationPropertyOfIsExecuting;
+extern NSString * const kVMPythonDownloadingOperationPropertyOfIsFinished;
+extern NSString * const kVMPythonDownloadingOperationPropertyOfIsCancelled;
+
+extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
+
+
 @interface VMPythonDownloadingOperation : NSOperation
 
 //@property (nonatomic, copy) NSString *urlString;
-//@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) float progress;
 
 //@property (nonatomic, assign, getter=isPaused) BOOL paused;
 //@property (nonatomic, copy) NSString *errorMessage;

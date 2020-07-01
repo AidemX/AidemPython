@@ -110,7 +110,7 @@ static NSString * const kVideosFolderName_ = @"videos";
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [[VMPythonRemoteSourceDownloader sharedInstance] checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+  [downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
@@ -228,9 +228,20 @@ static NSString * const kVideosFolderName_ = @"videos";
   NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
 }
 
+- (void)vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
+{
+  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
+}
+
 - (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
 {
   NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
+  
+  if (errorMessage) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _presentAlertWithTitle:nil message:errorMessage];
+    });
+  }
 }
 
 @end

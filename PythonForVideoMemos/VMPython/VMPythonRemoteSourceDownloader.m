@@ -14,12 +14,6 @@
 #import "VMPythonDownloadingOperation.h"
 
 
-static NSString * const kYNOperationPropertyOfIsExecuting_ = @"isExecuting";
-static NSString * const kYNOperationPropertyOfIsFinished_  = @"isFinished";
-static NSString * const kYNOperationPropertyOfIsCancelled_ = @"isCancelled";
-static NSString * const kYNOperationPropertyOfName_        = @"name";
-
-
 @interface VMPythonRemoteSourceDownloader ()
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
@@ -77,16 +71,18 @@ static NSString * const kYNOperationPropertyOfName_        = @"name";
 //  _operationsInfo[identifier] = [NSMutableDictionary dictionaryWithObject:...
 //                                                                   forKey:...];
   
-  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsExecuting_ options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsFinished_  options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsCancelled_ options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished  options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfProgress options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)_unobserveOperation:(NSOperation *)operation
 {
-  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsExecuting_];
-  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsFinished_];
-  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsCancelled_];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfProgress];
 }
 
 #pragma mark - NSKeyValueObserving Protocol
@@ -96,11 +92,18 @@ static NSString * const kYNOperationPropertyOfName_        = @"name";
                         change:(NSDictionary <NSString *, id> *)change
                        context:(void *)context
 {
-  if ([keyPath isEqualToString:kYNOperationPropertyOfIsExecuting_]) {
+  if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfProgress]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:progress:)]) {
+      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
+      float progress = [change[NSKeyValueChangeNewKey] floatValue];
+      [self.delegate vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier progress:progress];
+    }
+    
+  } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsExecuting]) {
     // The `isExecuting` will be 1 when operation starts, and will be 0 when it ends (and `isFinished` will be 1 at same time).
     //   What we care is when it starts, so compare the `new` value w/ 1 here.
     if (1 == [change[NSKeyValueChangeNewKey] intValue]) {
-      NSString *operationIdentifier = [object valueForKey:kYNOperationPropertyOfName_];
+      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
       NSLog(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
       if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:)]) {
@@ -108,12 +111,12 @@ static NSString * const kYNOperationPropertyOfName_        = @"name";
       }
     }
     
-  } else if ([keyPath isEqualToString:kYNOperationPropertyOfIsFinished_] ||
-             [keyPath isEqualToString:kYNOperationPropertyOfIsCancelled_])
+  } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ||
+             [keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsCancelled])
   {
-    NSString *operationIdentifier = [object valueForKey:kYNOperationPropertyOfName_];
+    NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
     
-    NSLog(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kYNOperationPropertyOfIsFinished_] ? @"Finished" : @"Cancelled"));
+    NSLog(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
     [_operationsInfo removeObjectForKey:operationIdentifier];
     
     [self _unobserveOperation:(NSOperation *)object];
@@ -154,6 +157,7 @@ static NSString * const kYNOperationPropertyOfName_        = @"name";
                                                                                            inFormat:format
                                                                                               title:title
                                                                              pythonVideoMemosModule:self.pythonVideoMemosModule];
+  [self _observeOperation:operation];
   [self.downloadingOperationQueue addOperation:operation];
 }
 
