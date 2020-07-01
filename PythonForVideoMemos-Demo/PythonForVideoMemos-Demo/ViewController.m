@@ -44,7 +44,7 @@ static NSString * const kVideosFolderName_ = @"videos";
   [super viewDidLoad];
   
   // Do any additional setup after loading the view.
-  self.view.backgroundColor = [UIColor blackColor];
+  self.view.backgroundColor = [UIColor systemBackgroundColor];
   
   _tableView = ({
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -154,6 +154,9 @@ static NSString * const kVideosFolderName_ = @"videos";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (!cell) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    cell.contentView.backgroundColor = [UIColor systemBackgroundColor];
+    cell.textLabel.textColor       = [UIColor labelColor];
+    cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
   }
   
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
