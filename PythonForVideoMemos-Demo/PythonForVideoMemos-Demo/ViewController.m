@@ -112,6 +112,7 @@ static NSString * const kVideosFolderName_ = @"videos";
   typeof(self) __weak weakSelf = self;
   [downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
+      NSLog(@"Got sourceItem.options: %@", sourceItem.options);
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
     } else {

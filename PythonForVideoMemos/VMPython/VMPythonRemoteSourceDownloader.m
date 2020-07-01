@@ -23,6 +23,9 @@
 
 #ifdef DEBUG
 
+- (NSString *)_filenameFromURLString:(NSString *)urlString;
+- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
+
 - (void)_observeOperation:(NSOperation *)operation;
 
 #endif // END #ifdef DEBUG
@@ -59,6 +62,35 @@
 }
 
 #pragma mark - Private
+
+- (NSString *)_filenameFromURLString:(NSString *)urlString
+{
+  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
+  return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
+}
+
+- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json
+{
+  VMRemoteSourceModel *sourceItem = [[VMRemoteSourceModel alloc] init];
+  sourceItem.title     = json[@"title"];
+  sourceItem.site      = json[@"site"];
+  sourceItem.urlString = json[@"url"];
+  
+  sourceItem.userAgent = json[@"ua"];
+  sourceItem.referer   = json[@"referer"];
+  
+  NSDictionary *streams = json[@"streams"];
+  if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
+    NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
+    for (NSString *key in [streams allKeys]) {
+      VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+      [options addObject:option];
+    }
+    sourceItem.options = options;
+  }
+  
+  return sourceItem;
+}
 
 - (void)_observeOperation:(NSOperation *)operation
 {
@@ -132,13 +164,63 @@
 - (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode
 {
   NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
-  [self.pythonVideoMemosModule setupWithSavePath:savePath cacheJSONFile:cacheJSONFile inDebugMode:debugMode];
+  
+  self.savePath = savePath;
+  self.cacheJSONFile = cacheJSONFile;
+  
+  self.pythonVideoMemosModule.savePath = savePath;
+  self.pythonVideoMemosModule.debugMode = debugMode;
 }
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion
 {
-  [self.pythonVideoMemosModule checkWithURLString:urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
-    completion(sourceItem, errorMessage);
+  NSString *jsonPath;
+  
+  // Let's use cached json file if it exists.
+  if (self.cacheJSONFile) {
+    NSString *filename = [self _filenameFromURLString:urlString];
+    jsonPath = [self.savePath stringByAppendingPathComponent:[filename stringByAppendingPathExtension:@"json"]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:jsonPath]) {
+      NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+      NSError *error = nil;
+      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+      if (error) {
+        // Can't parse the json file, let's rm it & reload from remote.
+        [fileManager removeItemAtPath:jsonPath error:NULL];
+        
+      } else {
+        VMRemoteSourceModel *sourceItem = [self _newRemoteSourceItemFromJSON:json];
+        NSLog(@"\nGot cached JSON file at %@", jsonPath);
+        completion(sourceItem, nil);
+        
+        return;
+      }
+    }
+  }
+  
+  typeof(self) __weak weakSelf = self;
+  [self.pythonVideoMemosModule checkWithURLString:urlString completion:^(NSString *jsonString, NSString *errorMessage) {
+    if (errorMessage) {
+      completion(nil, errorMessage);
+      
+    } else {
+      NSError *error = nil;
+      NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+      if (error) {
+        errorMessage = [NSString stringWithFormat:@"Parsing JSON failed: %@\nThe String to Parse: %@", [error localizedDescription], jsonString];
+        completion(nil, errorMessage);
+        
+      } else {
+        NSLog(@"Parsed JSON Dict: %@", json);
+        if (weakSelf.cacheJSONFile && jsonPath) {
+          [jsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        }
+        VMRemoteSourceModel *sourceItem = [weakSelf _newRemoteSourceItemFromJSON:json];
+        completion(sourceItem, nil);
+      }
+    }
   }];
 }
 

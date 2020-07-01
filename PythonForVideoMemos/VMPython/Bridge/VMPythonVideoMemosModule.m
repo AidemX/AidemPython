@@ -9,8 +9,6 @@
 #import "VMPythonVideoMemosModule.h"
 
 #import "VMPython.h"
-// Model
-#import "VMRemoteSourceModel.h"
 // Lib
 #import "Python.h"
 
@@ -33,9 +31,6 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 - (NSString *)_errorMessageFromPyErrOccurred;
 
-- (NSString *)_filenameFromURLString:(NSString *)urlString;
-- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
-
 #endif // END #ifdef DEBUG
 
 @end
@@ -48,6 +43,15 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   [[VMPython sharedInstance] quitPythonEnv];
   
   if (NULL != self.pySourceDownloaderModule) Py_DECREF(self.pySourceDownloaderModule);
+}
+
+#pragma mark - Setter
+
+- (void)setDebugMode:(BOOL)debugMode
+{
+  _debugMode = debugMode;
+  
+  self.debug = (debugMode ? 1 : 0);
 }
 
 #pragma mark - Private
@@ -153,45 +157,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   return (NULL == cString ? nil : [NSString stringWithUTF8String:cString]);
 }
 
-- (NSString *)_filenameFromURLString:(NSString *)urlString
-{
-  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
-  return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
-}
-
-- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json
-{
-  VMRemoteSourceModel *sourceItem = [[VMRemoteSourceModel alloc] init];
-  sourceItem.title     = json[@"title"];
-  sourceItem.site      = json[@"site"];
-  sourceItem.urlString = json[@"url"];
-  
-  sourceItem.userAgent = json[@"ua"];
-  sourceItem.referer   = json[@"referer"];
-  
-  NSDictionary *streams = json[@"streams"];
-  if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
-    NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
-    for (NSString *key in [streams allKeys]) {
-      VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
-      [options addObject:option];
-    }
-    sourceItem.options = options;
-  }
-  
-  return sourceItem;
-}
-
 #pragma mark - Public
-
-- (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode
-{
-  self.savePath = savePath;
-  self.cacheJSONFile = cacheJSONFile;
-  self.debugMode = debugMode;
-  
-  self.debug = (debugMode ? 1 : 0);
-}
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion
 {
@@ -199,30 +165,8 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   NSLog(@"Checking Source w/ URL: %@ ...", urlString);
   
-  VMRemoteSourceModel *sourceItem = nil;
+  NSString *resultJsonString = nil;
   NSString *errorMessage = nil;
-  
-  NSString *jsonPath;
-  if (self.cacheJSONFile) {
-    NSString *filename = [self _filenameFromURLString:urlString];
-    jsonPath = [self.savePath stringByAppendingPathComponent:[filename stringByAppendingPathExtension:@"json"]];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:jsonPath]) {
-      NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
-      NSError *error = nil;
-      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-      if (error) {
-        // Can't parse the json file, let's rm it & reload from remote.
-        [fileManager removeItemAtPath:jsonPath error:NULL];
-        
-      } else {
-        sourceItem = [self _newRemoteSourceItemFromJSON:json];
-        NSLog(@"\nGot cached JSON file at %@\nsourceItem.options: %@", jsonPath, sourceItem.options);
-        completion(sourceItem, nil);
-        return;
-      }
-    }
-  }
   
   const char *url = [urlString UTF8String];
   PyObject *result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfCheckSource_, "(ssssi)",
@@ -255,28 +199,14 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     
     if (NULL == resultCString) {
       errorMessage = @"Empty Result";
-      
     } else {
-      NSError *error = nil;
-      NSString *resultJsonString = [NSString stringWithUTF8String:resultCString];
-      NSData *resultJsonData = [resultJsonString dataUsingEncoding:NSUTF8StringEncoding];
-      NSDictionary *json = [NSJSONSerialization JSONObjectWithData:resultJsonData options:kNilOptions error:&error];
-      if (error) {
-        errorMessage = [NSString stringWithFormat:@"Parsing JSON failed: %@\nThe String to Parse: %@", [error localizedDescription], resultJsonString];
-        NSLog(@"%@", errorMessage);
-        
-      } else {
-        NSLog(@"Parsed JSON Dict: %@", json);
-        if (self.cacheJSONFile && jsonPath) {
-          [resultJsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        }
-        sourceItem = [self _newRemoteSourceItemFromJSON:json];
-      }
+      resultJsonString = [NSString stringWithUTF8String:resultCString];
     }
   }
   //PyRun_SimpleString("print('\\n')");
-  NSLog(@"\nReaches `-checkWithURLString:` End, Got sourceItem.options: %@", sourceItem.options);
-  completion(sourceItem, errorMessage);
+  NSLog(@"\nReaches `-checkWithURLString:` End");
+  
+  completion(resultJsonString, errorMessage);
 }
 
 - (void)downloadWithURLString:(NSString *)urlString
