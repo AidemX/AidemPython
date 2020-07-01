@@ -24,7 +24,6 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
 
 @interface VMPythonDownloadingOperation : NSOperation
 
-//@property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, assign) float progress;
 
 //@property (nonatomic, assign, getter=isPaused) BOOL paused;

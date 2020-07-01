@@ -159,6 +159,17 @@
   }
 }
 
+#pragma mark - Setter
+
+- (void)setSuspended:(BOOL)suspended
+{
+  _suspended = suspended;
+  
+  if (self.downloadingOperationQueue) {
+    self.downloadingOperationQueue.suspended = self.suspended;
+  }
+}
+
 #pragma mark - Public (Python Related)
 
 - (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode
@@ -229,6 +240,7 @@
   if (!self.downloadingOperationQueue) {
     self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
     self.downloadingOperationQueue.maxConcurrentOperationCount = 1;
+    self.downloadingOperationQueue.suspended = self.suspended;
   }
   // Set `suspended=YES` if want to pause temporary.
   //self.downloadingOperationQueue.suspended = YES;

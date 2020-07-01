@@ -8,8 +8,6 @@
 
 #import "VMPythonDownloadingOperation.h"
 
-// Data Service
-#import "VMPythonRemoteSourceDownloader.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
@@ -67,8 +65,6 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
     self.progressFilePath = [self.pythonVideoMemosModule.savePath stringByAppendingPathComponent:preogresFileName];
     NSLog(@"self.progressFilePath: %@", self.progressFilePath);
-    
-//    [[VMPythonRemoteSourceDownloader sharedInstance] enqueueDownloadingTask:self];
   }
   return self;
 }

@@ -16,6 +16,8 @@
 
 static NSString * const kVideosFolderName_ = @"videos";
 
+static CGFloat const kActionButtonHeight_ = 44.f;
+
 
 @interface ViewController () <
   UITableViewDataSource,
@@ -24,11 +26,14 @@ static NSString * const kVideosFolderName_ = @"videos";
 >
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIButton    *actionButton;
 
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
 
 #ifdef DEBUG
+
+- (void)_didPressActionButton;
 
 - (void)_presentAlertWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
 
@@ -69,11 +74,25 @@ static NSString * const kVideosFolderName_ = @"videos";
     tableView;
   });
   
+  _actionButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  _actionButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
+  _actionButton.layer.cornerRadius = 5.f;
+  [_actionButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
+  [_actionButton setTitle:@"Suspend" forState:UIControlStateNormal];
+  [_actionButton addTarget:self action:@selector(_didPressActionButton) forControlEvents:UIControlEventTouchUpInside];
+  _actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_actionButton];
+  
   [NSLayoutConstraint activateConstraints:
    @[[_tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
      [_tableView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
      [_tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-     [_tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+     [_tableView.bottomAnchor constraintEqualToAnchor:_actionButton.topAnchor constant:-15.f],
+     
+     [_actionButton.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:15.f],
+     [_actionButton.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-15.f],
+     [_actionButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
+     [_actionButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
    ]];
 }
 
@@ -122,6 +141,13 @@ static NSString * const kVideosFolderName_ = @"videos";
 }
 
 #pragma mark - Private
+
+- (void)_didPressActionButton
+{
+  BOOL suspended = ![VMPythonRemoteSourceDownloader sharedInstance].isSuspended;
+  [VMPythonRemoteSourceDownloader sharedInstance].suspended = suspended;
+  [_actionButton setTitle:(suspended ? @"Resume" : @"Suspend") forState:UIControlStateNormal];
+}
 
 - (void)_presentAlertWithTitle:(NSString *)title message:(NSString *)message
 {
