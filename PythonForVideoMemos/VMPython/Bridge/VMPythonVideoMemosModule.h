@@ -6,12 +6,19 @@
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMPythonVideoMemosModuleConstants.h"
+@import Foundation;
 
+@class VMRemoteSourceModel;
 @class VMRemoteSourceOptionModel;
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)(VMRemoteSourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
+
+typedef void (^VMPythonVideoMemosModuleDownloadingProgress)(float progress);
+typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullable errorMessage);
+
 
 @interface VMPythonVideoMemosModule : NSObject
 

@@ -135,16 +135,14 @@
   [self.pythonVideoMemosModule setupWithSavePath:savePath cacheJSONFile:cacheJSONFile inDebugMode:debugMode];
 }
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion
 {
-  [self.pythonVideoMemosModule checkWithURLString:urlString completion:completion];
+  [self.pythonVideoMemosModule checkWithURLString:urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+    completion(sourceItem, errorMessage);
+  }];
 }
 
-- (void)downloadWithURLString:(NSString *)urlString
-                     inFormat:(NSString *)format
-                        title:(NSString *)title
-                     progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
-                   completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format title:(NSString *)title
 {
   if (!self.downloadingOperationQueue) {
     self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
@@ -161,12 +159,9 @@
   [self.downloadingOperationQueue addOperation:operation];
 }
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
-                    optionItem:(VMRemoteSourceOptionModel *)optionItem
-                      progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
-                    completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
 {
-  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title progress:progress completion:completion];
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title];
 }
 
 /*

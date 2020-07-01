@@ -6,12 +6,15 @@
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMPythonVideoMemosModuleConstants.h"
+@import Foundation;
 
+@class VMRemoteSourceModel;
 @class VMRemoteSourceOptionModel;
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^VMPythonRemoteSourceDownloaderSourceCheckingCompletion)(VMRemoteSourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
 
 
 @protocol VMPythonRemoteSourceDownloaderDelegate;
@@ -25,18 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode;
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion;
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion;
 
-- (void)downloadWithURLString:(NSString *)urlString
-                     inFormat:(nullable NSString *)format
-                        title:(nullable NSString *)title
-                     progress:(nullable VMPythonVideoMemosModuleDownloadingProgress)progress
-                   completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
-
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
-                    optionItem:(nullable VMRemoteSourceOptionModel *)optionItem
-                      progress:(nullable VMPythonVideoMemosModuleDownloadingProgress)progress
-                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
+- (void)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format title:(nullable NSString *)title;
+- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(nullable VMRemoteSourceOptionModel *)optionItem;
 
 //- (void)debug_downloadWithURLString:(NSString *)urlString
 //                           progress:(VMPythonRemoteSourceDownloaderProgress)progress

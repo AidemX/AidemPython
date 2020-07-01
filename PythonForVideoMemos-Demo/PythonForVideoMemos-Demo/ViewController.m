@@ -190,24 +190,7 @@ static NSString * const kVideosFolderName_ = @"videos";
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
   
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    VMPythonVideoMemosModuleDownloadingProgress progress = ^(float progress) {
-      NSLog(@"Current progress: %f", progress);
-    };
-    
-    VMPythonVideoMemosModuleDownloadingCompletion completion = ^(NSString *errorMessage) {
-      if (errorMessage) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self _presentAlertWithTitle:nil message:errorMessage];
-        });
-      } else {
-        NSLog(@"Did complete downloading.");
-      }
-    };
-    
-    [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
-                                                                 optionItem:item
-                                                                   progress:progress
-                                                                 completion:completion];
+    [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
   });
   
   /*
