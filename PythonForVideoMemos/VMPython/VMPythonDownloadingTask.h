@@ -8,27 +8,28 @@
 
 @import Foundation;
 
-@class VMRemoteSourceModel;
-@class VMRemoteSourceOptionModel;
+@class VMPythonVideoMemosModule;
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMPythonDownloadingTask : NSObject
+@interface VMPythonDownloadingTask : NSOperation
 
-@property (nonatomic, copy) NSString *urlString;
-@property (nonatomic, assign) float progress;
+//@property (nonatomic, copy) NSString *urlString;
+//@property (nonatomic, assign) float progress;
 
-@property (nonatomic, assign, getter=isPaused) BOOL paused;
-@property (nonatomic, copy) NSString *errorMessage;
+//@property (nonatomic, assign, getter=isPaused) BOOL paused;
+//@property (nonatomic, copy) NSString *errorMessage;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
-//- (instancetype)initWithURLString:(NSString *)urlString;
-- (instancetype)initWithBaseSavePath:(NSString *)baseSavePath title:(NSString *)title;
+- (instancetype)initWithURLString:(NSString *)urlString
+                         inFormat:(nullable NSString *)format
+                            title:(nullable NSString *)title
+           pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule;
 
-- (void)resume;
-- (void)pause;
-- (void)finish;
+//- (void)resume;
+//- (void)pause;
+//- (void)finish;
 
 @end
 

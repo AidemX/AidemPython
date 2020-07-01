@@ -15,19 +15,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VMPythonVideoMemosModule : NSObject
 
+@property (nonatomic, copy) NSString *savePath; ///< Path to save the downloaed source.
+@property (nonatomic, assign) BOOL cacheJSONFile; ///< Whether cached parsed json file, default: NO.
+@property (nonatomic, assign, getter=inDebugMode) BOOL debugMode;
+
 - (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode;
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion;
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(nullable NSString *)format
-                        title:(nullable NSString *)title
-                     progress:(nullable VMPythonVideoMemosModuleDownloadingProgress)progress
                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
 
 - (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
                     optionItem:(nullable VMRemoteSourceOptionModel *)optionItem
-                      progress:(nullable VMPythonVideoMemosModuleDownloadingProgress)progress
                     completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
 
 @end

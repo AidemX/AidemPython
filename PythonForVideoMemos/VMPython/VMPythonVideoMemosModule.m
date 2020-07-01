@@ -27,10 +27,6 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
 
 @property (nonatomic, assign) PyObject *pySourceDownloaderModule;
 
-@property (nonatomic, copy) NSString *savePath; ///< Path to save the downloaed source.
-@property (nonatomic, assign) BOOL cacheJSONFile; ///< Whether cached parsed json file, default: NO.
-@property (nonatomic, assign, getter=inDebugMode) BOOL debugMode;
-
 #ifdef DEBUG
 
 - (void)_loadKYVideoDownloaderModuleIfNeeded;
@@ -246,10 +242,10 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     //NSLog(@"Got result!");
     //PyObject_Print(result, stdout, Py_PRINT_RAW);
     /*
-     NSString *listInfo = CFBridgingRelease(PyObject_GetAttrString(result, nil));
-     PyObject *output = PyObject_GetAttrString(result, "value"); //get the stdout and stderr from our catchOutErr object
-     printf("Here's the output:\n %s", Pystring(output));
-     PyObject_Print(output, stdout, Py_PRINT_RAW);
+    NSString *listInfo = CFBridgingRelease(PyObject_GetAttrString(result, nil));
+    PyObject *output = PyObject_GetAttrString(result, "value"); //get the stdout and stderr from our catchOutErr object
+    printf("Here's the output:\n %s", Pystring(output));
+    PyObject_Print(output, stdout, Py_PRINT_RAW);
      */
     
     // Prase JSON from `result`.
@@ -285,8 +281,6 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(NSString *)format
-                        title:(NSString *)title
-                     progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
                    completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
@@ -348,10 +342,9 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 - (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
                     optionItem:(VMRemoteSourceOptionModel *)optionItem
-                      progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
                     completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
 {
-  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title progress:progress completion:completion];
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format completion:completion];
 }
 
 @end

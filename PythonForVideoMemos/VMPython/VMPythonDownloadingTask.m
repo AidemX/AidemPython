@@ -11,15 +11,20 @@
 // Data Service
 #import "VMPythonRemoteSourceDownloader.h"
 // Model
+#import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
 #import "VMPythonDownloadingTask.h"
 
 
 @interface VMPythonDownloadingTask ()
 
-@property (nonatomic, copy, nullable) NSString *progressFilePath;
+@property (nonatomic, weak) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
-@property (nonatomic, strong, nullable) NSTimer *progressTimer;
+@property (nonatomic, copy)           NSString *urlString;
+@property (nonatomic, copy, nullable) NSString *format;
+
+@property (nonatomic, copy,   nullable) NSString *progressFilePath;
+@property (nonatomic, strong, nullable) NSTimer  *progressTimer;
 
 #ifdef DEBUG
 
@@ -40,15 +45,20 @@
   }
 }
 
-- (instancetype)initWithBaseSavePath:(NSString *)baseSavePath title:(NSString *)title
-//                          sourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
+- (instancetype)initWithURLString:(NSString *)urlString
+                         inFormat:(NSString *)format
+                            title:(NSString *)title
+           pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
 {
   if (self = [super init]) {
-//    _urlString = sourceItem.urlString;
-    NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
-    self.progressFilePath = [baseSavePath stringByAppendingPathComponent:preogresFileName];
-    NSLog(@"self.progressFilePath: %@", self.progressFilePath);
+    self.urlString = urlString;
+    self.format    = format;
     
+    self.pythonVideoMemosModule = pythonVideoMemosModule;
+    
+    NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
+    self.progressFilePath = [self.pythonVideoMemosModule.savePath stringByAppendingPathComponent:preogresFileName];
+    NSLog(@"self.progressFilePath: %@", self.progressFilePath);
     
 //    [[VMPythonRemoteSourceDownloader sharedInstance] enqueueDownloadingTask:self];
   }
@@ -60,13 +70,14 @@
 - (void)_checkProgress
 {
   NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
-  NSLog(@"GET CONTENT \"%@\" from .progress file", content);
+  NSLog(@"GET CONTENT \"%f\" from .progress file", content.floatValue);
 }
 
-#pragma mark - Public
+#pragma mark - Public (Override NSOperation)
 
-- (void)resume
+- (void)main
 {
+  NSLog(@"# Start Operation: %@", self);
   if (self.progressTimer) {
     return;
   }
@@ -78,6 +89,30 @@
                                                         userInfo:nil
                                                          repeats:YES];
   });
+  
+  typeof(self) __weak weakSelf = self;
+  VMPythonVideoMemosModuleDownloadingCompletion completion = ^(NSString *errorMessage) {
+//    if (errorMessage) {
+//      dispatch_async(dispatch_get_main_queue(), ^{
+//        [self _presentAlertWithTitle:nil message:errorMessage];
+//      });
+//    } else {
+//      NSLog(@"Did complete downloading.");
+//    }
+    [weakSelf.progressTimer invalidate];
+    weakSelf.progressTimer = nil;
+  };
+  [self.pythonVideoMemosModule downloadWithURLString:self.urlString
+                                            inFormat:self.format
+                                          completion:completion];
+}
+
+#pragma mark - Public
+
+/*
+- (void)resume
+{
+  
 }
 
 - (void)pause
@@ -101,6 +136,6 @@
   } else {
     NSLog(@"Failed to remove progressFilePath at %@, error: %@", self.progressFilePath, [error localizedDescription]);
   }
-}
+}*/
 
 @end

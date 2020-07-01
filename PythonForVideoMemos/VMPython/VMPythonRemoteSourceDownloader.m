@@ -8,29 +8,23 @@
 
 #import "VMPythonRemoteSourceDownloader.h"
 
-#import "VMPython.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
 #import "VMPythonDownloadingTask.h"
-// Lib
-#import "Python.h"
+
 
 @interface VMPythonRemoteSourceDownloader ()
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
-@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
+//@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
+@property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
 
 @end
 
 
 @implementation VMPythonRemoteSourceDownloader
-
-- (void)dealloc
-{
-  [[VMPython sharedInstance] quitPythonEnv];
-}
 
 + (instancetype)sharedInstance
 {
@@ -61,7 +55,7 @@
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion
 {
-  [self checkWithURLString:urlString completion:completion];
+  [self.pythonVideoMemosModule checkWithURLString:urlString completion:completion];
 }
 
 - (void)downloadWithURLString:(NSString *)urlString
@@ -70,7 +64,18 @@
                      progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
                    completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
 {
-  [self.pythonVideoMemosModule downloadWithURLString:urlString inFormat:format title:title progress:progress completion:completion];
+  if (!self.downloadingOperationQueue) {
+    self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
+    self.downloadingOperationQueue.maxConcurrentOperationCount = 1;
+  }
+  // Set `suspended=YES` if want to pause temporary.
+  //self.downloadingOperationQueue.suspended = YES;
+  
+  VMPythonDownloadingTask *operation = [[VMPythonDownloadingTask alloc] initWithURLString:urlString
+                                                                                 inFormat:format
+                                                                                    title:title
+                                                                   pythonVideoMemosModule:self.pythonVideoMemosModule];
+  [self.downloadingOperationQueue addOperation:operation];
 }
 
 - (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
@@ -78,7 +83,7 @@
                       progress:(VMPythonVideoMemosModuleDownloadingProgress)progress
                     completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
 {
-  [self.pythonVideoMemosModule downloadWithSourceItem:sourceItem optionItem:optionItem progress:progress completion:completion];
+  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title progress:progress completion:completion];
 }
 
 /*
