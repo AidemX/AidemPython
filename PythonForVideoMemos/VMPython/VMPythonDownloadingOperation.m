@@ -13,7 +13,6 @@
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
-#import "VMPythonDownloadingTask.h"
 
 
 @interface VMPythonDownloadingOperation ()

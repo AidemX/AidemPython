@@ -14,17 +14,36 @@
 #import "VMPythonDownloadingOperation.h"
 
 
+static NSString * const kYNOperationPropertyOfIsExecuting_ = @"isExecuting";
+static NSString * const kYNOperationPropertyOfIsFinished_  = @"isFinished";
+static NSString * const kYNOperationPropertyOfIsCancelled_ = @"isCancelled";
+static NSString * const kYNOperationPropertyOfName_        = @"name";
+
+
 @interface VMPythonRemoteSourceDownloader ()
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
-//@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingOperation *> *taskRef;
+@property (nonatomic, strong) NSMutableDictionary <NSString *, NSDictionary *> *operationsInfo;
 @property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
+
+#ifdef DEBUG
+
+- (void)_observeOperation:(NSOperation *)operation;
+
+#endif // END #ifdef DEBUG
 
 @end
 
 
 @implementation VMPythonRemoteSourceDownloader
+
+- (void)dealloc
+{
+  if (self.downloadingOperationQueue) {
+    [self.downloadingOperationQueue cancelAllOperations];
+  }
+}
 
 + (instancetype)sharedInstance
 {
@@ -43,6 +62,66 @@
     _pythonVideoMemosModule = [[VMPythonVideoMemosModule alloc] init];
   }
   return self;
+}
+
+#pragma mark - Private
+
+- (void)_observeOperation:(NSOperation *)operation
+{
+  if (!self.operationsInfo) {
+    self.operationsInfo = [NSMutableDictionary dictionary];
+  }
+  
+  NSString *identifier = [[NSUUID UUID] UUIDString];
+  operation.name = identifier;
+//  _operationsInfo[identifier] = [NSMutableDictionary dictionaryWithObject:...
+//                                                                   forKey:...];
+  
+  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsExecuting_ options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsFinished_  options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kYNOperationPropertyOfIsCancelled_ options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)_unobserveOperation:(NSOperation *)operation
+{
+  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsExecuting_];
+  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsFinished_];
+  [operation removeObserver:self forKeyPath:kYNOperationPropertyOfIsCancelled_];
+}
+
+#pragma mark - NSKeyValueObserving Protocol
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary <NSString *, id> *)change
+                       context:(void *)context
+{
+  if ([keyPath isEqualToString:kYNOperationPropertyOfIsExecuting_]) {
+    // The `isExecuting` will be 1 when operation starts, and will be 0 when it ends (and `isFinished` will be 1 at same time).
+    //   What we care is when it starts, so compare the `new` value w/ 1 here.
+    if (1 == [change[NSKeyValueChangeNewKey] intValue]) {
+      NSString *operationIdentifier = [object valueForKey:kYNOperationPropertyOfName_];
+      NSLog(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
+      
+      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:)]) {
+        [self.delegate vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:operationIdentifier];
+      }
+    }
+    
+  } else if ([keyPath isEqualToString:kYNOperationPropertyOfIsFinished_] ||
+             [keyPath isEqualToString:kYNOperationPropertyOfIsCancelled_])
+  {
+    NSString *operationIdentifier = [object valueForKey:kYNOperationPropertyOfName_];
+    
+    NSLog(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kYNOperationPropertyOfIsFinished_] ? @"Finished" : @"Cancelled"));
+    [_operationsInfo removeObjectForKey:operationIdentifier];
+    
+    [self _unobserveOperation:(NSOperation *)object];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:errorMessage:)]) {
+      [self.delegate vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:operationIdentifier errorMessage:nil];
+    }
+  }
 }
 
 #pragma mark - Public (Python Related)
@@ -72,9 +151,9 @@
   //self.downloadingOperationQueue.suspended = YES;
   
   VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
-                                                                                 inFormat:format
-                                                                                    title:title
-                                                                   pythonVideoMemosModule:self.pythonVideoMemosModule];
+                                                                                           inFormat:format
+                                                                                              title:title
+                                                                             pythonVideoMemosModule:self.pythonVideoMemosModule];
   [self.downloadingOperationQueue addOperation:operation];
 }
 

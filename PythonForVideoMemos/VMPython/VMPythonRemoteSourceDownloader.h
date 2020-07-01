@@ -13,7 +13,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+@protocol VMPythonRemoteSourceDownloaderDelegate;
+
+
 @interface VMPythonRemoteSourceDownloader : NSObject
+
+@property (nonatomic, weak, nullable) id <VMPythonRemoteSourceDownloaderDelegate> delegate;
 
 + (instancetype)sharedInstance;
 
@@ -35,6 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
 //- (void)debug_downloadWithURLString:(NSString *)urlString
 //                           progress:(VMPythonRemoteSourceDownloaderProgress)progress
 //                         completion:(VMPythonRemoteSourceDownloaderCompletion)completion;
+
+@end
+
+
+@protocol VMPythonRemoteSourceDownloaderDelegate <NSObject>
+
+@optional
+
+- (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier;
+
+- (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier
+                                                   errorMessage:(nullable NSString *)errorMessage;
 
 @end
 

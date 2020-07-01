@@ -19,7 +19,8 @@ static NSString * const kVideosFolderName_ = @"videos";
 
 @interface ViewController () <
   UITableViewDataSource,
-  UITableViewDelegate
+  UITableViewDelegate,
+  VMPythonRemoteSourceDownloaderDelegate
 >
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -87,6 +88,7 @@ static NSString * const kVideosFolderName_ = @"videos";
     [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
   }
   VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
+  downloader.delegate = self;
   [downloader setupWithSavePath:savePath cacheJSONFile:YES inDebugMode:YES];
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
@@ -214,6 +216,18 @@ static NSString * const kVideosFolderName_ = @"videos";
   }
   [[VMRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
    */
+}
+
+#pragma mark - VMPythonRemoteSourceDownloaderDelegate
+
+- (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
+{
+  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
+}
+
+- (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
+{
+  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
 }
 
 @end
