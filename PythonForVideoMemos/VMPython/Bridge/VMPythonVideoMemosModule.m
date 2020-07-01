@@ -340,11 +340,4 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   }
 }
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
-                    optionItem:(VMRemoteSourceOptionModel *)optionItem
-                    completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
-{
-  [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format completion:completion];
-}
-
 @end

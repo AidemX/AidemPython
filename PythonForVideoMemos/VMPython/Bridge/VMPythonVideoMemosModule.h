@@ -34,10 +34,6 @@ typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullabl
                      inFormat:(nullable NSString *)format
                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
-                    optionItem:(nullable VMRemoteSourceOptionModel *)optionItem
-                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
-
 @end
 
 NS_ASSUME_NONNULL_END
