@@ -1,5 +1,5 @@
 //
-//  VMPythonDownloadingTask.h
+//  VMPythonDownloadingOperation.h
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 29/6/2020.
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMPythonDownloadingTask : NSOperation
+@interface VMPythonDownloadingOperation : NSOperation
 
 //@property (nonatomic, copy) NSString *urlString;
 //@property (nonatomic, assign) float progress;

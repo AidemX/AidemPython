@@ -288,9 +288,9 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
   
   /*
-  VMPythonDownloadingTask *task;
+  VMPythonDownloadingOperation *task;
   if (title && progress) {
-    task = [[VMPythonDownloadingTask alloc] initWithBaseSavePath:self.savePath title:title];
+    task = [[VMPythonDownloadingOperation alloc] initWithBaseSavePath:self.savePath title:title];
     task.urlString = urlString;
     [self enqueueDownloadingTask:task];
     

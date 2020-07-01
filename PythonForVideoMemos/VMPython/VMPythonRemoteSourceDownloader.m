@@ -11,14 +11,14 @@
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
-#import "VMPythonDownloadingTask.h"
+#import "VMPythonDownloadingOperation.h"
 
 
 @interface VMPythonRemoteSourceDownloader ()
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
-//@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingTask *> *taskRef;
+//@property (nonatomic, strong) NSMutableDictionary <NSString *, VMPythonDownloadingOperation *> *taskRef;
 @property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
 
 @end
@@ -71,7 +71,7 @@
   // Set `suspended=YES` if want to pause temporary.
   //self.downloadingOperationQueue.suspended = YES;
   
-  VMPythonDownloadingTask *operation = [[VMPythonDownloadingTask alloc] initWithURLString:urlString
+  VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
                                                                                  inFormat:format
                                                                                     title:title
                                                                    pythonVideoMemosModule:self.pythonVideoMemosModule];
@@ -131,7 +131,7 @@
 /*
 #pragma mark - Downloading Task
 
-- (void)enqueueDownloadingTask:(VMPythonDownloadingTask *)task
+- (void)enqueueDownloadingTask:(VMPythonDownloadingOperation *)task
 {
   if (!self.taskRef) {
     self.taskRef = [NSMutableDictionary dictionary];

@@ -1,12 +1,12 @@
 //
-//  VMPythonDownloadingTask.m
+//  VMPythonDownloadingOperation.m
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 29/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMPythonDownloadingTask.h"
+#import "VMPythonDownloadingOperation.h"
 
 // Data Service
 #import "VMPythonRemoteSourceDownloader.h"
@@ -16,7 +16,7 @@
 #import "VMPythonDownloadingTask.h"
 
 
-@interface VMPythonDownloadingTask ()
+@interface VMPythonDownloadingOperation ()
 
 @property (nonatomic, weak) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
@@ -35,7 +35,7 @@
 @end
 
 
-@implementation VMPythonDownloadingTask
+@implementation VMPythonDownloadingOperation
 
 - (void)dealloc
 {
