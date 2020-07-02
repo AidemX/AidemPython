@@ -4,19 +4,19 @@
 import sys
 import os
 
-def vm_progress_filepath_from_output_filepath(output_filepath):
-    progress_filepath = output_filepath.rsplit('.', 1)[0] + '.progress'
-    return progress_filepath
-
 class VMDownloadingProgress:
-    def __init__(self, filepath, total_size, total_pieces=1):
+    def __init__(self, output_dir, total_size, total_pieces=1):
         self.total_size = total_size
         self.total_pieces = total_pieces
         self.current_piece = 1
         self.received = 0
         self.speed = ''
         #self.last_updated = time.time()
-        self.progress_filepath = vm_progress_filepath_from_output_filepath(filepath)
+        #self.progress_filepath = output_filepath.rsplit('.', 1)[0] + '.progress'
+        self.progress_filepath = output_dir + '/vm_progress'
+
+    def progress_file_exists(self):
+        return os.path.exists(self.progress_filepath)
         
     def update(self):
         percent = round(self.received * 100 / self.total_size, 1)
