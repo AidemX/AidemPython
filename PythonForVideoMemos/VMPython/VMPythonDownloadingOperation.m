@@ -86,6 +86,11 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 - (void)main
 {
   NSLog(@"# Start Operation: %@", self);
+  if (self.paused) {
+    NSLog(@"# Paused, Do Nothing.");
+    return;
+  }
+  
   if (self.progressTimer) {
     return;
   }
@@ -118,8 +123,23 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
                                           completion:completion];
 }
 
-- (void)cancel
+#pragma mark - Public
+
+- (void)resume
 {
+  if (!self.isPaused) {
+    return;
+  }
+  self.paused = NO;
+}
+
+- (void)pause
+{
+  if (self.isPaused) {
+    return;
+  }
+  self.paused = YES;
+  
   if (self.progressTimer) {
     [self.progressTimer invalidate];
     self.progressTimer = nil;
@@ -132,11 +152,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
       NSLog(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
     }
   }
-  
-  [super cancel];
 }
-
-#pragma mark - Public
 
 /*
 - (void)finish
