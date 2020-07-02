@@ -90,6 +90,12 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     return;
   }
   
+  if (![[NSFileManager defaultManager] fileExistsAtPath:self.progressFilePath]) {
+    NSData *data = [NSData data];
+    [[NSFileManager defaultManager] createFileAtPath:self.progressFilePath contents:data attributes:nil];
+    NSLog(@"Created progressFile");
+  }
+  
   dispatch_async(dispatch_get_main_queue(), ^{
     self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                           target:self
@@ -102,6 +108,10 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
   VMPythonVideoMemosModuleDownloadingCompletion completion = ^(NSString *errorMessage) {
     [weakSelf.progressTimer invalidate];
     weakSelf.progressTimer = nil;
+    
+    NSError *error = nil;
+    (void)[[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error];
+    NSLog(@"Did Complete Downloading, Deleting progressFile, error: %@", [error localizedDescription]);
   };
   [self.pythonVideoMemosModule downloadWithURLString:self.urlString
                                             inFormat:self.format
@@ -114,7 +124,13 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     [self.progressTimer invalidate];
     self.progressTimer = nil;
     
-    [self.pythonVideoMemosModule stopDownloading];
+    //[self.pythonVideoMemosModule stopDownloading];
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error]) {
+      NSLog(@"Stop Downloading by deleting progressFile.");
+    } else {
+      NSLog(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
+    }
   }
   
   [super cancel];

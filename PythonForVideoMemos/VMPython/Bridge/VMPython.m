@@ -115,7 +115,7 @@ void load_custom_builtin_importer() {
   putenv("PYTHONUNBUFFERED=1");
   putenv("LC_CTYPE=UTF-8");
 #ifdef DEBUG
-  putenv("PYTHONVERBOSE=1");
+//  putenv("PYTHONVERBOSE=1");
 #endif // END #ifdef DEBUG
   // putenv("PYOBJUS_DEBUG=1");
   

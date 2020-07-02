@@ -215,6 +215,11 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
+  // GIL: Global Interpreter Lock, it's a mutex (or a lock) that allows only
+  //   one thread to hold the control of the Python interpreter.
+  // REF: https://realpython.com/python-gil/
+  PyGILState_STATE pyGILState = PyGILState_Ensure();
+  
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
   
   /*
@@ -256,6 +261,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     PyObject_Print(result, stdout, Py_PRINT_RAW);
     Py_DECREF(result);
   }
+  
   //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
   
@@ -265,9 +271,39 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     [self.taskRef removeObjectForKey:task.urlString];
   }*/
   
+  PyGILState_Release(pyGILState);
+  
   if (completion) {
     completion(errorMessage);
   }
 }
+
+/*
+- (void)stopDownloadingWithTaskProgressFilePath:(NSString *)taskProgressFilePath
+{
+  NSLog(@"Stop Downloading Source ...");
+  
+  if (!self.isModuleLoaded) {
+    NSLog(@"Module Not Loaded, Do Nothing.");
+    return;
+  }
+  
+  PyGILState_STATE pyGILState = PyGILState_Ensure();
+  
+  const char *path = [taskProgressFilePath UTF8String];
+  int debug = 1;
+  PyObject *result = PyObject_CallMethod(self.pySourceDownloaderModule, "stop_downloading", "(si)", path, debug);
+  if (result == NULL) {
+    PyErr_Print();
+    
+  } else {
+    PyObject_Print(result, stdout, Py_PRINT_RAW);
+    Py_DECREF(result);
+  }
+  //PyRun_SimpleString("print('\\n')");
+  NSLog(@"\nReaches `-stopDownloading:` End.");
+  
+  PyGILState_Release(pyGILState);
+}*/
 
 @end
