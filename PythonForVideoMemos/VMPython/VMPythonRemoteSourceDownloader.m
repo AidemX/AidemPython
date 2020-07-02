@@ -259,6 +259,32 @@
 }
 
 /*
+- (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier
+{
+  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+    if ([operation.name isEqualToString:taskIdentifier]) {
+      [operation resume];
+      break;
+    }
+  }
+}*/
+
+- (void)stopTaskWithIdentifier:(NSString *)taskIdentifier
+{
+  VMPythonDownloadingOperation *matchedOperation = nil;
+  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+    if ([operation.name isEqualToString:taskIdentifier]) {
+      matchedOperation = operation;
+      break;
+    }
+  }
+  
+  if (matchedOperation) {
+    [matchedOperation cancel];
+  }
+}
+
+/*
 - (void)debug_downloadWithURLString:(NSString *)urlString
                            progress:(VMPythonRemoteSourceDownloaderProgress)progress
                          completion:(VMPythonRemoteSourceDownloaderCompletion)completion
