@@ -26,18 +26,11 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
 
 @property (nonatomic, assign) float progress;
 
-//@property (nonatomic, assign, getter=isPaused) BOOL paused;
-//@property (nonatomic, copy) NSString *errorMessage;
-
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
                             title:(nullable NSString *)title
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule;
-
-//- (void)resume;
-//- (void)pause;
-//- (void)finish;
 
 @end
 

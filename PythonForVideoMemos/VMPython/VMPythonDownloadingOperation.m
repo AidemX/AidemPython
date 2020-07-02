@@ -108,22 +108,21 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
                                           completion:completion];
 }
 
-#pragma mark - Public
-
-/*
-- (void)resume
-{
-  
-}
-
-- (void)pause
+- (void)cancel
 {
   if (self.progressTimer) {
     [self.progressTimer invalidate];
     self.progressTimer = nil;
+    
+    [self.pythonVideoMemosModule stopDownloading];
   }
+  
+  [super cancel];
 }
 
+#pragma mark - Public
+
+/*
 - (void)finish
 {
   if (self.progressTimer) {
