@@ -19,6 +19,8 @@ class VMDownloadingProgress:
         percent = round(self.received * 100 / self.total_size, 1)
         #sys.stdout.write('\r' + format(percent))
         #sys.stdout.flush()
+        print(format(percent))
+
         with open(self.progress_filepath, "w") as output:
             #output.seek(0) # rewind
             output.write(format(percent))
