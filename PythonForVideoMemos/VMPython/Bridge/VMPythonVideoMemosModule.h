@@ -11,6 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString * const kVMPythonVideoMemosModuleProgressFileName;
+
 typedef void (^VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)(NSString *_Nullable jsonString, NSString *_Nullable errorMessage);
 
 typedef void (^VMPythonVideoMemosModuleDownloadingProgress)(float progress);

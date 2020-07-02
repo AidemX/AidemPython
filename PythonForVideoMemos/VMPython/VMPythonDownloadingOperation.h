@@ -31,7 +31,8 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
                             title:(nullable NSString *)title
-           pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule;
+           pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
+                 progressFilePath:(NSString *)progressFilePath;
 
 - (void)resume;
 - (void)pause;

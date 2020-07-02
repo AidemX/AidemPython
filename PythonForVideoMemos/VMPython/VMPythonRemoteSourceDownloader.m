@@ -21,6 +21,22 @@
 @property (nonatomic, strong) NSMutableDictionary <NSString *, NSDictionary *> *operationsInfo;
 @property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
 
+/**
+ * The path of an unique progress file that reflect current downloading operation progress.
+ *
+ * @discussion
+ * Whenever a new operation starts, will make sure this file created, and it'll be deleted
+ *   once completed downloading.
+ *
+ * Note:
+ *
+ * If this progress file deleted during downloading, the downloading process will be paused.
+ * The downloading code snippet keeps checking its existence, refer to
+ *
+ *   site_packages/you-get/src/you_get/common.py: if not os.path.exists(vm_tmp_progress_filepath)
+ */
+@property (nonatomic, copy) NSString *progressFilePath;
+
 #ifdef DEBUG
 
 - (NSString *)_filenameFromURLString:(NSString *)urlString;
@@ -161,6 +177,24 @@
 
 #pragma mark - Setter
 
+- (void)setSavePath:(NSString *)savePath
+{
+  NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
+  
+  _savePath = savePath;
+  
+  self.progressFilePath = [savePath stringByAppendingPathComponent:kVMPythonVideoMemosModuleProgressFileName];
+  
+  self.pythonVideoMemosModule.savePath = savePath;
+}
+
+- (void)setDebugMode:(BOOL)debugMode
+{
+  _debugMode = debugMode;
+  
+  self.pythonVideoMemosModule.debugMode = debugMode;
+}
+
 - (void)setSuspended:(BOOL)suspended
 {
   _suspended = suspended;
@@ -171,17 +205,6 @@
 }
 
 #pragma mark - Public (Python Related)
-
-- (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode
-{
-  NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
-  
-  self.savePath = savePath;
-  self.cacheJSONFile = cacheJSONFile;
-  
-  self.pythonVideoMemosModule.savePath = savePath;
-  self.pythonVideoMemosModule.debugMode = debugMode;
-}
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion
 {
@@ -248,7 +271,11 @@
   VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
                                                                                            inFormat:format
                                                                                               title:title
-                                                                             pythonVideoMemosModule:self.pythonVideoMemosModule];
+                                                                             pythonVideoMemosModule:self.pythonVideoMemosModule
+                                                                                   progressFilePath:self.progressFilePath];
+  if (self.suspended) {
+    [operation pause];
+  }
   [self _observeOperation:operation];
   [self.downloadingOperationQueue addOperation:operation];
 }
@@ -269,7 +296,7 @@
   }
 }*/
 
-- (void)stopTaskWithIdentifier:(NSString *)taskIdentifier
+- (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier
 {
   VMPythonDownloadingOperation *matchedOperation = nil;
   for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
@@ -280,7 +307,7 @@
   }
   
   if (matchedOperation) {
-    [matchedOperation cancel];
+    [matchedOperation pause];
   }
 }
 

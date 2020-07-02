@@ -55,15 +55,14 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
                          inFormat:(NSString *)format
                             title:(NSString *)title
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
+                 progressFilePath:(NSString *)progressFilePath
 {
   if (self = [super init]) {
     self.urlString = urlString;
     self.format    = format;
     
     self.pythonVideoMemosModule = pythonVideoMemosModule;
-    
-    NSString *preogresFileName = [title stringByAppendingPathExtension:@"progress"];
-    self.progressFilePath = [self.pythonVideoMemosModule.savePath stringByAppendingPathComponent:preogresFileName];
+    self.progressFilePath = progressFilePath;
     NSLog(@"self.progressFilePath: %@", self.progressFilePath);
   }
   return self;
@@ -114,9 +113,13 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     [weakSelf.progressTimer invalidate];
     weakSelf.progressTimer = nil;
     
-    NSError *error = nil;
-    (void)[[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error];
-    NSLog(@"Did Complete Downloading, Deleting progressFile, error: %@", [error localizedDescription]);
+    if (weakSelf.progressFilePath && [[NSFileManager defaultManager] fileExistsAtPath:weakSelf.progressFilePath]) {
+      NSError *error = nil;
+      (void)[[NSFileManager defaultManager] removeItemAtPath:weakSelf.progressFilePath error:&error];
+      NSLog(@"Did Complete Downloading, Deleting progressFile, error: %@", [error localizedDescription]);
+    } else {
+      NSLog(@"Did Complete Downloading, No existing progressFile, do nothing.");
+    }
   };
   [self.pythonVideoMemosModule downloadWithURLString:self.urlString
                                             inFormat:self.format
@@ -131,6 +134,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     return;
   }
   self.paused = NO;
+  NSLog(@"Resume Operation w/ Task Identifier: %@", self.name);
 }
 
 - (void)pause
@@ -139,6 +143,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     return;
   }
   self.paused = YES;
+  NSLog(@"Pause Operation w/ Task Identifier: %@", self.name);
   
   if (self.progressTimer) {
     [self.progressTimer invalidate];

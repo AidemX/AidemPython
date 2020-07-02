@@ -24,14 +24,13 @@ typedef void (^VMPythonRemoteSourceDownloaderSourceCheckingCompletion)(VMRemoteS
 
 @property (nonatomic, copy) NSString *savePath; ///< Path to save the downloaed source.
 @property (nonatomic, assign) BOOL cacheJSONFile; ///< Whether cached parsed json file, default: NO.
+@property (nonatomic, assign, getter=inDebugMode) BOOL debugMode;
 
 @property (nonatomic, assign, getter=isSuspended) BOOL suspended;
 
 @property (nonatomic, weak, nullable) id <VMPythonRemoteSourceDownloaderDelegate> delegate;
 
 + (instancetype)sharedInstance;
-
-- (void)setupWithSavePath:(NSString *)savePath cacheJSONFile:(BOOL)cacheJSONFile inDebugMode:(BOOL)debugMode;
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion;
 

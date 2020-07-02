@@ -107,8 +107,10 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
   }
   VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
+  downloader.savePath      = savePath;
+  downloader.cacheJSONFile = YES;
+  downloader.debugMode     = YES;
   downloader.delegate = self;
-  [downloader setupWithSavePath:savePath cacheJSONFile:YES inDebugMode:YES];
   
   self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
   

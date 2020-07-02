@@ -13,6 +13,9 @@
 #import "Python.h"
 
 
+//! Make sure it's equal to the one in `site_packages/video_memos/vm_downloading_progress.py`
+NSString * const kVMPythonVideoMemosModuleProgressFileName = @"vm_progress";
+
 static char * const kSourceDownloaderMethodOfCheckSource_    = "check_source";
 static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source";
 
@@ -218,7 +221,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   // GIL: Global Interpreter Lock, it's a mutex (or a lock) that allows only
   //   one thread to hold the control of the Python interpreter.
   // REF: https://realpython.com/python-gil/
-  PyGILState_STATE pyGILState = PyGILState_Ensure();
+  //PyGILState_STATE pyGILState = PyGILState_Ensure();
   
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
   
@@ -271,7 +274,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     [self.taskRef removeObjectForKey:task.urlString];
   }*/
   
-  PyGILState_Release(pyGILState);
+  //PyGILState_Release(pyGILState);
   
   if (completion) {
     completion(errorMessage);
