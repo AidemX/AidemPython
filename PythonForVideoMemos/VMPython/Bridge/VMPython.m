@@ -104,15 +104,22 @@ void load_custom_builtin_importer() {
   
   // Special environment to prefer .pyo, and don't write bytecode if .py are found
   // because the process will not have a write attribute on the device.
+  //
+  // REF:
+  //   https://docs.python.org/3/c-api/init.html
+  //
   putenv("PYTHONOPTIMIZE=2");
   putenv("PYTHONDONTWRITEBYTECODE=1");
   putenv("PYTHONNOUSERSITE=1");
   putenv("PYTHONPATH=.");
   putenv("PYTHONUNBUFFERED=1");
   putenv("LC_CTYPE=UTF-8");
-  // putenv("PYTHONVERBOSE=1");
+#ifdef DEBUG
+  putenv("PYTHONVERBOSE=1");
+#endif // END #ifdef DEBUG
   // putenv("PYOBJUS_DEBUG=1");
   
+  /*
   // Kivy environment to prefer some implementation on iOS platform
   putenv("KIVY_BUILD=ios");
   putenv("KIVY_NO_CONFIG=1");
@@ -121,6 +128,7 @@ void load_custom_builtin_importer() {
   putenv("KIVY_IMAGE=imageio,tex,gif");
   putenv("KIVY_AUDIO=sdl2");
   putenv("KIVY_GL_BACKEND=sdl2");
+   */
   
   // IOS_IS_WINDOWED=True disables fullscreen and then statusbar is shown
   putenv("IOS_IS_WINDOWED=False");
