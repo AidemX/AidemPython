@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
+
+def vm_progress_filepath_from_output_filepath(output_filepath):
+    progress_filepath = output_filepath.rsplit('.', 1)[0] + '.progress'
+    return progress_filepath
 
 class VMDownloadingProgress:
     def __init__(self, filepath, total_size, total_pieces=1):
@@ -11,19 +16,17 @@ class VMDownloadingProgress:
         self.received = 0
         self.speed = ''
         #self.last_updated = time.time()
-
-        #self.progress_filepath = filepath + '.progress'
-        self.progress_filepath = filepath.rsplit('.', 1)[0] + '.progress'
-
+        self.progress_filepath = vm_progress_filepath_from_output_filepath(filepath)
+        
     def update(self):
         percent = round(self.received * 100 / self.total_size, 1)
-        #sys.stdout.write('\r' + format(percent))
-        #sys.stdout.flush()
+        #sys.stdout.write('\r' + format(percent), flush=True)
         print(format(percent))
-
-        with open(self.progress_filepath, "w") as output:
-            #output.seek(0) # rewind
-            output.write(format(percent))
+        
+        if os.path.exists(self.progress_filepath):
+            with open(self.progress_filepath, "w") as output:
+                #output.seek(0) # rewind
+                output.write(format(percent))
 
     def update_received(self, n):
         self.received += n

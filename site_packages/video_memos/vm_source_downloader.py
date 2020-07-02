@@ -106,3 +106,31 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
         print('cmd: %s' % sys.argv)
 
     return result
+
+
+def stop_downloading(taskProgressFilePath, debug=0):
+    you_get.common.vm_skip_downloading(debug)
+    '''
+    try:
+        #execfile('vm_execfile.py')
+        #exec(open('vm_execfile.py').read())
+        sys.exit(1)
+    except SystemExit:
+        print("sys.exit was called but I'm proceeding anyway (so there!-).")
+    print("so I'll print this, etc, etc")
+    '''
+    result = 'result'
+    return result
+
+
+def vm_skip_downloading(debug=0):
+    if debug:
+        print('SKIPPED DOWNLOADING!')
+    skipped_downloading = True
+    try:
+        #execfile('vm_execfile.py')
+        #exec(open('vm_execfile.py').read())
+        sys.exit(1)
+    except SystemExit:
+        print("sys.exit was called but I'm proceeding anyway (so there!-).")
+    print("so I'll print this, etc, etc")
