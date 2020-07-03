@@ -160,20 +160,4 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
   }
 }
 
-/*
-- (void)finish
-{
-  if (self.progressTimer) {
-    [self.progressTimer invalidate];
-    self.progressTimer = nil;
-  }
-  
-  NSError *error = nil;
-  if ([[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error]) {
-    VMPythonLogDebug(@"Removed progressFilePath at %@", self.progressFilePath);
-  } else {
-    VMPythonLogError(@"Failed to remove progressFilePath at %@, error: %@", self.progressFilePath, [error localizedDescription]);
-  }
-}*/
-
 @end
