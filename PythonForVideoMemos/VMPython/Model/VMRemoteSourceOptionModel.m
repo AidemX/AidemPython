@@ -37,6 +37,9 @@
     item.urls = urls;
   }
   
+  item.status = kVMPythonDownloadProcessStatusNone;
+  item.taskIdentifier = nil;
+  
   return item;
 }
 

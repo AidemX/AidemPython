@@ -8,6 +8,9 @@
 
 @import Foundation;
 
+#import "VMPythonCommon.h"
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VMRemoteSourceOptionModel : NSObject
@@ -20,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy)   NSString *sizeText;      ///< Media size in text
 
 @property (nonatomic, copy) NSArray <NSString *> *urls; ///< Urls in string
+
+@property (nonatomic, assign) VMPythonDownloadProcessStatus status; ///< Item status
+@property (nonatomic, copy, nullable) NSString *taskIdentifier; ///< Associated task's identifier
+@property (nonatomic, assign) float progress; ///< Downloading progress, from 0.f to 1.f
 
 + (instancetype)newWithKey:(NSString *)key andValue:(NSDictionary *)value;
 
