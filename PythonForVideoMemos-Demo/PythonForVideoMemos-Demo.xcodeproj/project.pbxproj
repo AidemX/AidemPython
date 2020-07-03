@@ -97,6 +97,7 @@
 		7FFEE27224AC1E830071144F /* VMPython.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
 		7FFEE27424AC1E830071144F /* VMPythonVideoMemosModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonVideoMemosModule.m; sourceTree = "<group>"; };
 		7FFEE27524AC1E830071144F /* VMPython.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
+		7FFEE27924AEBF7C0071144F /* VMPythonCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonCommon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +240,7 @@
 		7F4CBD5F24A43DAF00CC0889 /* VMPython */ = {
 			isa = PBXGroup;
 			children = (
+				7FFEE27924AEBF7C0071144F /* VMPythonCommon.h */,
 				7FFEE26F24AC1E830071144F /* Bridge */,
 				7F4CBD6024A43E6900CC0889 /* VMPythonRemoteSourceDownloader.h */,
 				7F4CBD6124A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m */,
