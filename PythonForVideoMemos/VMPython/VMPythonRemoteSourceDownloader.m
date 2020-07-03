@@ -205,7 +205,7 @@
   }
 }
 
-#pragma mark - Public (Python Related)
+#pragma mark - Public
 
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion
 {
@@ -286,7 +286,8 @@
   [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title];
 }
 
-/*
+#pragma mark - Public (Task Management)
+
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier
 {
   for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
@@ -295,7 +296,7 @@
       break;
     }
   }
-}*/
+}
 
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier
 {
