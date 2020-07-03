@@ -8,6 +8,7 @@
 
 #import "VMPython.h"
 
+#import "VMPythonCommon.h"
 // Lib
 #import "Python.h"
 
@@ -139,10 +140,10 @@ void load_custom_builtin_importer() {
   
   NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
   resourcePath = [resourcePath stringByAppendingPathComponent:@"python"];
-  NSLog(@"resourcePath: %@", resourcePath);
+  VMPythonLogNotice(@"resourcePath: %@", resourcePath);
 #if PY_MAJOR_VERSION == 2
   wchar_t *pythonHome = (wchar_t *)[resourcePath UTF8String];
-  NSLog(@"PythonHome is: %s", pythonHome);
+  VMPythonLogNotice(@"PythonHome is: %s", pythonHome);
   Py_SetPythonHome(pythonHome);
 #else
   NSString *pythonHome = [NSString stringWithFormat:@"PYTHONHOME=%@", resourcePath, nil];
@@ -156,15 +157,19 @@ void load_custom_builtin_importer() {
 #endif
   
   // Initialize Python Environment
-  NSLog(@"Initializing Python ...");
+  VMPythonLogNotice(@"Initializing Python ...");
   Py_Initialize();
   // If other modules are using the thread, we need to initialize them before.
   PyEval_InitThreads();
   
-  BOOL pythonEnvInitialized = Py_IsInitialized();
-  NSLog(@"Python Environment Initialization %@", (pythonEnvInitialized ? @"Succeeded" : @"Failed"));
-  
-  self.initialized = YES;
+  self.initialized = Py_IsInitialized();
+#ifdef DEBUG
+  if (self.isInitialized) {
+    VMPythonLogSuccess(@"Python Environment Initialization Succeeded.");
+  } else {
+    VMPythonLogError(@"Python Environment Initialization Failed.");
+  }
+#endif // END #ifdef DEBUG
   
   load_custom_builtin_importer();
 }
@@ -174,7 +179,7 @@ void load_custom_builtin_importer() {
   if (self.isInitialized) {
     self.initialized = NO;
     Py_Finalize();
-    NSLog(@"Python Finalize");
+    VMPythonLogNotice(@"Python Finalize");
   }
 }
 

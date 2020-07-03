@@ -10,8 +10,6 @@
 #define VMPythonCommon_h
 
 #ifndef DEBUG
-  //#undef NSLog
-  #define NSLog(args, ...);
   #define VMPythonLog(__FORMAT__, ...);
   #define VMPythonLogWithColor(fg, type, __FORMAT__, ...);
   #define VMPythonLogCritical(__FORMAT__, ...);
@@ -22,7 +20,6 @@
   #define VMPythonLogDebug(__FORMAT__, ...);
 
 #else
-  // Disable loging when not in debug
   #define kVMPythonLogTypeCritical @"❌ CRITICAL"
   #define kVMPythonLogTypeError    @"🔴 ERROR"
   #define kVMPythonLogTypeWarn     @"⚠️ WARN"

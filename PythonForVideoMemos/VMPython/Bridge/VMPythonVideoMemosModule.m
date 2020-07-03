@@ -8,6 +8,7 @@
 
 #import "VMPythonVideoMemosModule.h"
 
+#import "VMPythonCommon.h"
 #import "VMPython.h"
 // Lib
 #import "Python.h"
@@ -73,7 +74,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
     PyErr_Print();
     
   } else {
-    NSLog(@"Importing %s module succeeded", moduleName);
+    VMPythonLogDebug(@"Importing %s module succeeded", moduleName);
     self.moduleLoaded = YES;
   }
 }
@@ -125,7 +126,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
               Py_DECREF(line);
             }
           }
-          NSLog(@"TRACEKBACK: %@", trackbackValue);
+          VMPythonLogDebug(@"TRACEKBACK: %@", trackbackValue);
           Py_DECREF(pyTrackbackValue);
         }
         Py_DECREF(pyTrackbackModuleFunc);
@@ -166,7 +167,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   
-  NSLog(@"Checking Source w/ URL: %@ ...", urlString);
+  VMPythonLogDebug(@"Checking Source w/ URL: %@ ...", urlString);
   
   NSString *resultJsonString = nil;
   NSString *errorMessage = nil;
@@ -183,10 +184,10 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     if (0 == errorMessage.length) {
       errorMessage = @"Empty Result";
     }
-    NSLog(@"Error Msg:\n%@", errorMessage);
+    VMPythonLogError(@"Error Msg:\n%@", errorMessage);
     
   } else {
-    //NSLog(@"Got result!");
+    //VMPythonLogDebug(@"Got result!");
     //PyObject_Print(result, stdout, Py_PRINT_RAW);
     /*
     NSString *listInfo = CFBridgingRelease(PyObject_GetAttrString(result, nil));
@@ -207,7 +208,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     }
   }
   //PyRun_SimpleString("print('\\n')");
-  NSLog(@"\nReaches `-checkWithURLString:` End");
+  VMPythonLogDebug(@"\nReaches `-checkWithURLString:` End");
   
   completion(resultJsonString, errorMessage);
 }
@@ -222,7 +223,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   //   one thread to hold the control of the Python interpreter.
   // REF: https://realpython.com/python-gil/
   //PyGILState_STATE pyGILState = PyGILState_Ensure();
-  NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
+  VMPythonLogDebug(@"Start Downloading Source w/ URL: %@ ...", urlString);
   
   NSString *errorMessage = nil;
   
@@ -256,7 +257,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     Py_DECREF(result);
   }
   
-  NSLog(@"\nReaches `-downloadWithURLString:` End.");
+  VMPythonLogDebug(@"\nReaches `-downloadWithURLString:` End.");
   //PyGILState_Release(pyGILState);
   
   if (completion) {
@@ -267,10 +268,10 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 /*
 - (void)stopDownloadingWithTaskProgressFilePath:(NSString *)taskProgressFilePath
 {
-  NSLog(@"Stop Downloading Source ...");
+  VMPythonLogDebug(@"Stop Downloading Source ...");
   
   if (!self.isModuleLoaded) {
-    NSLog(@"Module Not Loaded, Do Nothing.");
+    VMPythonLogNotice(@"Module Not Loaded, Do Nothing.");
     return;
   }
   
@@ -287,7 +288,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     Py_DECREF(result);
   }
   //PyRun_SimpleString("print('\\n')");
-  NSLog(@"\nReaches `-stopDownloading:` End.");
+  VMPythonLogDebug(@"\nReaches `-stopDownloading:` End.");
   
   PyGILState_Release(pyGILState);
 }*/

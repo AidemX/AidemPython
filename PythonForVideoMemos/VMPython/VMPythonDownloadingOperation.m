@@ -8,6 +8,7 @@
 
 #import "VMPythonDownloadingOperation.h"
 
+#import "VMPythonCommon.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
@@ -63,7 +64,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     
     self.pythonVideoMemosModule = pythonVideoMemosModule;
     self.progressFilePath = progressFilePath;
-    NSLog(@"self.progressFilePath: %@", self.progressFilePath);
+    VMPythonLogDebug(@"self.progressFilePath: %@", self.progressFilePath);
   }
   return self;
 }
@@ -74,7 +75,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 {
   NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
   float progress = content.floatValue;
-  NSLog(@"GET CONTENT \"%f\" from .progress file", progress);
+  VMPythonLogDebug(@"GET CONTENT \"%f\" from .progress file", progress);
   if (self.progress != progress) {
     self.progress = progress;
   }
@@ -84,9 +85,9 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 
 - (void)main
 {
-  NSLog(@"# Start Operation: %@", self);
+  VMPythonLogNotice(@"# Start Operation: %@", self);
   if (self.paused) {
-    NSLog(@"# Paused, Do Nothing.");
+    VMPythonLogNotice(@"# Paused, Do Nothing.");
     return;
   }
   
@@ -97,7 +98,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
   if (![[NSFileManager defaultManager] fileExistsAtPath:self.progressFilePath]) {
     NSData *data = [NSData data];
     [[NSFileManager defaultManager] createFileAtPath:self.progressFilePath contents:data attributes:nil];
-    NSLog(@"Created progressFile");
+    VMPythonLogDebug(@"Created progressFile");
   }
   
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -116,9 +117,9 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     if (weakSelf.progressFilePath && [[NSFileManager defaultManager] fileExistsAtPath:weakSelf.progressFilePath]) {
       NSError *error = nil;
       (void)[[NSFileManager defaultManager] removeItemAtPath:weakSelf.progressFilePath error:&error];
-      NSLog(@"Did Complete Downloading, Deleting progressFile, error: %@", [error localizedDescription]);
+      VMPythonLogNotice(@"Did Complete Downloading, Deleting progressFile, error: %@", [error localizedDescription]);
     } else {
-      NSLog(@"Did Complete Downloading, No existing progressFile, do nothing.");
+      VMPythonLogNotice(@"Did Complete Downloading, No existing progressFile, do nothing.");
     }
   };
   [self.pythonVideoMemosModule downloadWithURLString:self.urlString
@@ -134,7 +135,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     return;
   }
   self.paused = NO;
-  NSLog(@"Resume Operation w/ Task Identifier: %@", self.name);
+  VMPythonLogNotice(@"Resume Operation w/ Task Identifier: %@", self.name);
 }
 
 - (void)pause
@@ -143,7 +144,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     return;
   }
   self.paused = YES;
-  NSLog(@"Pause Operation w/ Task Identifier: %@", self.name);
+  VMPythonLogNotice(@"Pause Operation w/ Task Identifier: %@", self.name);
   
   if (self.progressTimer) {
     [self.progressTimer invalidate];
@@ -152,9 +153,9 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     //[self.pythonVideoMemosModule stopDownloading];
     NSError *error = nil;
     if ([[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error]) {
-      NSLog(@"Stop Downloading by deleting progressFile.");
+      VMPythonLogNotice(@"Stop Downloading by deleting progressFile.");
     } else {
-      NSLog(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
+      VMPythonLogError(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
     }
   }
 }
@@ -169,9 +170,9 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
   
   NSError *error = nil;
   if ([[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error]) {
-    NSLog(@"Removed progressFilePath at %@", self.progressFilePath);
+    VMPythonLogDebug(@"Removed progressFilePath at %@", self.progressFilePath);
   } else {
-    NSLog(@"Failed to remove progressFilePath at %@, error: %@", self.progressFilePath, [error localizedDescription]);
+    VMPythonLogError(@"Failed to remove progressFilePath at %@, error: %@", self.progressFilePath, [error localizedDescription]);
   }
 }*/
 

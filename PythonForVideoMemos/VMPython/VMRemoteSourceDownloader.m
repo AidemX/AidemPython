@@ -8,6 +8,7 @@
 
 #import "VMRemoteSourceDownloader.h"
 
+#import "VMPythonCommon.h"
 // Model
 #import "VMRemoteSourceModel.h"
 // Lib
@@ -45,7 +46,7 @@
   NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
     return destinationURL;
   } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-    NSLog(@"File downloaded to: %@", filePath);
+    VMPythonLogNotice(@"File downloaded to: %@", filePath);
   }];
   [downloadTask resume];
 }

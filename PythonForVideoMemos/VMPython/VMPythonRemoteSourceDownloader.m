@@ -8,6 +8,7 @@
 
 #import "VMPythonRemoteSourceDownloader.h"
 
+#import "VMPythonCommon.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMRemoteSourceModel.h"
@@ -152,7 +153,7 @@
     //   What we care is when it starts, so compare the `new` value w/ 1 here.
     if (1 == [change[NSKeyValueChangeNewKey] intValue]) {
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
-      NSLog(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
+      VMPythonLogNotice(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
       if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:)]) {
         [self.delegate vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:operationIdentifier];
@@ -164,7 +165,7 @@
   {
     NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
     
-    NSLog(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
+    VMPythonLogNotice(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
     [_operationsInfo removeObjectForKey:operationIdentifier];
     
     [self _unobserveOperation:(NSOperation *)object];
@@ -179,7 +180,7 @@
 
 - (void)setSavePath:(NSString *)savePath
 {
-  NSLog(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
+  VMPythonLogNotice(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
   
   _savePath = savePath;
   
@@ -225,7 +226,7 @@
         
       } else {
         VMRemoteSourceModel *sourceItem = [self _newRemoteSourceItemFromJSON:json];
-        NSLog(@"\nGot cached JSON file at %@", jsonPath);
+        VMPythonLogNotice(@"\nGot cached JSON file at %@", jsonPath);
         completion(sourceItem, nil);
         
         return;
@@ -247,7 +248,7 @@
         completion(nil, errorMessage);
         
       } else {
-        NSLog(@"Parsed JSON Dict: %@", json);
+        VMPythonLogDebug(@"Parsed JSON Dict: %@", json);
         if (weakSelf.cacheJSONFile && jsonPath) {
           [jsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
@@ -325,10 +326,10 @@
     return;
     
   } else {
-    NSLog(@"Importing %s module succeeded", moduleName);
+    VMPythonLogSuccess(@"Importing %s module succeeded", moduleName);
   }
   
-  NSLog(@"Test Downloading Progress w/ URL: %@ ...", urlString);
+  VMPythonLogDebug(@"Test Downloading Progress w/ URL: %@ ...", urlString);
   
   NSString *errorMessage = nil;
   
@@ -350,7 +351,7 @@
     Py_DECREF(result);
   }
   //PyRun_SimpleString("print('\\n')");
-  NSLog(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
+  VMPythonLogDebug(@"\nReaches `-debug_downloadWithURLString:progress:completion:` End.");
 }*/
 
 /*

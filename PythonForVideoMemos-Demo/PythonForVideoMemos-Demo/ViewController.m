@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
+#import "VMPythonCommon.h"
 // Lib
 #import "VMPythonRemoteSourceDownloader.h"
 #import "VMRemoteSourceDownloader.h"
@@ -117,9 +118,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   /*/ Test downloading progress
   [downloader debug_downloadWithURLString:self.urlString
                                  progress:^(float progress) {
-    NSLog(@"Get progress: %f", progress);
+    VMPythonLogDebug(@"Get progress: %f", progress);
   } completion:^(NSString * _Nullable errorMessage) {
-    NSLog(@"Did complete downloading, error: %@", errorMessage);
+    VMPythonLogDebug(@"Did complete downloading, error: %@", errorMessage);
   }];
   return;
    */
@@ -133,7 +134,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   typeof(self) __weak weakSelf = self;
   [downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
-      NSLog(@"Got sourceItem.options: %@", sourceItem.options);
+      VMPythonLogDebug(@"Got sourceItem.options: %@", sourceItem.options);
       weakSelf.sourceItem = sourceItem;
       [weakSelf.tableView reloadData];
     } else {
@@ -237,17 +238,17 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 - (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
 {
-  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
 }
 
 - (void)vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
 {
-  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
 }
 
 - (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
 {
-  NSLog(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
   
   if (errorMessage) {
     dispatch_async(dispatch_get_main_queue(), ^{
