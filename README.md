@@ -17,6 +17,7 @@ Python iOS framework for Video Memos app.
 4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos".
 
     Files left:  
+    - **VMDownloadProcessButton** folder  
     - **VMPython** folder  
     - ***.a** files  
 
