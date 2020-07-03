@@ -203,6 +203,11 @@
   if (self.downloadingOperationQueue) {
     self.downloadingOperationQueue.suspended = self.suspended;
   }
+  
+  // Pause all operations if needed
+  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+    [operation pause];
+  }
 }
 
 #pragma mark - Public
