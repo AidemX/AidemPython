@@ -27,14 +27,22 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 >
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIButton    *actionButton;
+@property (nonatomic, strong) UIButton    *pauseOrResumeCurrentButton;
+@property (nonatomic, strong) UIButton    *suspendOrResumeAllButton;
 
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
 
+@property (nonatomic, strong, nullable) VMRemoteSourceOptionModel *selectedItem;
+@property (nonatomic, copy,   nullable) NSString *currentTaskIdentifier;
+
 #ifdef DEBUG
 
-- (void)_didPressActionButton;
+- (void)_refreshPauseOrResumeCurrentButton;
+- (void)_didPressPauseOrResumeCurrentButton;
+
+- (void)_refreshSuspendOrResumeAllButton;
+- (void)_didPressSuspendOrResumeAllButton;
 
 - (void)_presentAlertWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
 
@@ -75,25 +83,39 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     tableView;
   });
   
-  _actionButton = [UIButton buttonWithType:UIButtonTypeSystem];
-  _actionButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
-  _actionButton.layer.cornerRadius = 5.f;
-  [_actionButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
-  [_actionButton setTitle:@"Suspend" forState:UIControlStateNormal];
-  [_actionButton addTarget:self action:@selector(_didPressActionButton) forControlEvents:UIControlEventTouchUpInside];
-  _actionButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_actionButton];
+  _pauseOrResumeCurrentButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  _pauseOrResumeCurrentButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
+  _pauseOrResumeCurrentButton.layer.cornerRadius = 5.f;
+  [_pauseOrResumeCurrentButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
+  [_pauseOrResumeCurrentButton setTitle:@"Pause Current" forState:UIControlStateNormal];
+  [_pauseOrResumeCurrentButton addTarget:self action:@selector(_didPressPauseOrResumeCurrentButton) forControlEvents:UIControlEventTouchUpInside];
+  _pauseOrResumeCurrentButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_pauseOrResumeCurrentButton];
+  
+  _suspendOrResumeAllButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  _suspendOrResumeAllButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
+  _suspendOrResumeAllButton.layer.cornerRadius = 5.f;
+  [_suspendOrResumeAllButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
+  [_suspendOrResumeAllButton setTitle:@"Suspend All" forState:UIControlStateNormal];
+  [_suspendOrResumeAllButton addTarget:self action:@selector(_didPressSuspendOrResumeAllButton) forControlEvents:UIControlEventTouchUpInside];
+  _suspendOrResumeAllButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_suspendOrResumeAllButton];
   
   [NSLayoutConstraint activateConstraints:
    @[[_tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
      [_tableView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
      [_tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-     [_tableView.bottomAnchor constraintEqualToAnchor:_actionButton.topAnchor constant:-15.f],
+     [_tableView.bottomAnchor constraintEqualToAnchor:_pauseOrResumeCurrentButton.topAnchor constant:-15.f],
      
-     [_actionButton.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:15.f],
-     [_actionButton.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-15.f],
-     [_actionButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
-     [_actionButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
+     [_pauseOrResumeCurrentButton.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:15.f],
+     [_pauseOrResumeCurrentButton.rightAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:-5.f],
+     [_pauseOrResumeCurrentButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
+     [_pauseOrResumeCurrentButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
+     
+     [_suspendOrResumeAllButton.leftAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:5.f],
+     [_suspendOrResumeAllButton.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-15.f],
+     [_suspendOrResumeAllButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
+     [_suspendOrResumeAllButton.bottomAnchor constraintEqualToAnchor:_pauseOrResumeCurrentButton.bottomAnchor]
    ]];
 }
 
@@ -145,11 +167,46 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 #pragma mark - Private
 
-- (void)_didPressActionButton
+- (void)_refreshPauseOrResumeCurrentButton
+{
+  NSString *title;
+  if (nil == self.selectedItem) {
+    _pauseOrResumeCurrentButton.enabled = NO;
+    title = @"Pause Current";
+  } else {
+    _pauseOrResumeCurrentButton.enabled = YES;
+    title = (nil == self.currentTaskIdentifier ? @"Resume Current" : @"Pause Current");
+  }
+  [_pauseOrResumeCurrentButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)_didPressPauseOrResumeCurrentButton
+{
+  if (nil == self.currentTaskIdentifier) {
+    if (nil == self.selectedItem) {
+      [self _presentAlertWithTitle:nil message:@"No selected item to resume task, please select one."];
+    } else {
+      self.currentTaskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.selectedItem];
+    }
+  } else {
+    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:self.currentTaskIdentifier];
+    self.currentTaskIdentifier = nil;
+  }
+  [self _refreshPauseOrResumeCurrentButton];
+}
+
+- (void)_refreshSuspendOrResumeAllButton
+{
+  NSString *title = ([VMPythonRemoteSourceDownloader sharedInstance].suspended ? @"Resume All" : @"Suspend All");
+  [_suspendOrResumeAllButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)_didPressSuspendOrResumeAllButton
 {
   BOOL suspended = ![VMPythonRemoteSourceDownloader sharedInstance].isSuspended;
   [VMPythonRemoteSourceDownloader sharedInstance].suspended = suspended;
-  [_actionButton setTitle:(suspended ? @"Resume" : @"Suspend") forState:UIControlStateNormal];
+  
+  [self _refreshSuspendOrResumeAllButton];
 }
 
 - (void)_presentAlertWithTitle:(NSString *)title message:(NSString *)message
@@ -216,12 +273,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 // Tells the delegate that the specified row is now selected.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  self.selectedItem = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
-  });
+  self.currentTaskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.selectedItem];
   
   /*
   if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
