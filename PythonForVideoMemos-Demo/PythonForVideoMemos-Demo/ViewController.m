@@ -9,6 +9,9 @@
 #import "ViewController.h"
 
 #import "VMPythonCommon.h"
+#import "Constants.h"
+// View
+#import "TableViewDownloadingCell.h"
 // Lib
 #import "VMPythonRemoteSourceDownloader.h"
 #import "VMRemoteSourceDownloader.h"
@@ -33,8 +36,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
 
-@property (nonatomic, strong, nullable) VMRemoteSourceOptionModel *selectedItem;
-@property (nonatomic, copy,   nullable) NSString *currentTaskIdentifier;
+@property (nonatomic, strong, nullable) VMRemoteSourceOptionModel *currentDownloadingItem;
+@property (nonatomic, strong, nullable) TableViewDownloadingCell  *currentDownloadingCell;
 
 #ifdef DEBUG
 
@@ -170,27 +173,27 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 - (void)_refreshPauseOrResumeCurrentButton
 {
   NSString *title;
-  if (nil == self.selectedItem) {
+  if (nil == self.currentDownloadingItem) {
     _pauseOrResumeCurrentButton.enabled = NO;
     title = @"Pause Current";
   } else {
     _pauseOrResumeCurrentButton.enabled = YES;
-    title = (nil == self.currentTaskIdentifier ? @"Resume Current" : @"Pause Current");
+    title = (nil == self.currentDownloadingItem.taskIdentifier ? @"Resume Current" : @"Pause Current");
   }
   [_pauseOrResumeCurrentButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (void)_didPressPauseOrResumeCurrentButton
 {
-  if (nil == self.currentTaskIdentifier) {
-    if (nil == self.selectedItem) {
+  if (nil == self.currentDownloadingItem.taskIdentifier) {
+    if (nil == self.currentDownloadingItem) {
       [self _presentAlertWithTitle:nil message:@"No selected item to resume task, please select one."];
     } else {
-      self.currentTaskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.selectedItem];
+      self.currentDownloadingItem.taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.currentDownloadingItem];
     }
   } else {
-    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:self.currentTaskIdentifier];
-    self.currentTaskIdentifier = nil;
+    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:self.currentDownloadingItem.taskIdentifier];
+    self.currentDownloadingItem.taskIdentifier = nil;
   }
   [self _refreshPauseOrResumeCurrentButton];
 }
@@ -238,19 +241,23 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   static NSString * const cellIdentifier = @"cell";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    cell.contentView.backgroundColor = [UIColor systemBackgroundColor];
-    cell.textLabel.textColor       = [UIColor labelColor];
-    cell.detailTextLabel.textColor = [UIColor secondaryLabelColor];
-  }
   
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
-  cell.textLabel.text = item.qualityText;
-  cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", item.mediaTypeText, item.sizeText];
-  
-  return cell;
+  if (self.currentDownloadingItem == item) {
+    return self.currentDownloadingCell;
+    
+  } else {
+    TableViewDownloadingCell *cell = (TableViewDownloadingCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+      cell = [[TableViewDownloadingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.nameLabel.text = item.qualityText;
+    cell.infoLabel.text = [NSString stringWithFormat:@"%@, %@", item.mediaTypeText, item.sizeText];
+    cell.downloadProcessButton.status   = item.status;
+    cell.downloadProcessButton.progress = item.progress;
+    
+    return cell;
+  }
 }
 
 #pragma mark - UITableViewDelegate
@@ -267,15 +274,17 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 // Asks the delegate for the height to use for a row in a specified location.
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  return UITableViewAutomaticDimension;
+  return kTableViewCellHeight;
 }
 
 // Tells the delegate that the specified row is now selected.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  self.selectedItem = self.sourceItem.options[indexPath.row];
+  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  self.currentTaskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.selectedItem];
+  NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+  item.taskIdentifier = taskIdentifier;
+  item.status = kVMPythonDownloadProcessStatusOfWaiting;
   
   /*
   if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
@@ -293,20 +302,70 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 - (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
 {
   VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
+  
+  NSInteger row;
+  VMRemoteSourceOptionModel *item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
+  if (item) {
+    item.taskIdentifier = nil;
+    item.status = kVMPythonDownloadProcessStatusOfDownloading;
+    self.currentDownloadingItem = item;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+      self.currentDownloadingCell = [self.tableView cellForRowAtIndexPath:indexPath];
+      self.currentDownloadingCell.downloadProcessButton.status   = item.status;
+      self.currentDownloadingCell.downloadProcessButton.progress = item.progress;
+    });
+  }
 }
 
 - (void)vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
 {
   VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
+  self.currentDownloadingItem.progress = progress;
+  self.currentDownloadingCell.downloadProcessButton.progress = progress;
 }
 
 - (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
 {
   VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
   
+  VMRemoteSourceOptionModel *item;
+  NSInteger row = NSNotFound;
+  
+  if (self.currentDownloadingItem) {
+    if (self.currentDownloadingItem.taskIdentifier && [self.currentDownloadingItem.taskIdentifier isEqualToString:taskIdentifier]) {
+      item = self.currentDownloadingItem;
+      row = [self.sourceItem.options indexOfObject:item];
+    }
+    self.currentDownloadingItem = nil;
+  }
+  self.currentDownloadingCell = nil;
+  
+  if (nil == item) {
+    item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
+  }
+  
   if (errorMessage) {
+    if (item) {
+      item.taskIdentifier = nil;
+      item.status = kVMPythonDownloadProcessStatusOfDownloadFailed;
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
       [self _presentAlertWithTitle:nil message:errorMessage];
+    });
+    
+  } else {
+    if (item) {
+      item.taskIdentifier = nil;
+      item.status = kVMPythonDownloadProcessStatusOfDownloadSucceeded;
+    }
+  }
+  
+  if (NSNotFound != row) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+      [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     });
   }
 }

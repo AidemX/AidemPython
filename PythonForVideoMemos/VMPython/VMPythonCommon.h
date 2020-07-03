@@ -41,4 +41,15 @@
   //🎾
 #endif
 
+
+typedef NS_ENUM(NSInteger, VMPythonDownloadProcessStatus) {
+  kVMPythonDownloadProcessStatusUnknown = 0,
+  kVMPythonDownloadProcessStatusNone,
+  kVMPythonDownloadProcessStatusOfWaiting,
+  kVMPythonDownloadProcessStatusOfPaused,
+  kVMPythonDownloadProcessStatusOfDownloading,
+  kVMPythonDownloadProcessStatusOfDownloadSucceeded,
+  kVMPythonDownloadProcessStatusOfDownloadFailed,
+};
+
 #endif /* VMPythonCommon_h */

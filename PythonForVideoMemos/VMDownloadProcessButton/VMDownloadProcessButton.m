@@ -9,7 +9,7 @@
 #import "VMDownloadProcessButton.h"
 
 
-static CGFloat const kVMDownloadProcessLineWidth_ = 3.f;
+static CGFloat const kVMDownloadProcessLineWidth_ = 2.f;
 
 
 @interface VMDownloadProcessButton ()
@@ -28,6 +28,8 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 3.f;
 {
   CGRect frame = (CGRect){CGPointZero, size};
   if (self = [super initWithFrame:frame]) {
+    _status = kVMPythonDownloadProcessStatusUnknown;
+    
     CGFloat widthInHalf  = size.width / 2;
     CGFloat heightInHalf = size.height / 2;
     CGPoint center = CGPointMake(widthInHalf, heightInHalf);
@@ -41,7 +43,7 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 3.f;
       shapeLayer.bounds = frame;
       shapeLayer.opaque = YES;
       shapeLayer.fillColor = [UIColor clearColor].CGColor;
-      shapeLayer.strokeColor = [UIColor secondarySystemBackgroundColor].CGColor;
+      shapeLayer.strokeColor = [UIColor tertiarySystemBackgroundColor].CGColor;
       shapeLayer.lineWidth = kVMDownloadProcessLineWidth_;
       shapeLayer.lineCap = kCALineCapRound;
       
@@ -81,7 +83,10 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 3.f;
     
     _progressLayer.strokeEnd = 0.f;
     
-    _imageView = [[UIImageView alloc] initWithFrame:frame];
+    CGFloat iconSizeLength = radius;
+    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((size.width  - iconSizeLength) / 2,
+                                                               (size.height - iconSizeLength) / 2,
+                                                               iconSizeLength, iconSizeLength)];
     if (tintColor) {
       _imageView.tintColor = tintColor;
     }
@@ -93,19 +98,26 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 3.f;
 
 #pragma mark - Setter
 
-- (void)setStatus:(VMDownloadProcessButtonStatus)status
+- (void)setStatus:(VMPythonDownloadProcessStatus)status
 {
-  if (_status != status) {
+  if (_status == status) {
     return;
   }
   _status = status;
   
-  if (kVMDownloadProcessButtonStatusOfWaiting == status) {
-    _imageView.image = [UIImage systemImageNamed:@"xmark"];
-  } else if (kVMDownloadProcessButtonStatusOfPaused == status) {
-    _imageView.image = [UIImage systemImageNamed:@"arrow.clockwise"];
-  } else if (kVMDownloadProcessButtonStatusOfDownloading == status) {
-    _imageView.image = [UIImage systemImageNamed:@"pause.fill"];
+  if (kVMPythonDownloadProcessStatusNone == status || kVMPythonDownloadProcessStatusOfDownloadSucceeded == status) {
+    self.hidden = YES;
+  } else {
+    self.hidden = NO;
+    if (kVMPythonDownloadProcessStatusOfWaiting == status) {
+      _imageView.image = [UIImage systemImageNamed:@"xmark"];
+    } else if (kVMPythonDownloadProcessStatusOfPaused == status) {
+      _imageView.image = [UIImage systemImageNamed:@"arrow.clockwise"];
+    } else if (kVMPythonDownloadProcessStatusOfDownloading == status) {
+      _imageView.image = [UIImage systemImageNamed:@"pause.fill"];
+    } else if (kVMPythonDownloadProcessStatusOfDownloadFailed == status) {
+      _imageView.image = [UIImage systemImageNamed:@"exclamationmark"];
+    }
   }
 }
 

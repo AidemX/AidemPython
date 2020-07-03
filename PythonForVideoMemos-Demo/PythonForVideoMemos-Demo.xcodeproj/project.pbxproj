@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */; };
+		7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */; };
+		7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD824AF1E1700B3F5EB /* Constants.m */; };
 		7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57824A42AAB00CC0889 /* AppDelegate.m */; };
 		7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57B24A42AAB00CC0889 /* SceneDelegate.m */; };
 		7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57E24A42AAB00CC0889 /* ViewController.m */; };
@@ -57,6 +59,10 @@
 /* Begin PBXFileReference section */
 		7F08BBD124AF0F6000B3F5EB /* VMDownloadProcessButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMDownloadProcessButton.h; sourceTree = "<group>"; };
 		7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMDownloadProcessButton.m; sourceTree = "<group>"; };
+		7F08BBD424AF1D4B00B3F5EB /* TableViewDownloadingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewDownloadingCell.h; sourceTree = "<group>"; };
+		7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDownloadingCell.m; sourceTree = "<group>"; };
+		7F08BBD724AF1E1700B3F5EB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		7F08BBD824AF1E1700B3F5EB /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PythonForVideoMemos-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4CB57724A42AAB00CC0889 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7F4CB57824A42AAB00CC0889 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -175,8 +181,12 @@
 				7F4CB57824A42AAB00CC0889 /* AppDelegate.m */,
 				7F4CB57A24A42AAB00CC0889 /* SceneDelegate.h */,
 				7F4CB57B24A42AAB00CC0889 /* SceneDelegate.m */,
+				7F08BBD724AF1E1700B3F5EB /* Constants.h */,
+				7F08BBD824AF1E1700B3F5EB /* Constants.m */,
 				7F4CB57D24A42AAB00CC0889 /* ViewController.h */,
 				7F4CB57E24A42AAB00CC0889 /* ViewController.m */,
+				7F08BBD424AF1D4B00B3F5EB /* TableViewDownloadingCell.h */,
+				7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */,
 				7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */,
 				7F4CB5AD24A42C7E00CC0889 /* Libs */,
 				7F4CBD5A24A42D6200CC0889 /* Frameworks */,
@@ -458,6 +468,8 @@
 				7F4CBD6224A43E6900CC0889 /* VMPythonRemoteSourceDownloader.m in Sources */,
 				7FFEE25124A9C74C0071144F /* VMPythonDownloadingOperation.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
+				7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */,
+				7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
 				7FFEE27624AC1E840071144F /* VMPython.m in Sources */,
 				7FFEE27824AC1E840071144F /* VMPythonVideoMemosModule.m in Sources */,

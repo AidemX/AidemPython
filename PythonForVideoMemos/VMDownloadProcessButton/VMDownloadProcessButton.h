@@ -8,19 +8,13 @@
 
 @import UIKit;
 
+#import "VMPythonCommon.h"
+
 NS_ASSUME_NONNULL_BEGIN
-
-typedef NS_ENUM(NSInteger, VMDownloadProcessButtonStatus) {
-  kVMDownloadProcessButtonStatusNone = 0,
-  kVMDownloadProcessButtonStatusOfWaiting,
-  kVMDownloadProcessButtonStatusOfPaused,
-  kVMDownloadProcessButtonStatusOfDownloading,
-};
-
 
 @interface VMDownloadProcessButton : UIControl
 
-@property (nonatomic, assign) VMDownloadProcessButtonStatus status;
+@property (nonatomic, assign) VMPythonDownloadProcessStatus status;
 @property (nonatomic, assign) float progress;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
