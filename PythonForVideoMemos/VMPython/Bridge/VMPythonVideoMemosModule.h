@@ -30,8 +30,6 @@ typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullabl
                      inFormat:(nullable NSString *)format
                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
 
-//- (void)stopDownloadingWithTaskProgressFilePath:(NSString *)taskProgressFilePath;
-
 @end
 
 NS_ASSUME_NONNULL_END

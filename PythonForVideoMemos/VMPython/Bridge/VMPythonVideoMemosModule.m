@@ -222,18 +222,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   //   one thread to hold the control of the Python interpreter.
   // REF: https://realpython.com/python-gil/
   //PyGILState_STATE pyGILState = PyGILState_Ensure();
-  
   NSLog(@"Start Downloading Source w/ URL: %@ ...", urlString);
-  
-  /*
-  VMPythonDownloadingOperation *task;
-  if (title && progress) {
-    task = [[VMPythonDownloadingOperation alloc] initWithBaseSavePath:self.savePath title:title];
-    task.urlString = urlString;
-    [self enqueueDownloadingTask:task];
-    
-    [task resume];
-  }*/
   
   NSString *errorMessage = nil;
   
@@ -261,19 +250,13 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     }
     
   } else {
+#ifdef DEBUG
     PyObject_Print(result, stdout, Py_PRINT_RAW);
+#endif // END #ifdef DEBUG
     Py_DECREF(result);
   }
   
-  //PyRun_SimpleString("print('\\n')");
   NSLog(@"\nReaches `-downloadWithURLString:` End.");
-  
-  /*
-  if (task) {
-    [task finish];
-    [self.taskRef removeObjectForKey:task.urlString];
-  }*/
-  
   //PyGILState_Release(pyGILState);
   
   if (completion) {
