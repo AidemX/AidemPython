@@ -54,7 +54,6 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(NSString *)format
-                            title:(NSString *)title
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
                  progressFilePath:(NSString *)progressFilePath
 {

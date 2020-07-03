@@ -259,7 +259,7 @@
   }];
 }
 
-- (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format title:(NSString *)title
+- (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format
 {
   if (!self.downloadingOperationQueue) {
     self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
@@ -271,7 +271,6 @@
   
   VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
                                                                                            inFormat:format
-                                                                                              title:title
                                                                              pythonVideoMemosModule:self.pythonVideoMemosModule
                                                                                    progressFilePath:self.progressFilePath];
   if (self.suspended) {
@@ -285,7 +284,7 @@
 
 - (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
 {
-  return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format title:sourceItem.title];
+  return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format];
 }
 
 #pragma mark - Public (Task Management)
