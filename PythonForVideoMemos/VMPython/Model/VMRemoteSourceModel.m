@@ -10,4 +10,22 @@
 
 @implementation VMRemoteSourceModel
 
+#pragma mark - Public
+
+- (VMRemoteSourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier
+{
+  VMRemoteSourceOptionModel *matchedOption = nil;
+  NSInteger row = 0;
+  for (VMRemoteSourceOptionModel *option in self.options) {
+    if (option.taskIdentifier && [option.taskIdentifier isEqualToString:taskIdentifier]) {
+      matchedOption = option;
+      break;
+    }
+    ++row;
+  }
+  *matchedRow = (nil == matchedOption ? NSNotFound : row);
+  
+  return matchedOption;
+}
+
 @end

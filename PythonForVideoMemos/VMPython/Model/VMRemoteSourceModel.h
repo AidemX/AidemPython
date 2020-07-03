@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, nullable) NSArray <VMRemoteSourceOptionModel *> *options;
 
+- (VMRemoteSourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier;
+
 @end
 
 NS_ASSUME_NONNULL_END
