@@ -19,7 +19,8 @@ class VMDownloadingProgress:
         return os.path.exists(self.progress_filepath)
         
     def update(self):
-        percent = round(self.received * 100 / self.total_size, 1)
+        #percent = round(self.received * 100 / self.total_size, 1)
+        percent = round(self.received / self.total_size, 2)
         #sys.stdout.write('\r' + format(percent), flush=True)
         print(format(percent))
         
