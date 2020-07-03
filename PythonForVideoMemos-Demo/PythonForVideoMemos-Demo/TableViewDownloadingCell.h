@@ -14,11 +14,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol TableViewDownloadingCellDelegate;
+
+
 @interface TableViewDownloadingCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic, strong) VMDownloadProcessButton *downloadProcessButton;
+
+@property (nonatomic, weak) id <TableViewDownloadingCellDelegate> delegate;
+
+@end
+
+
+@protocol TableViewDownloadingCellDelegate <NSObject>
+
+@required
+- (void)didPressDownloadProcessButtonOnTableViewDownloadingCell:(TableViewDownloadingCell *)cell;
 
 @end
 

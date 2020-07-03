@@ -32,6 +32,7 @@
     
     CGSize size = CGSizeMake(kTableViewCellDownloadProcessButtonSizeLength, kTableViewCellDownloadProcessButtonSizeLength);
     _downloadProcessButton = [[VMDownloadProcessButton alloc] initWithSize:size padding:kTableViewCellDownloadProcessButtonPadding tintColor:nil];
+    [_downloadProcessButton addTarget:self action:@selector(_didPressDownloadProcessButton) forControlEvents:UIControlEventTouchUpInside];
     _downloadProcessButton.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_downloadProcessButton];
     
@@ -60,6 +61,13 @@
   [super setSelected:selected animated:animated];
   
   // Configure the view for the selected state
+}
+
+#pragma mark - Private
+
+- (void)_didPressDownloadProcessButton
+{
+  [self.delegate didPressDownloadProcessButtonOnTableViewDownloadingCell:self];
 }
 
 @end

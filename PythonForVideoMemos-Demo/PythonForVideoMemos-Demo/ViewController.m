@@ -26,6 +26,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 @interface ViewController () <
   UITableViewDataSource,
   UITableViewDelegate,
+  TableViewDownloadingCellDelegate,
   VMPythonRemoteSourceDownloaderDelegate
 >
 
@@ -250,7 +251,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     TableViewDownloadingCell *cell = (TableViewDownloadingCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
       cell = [[TableViewDownloadingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+      cell.delegate = self;
     }
+    
     cell.nameLabel.text = item.qualityText;
     cell.infoLabel.text = [NSString stringWithFormat:@"%@, %@", item.mediaTypeText, item.sizeText];
     cell.downloadProcessButton.status   = item.status;
@@ -297,6 +300,38 @@ static CGFloat const kActionButtonHeight_ = 44.f;
    */
 }
 
+#pragma mark - TableViewDownloadingCellDelegate
+
+- (void)didPressDownloadProcessButtonOnTableViewDownloadingCell:(TableViewDownloadingCell *)cell
+{
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+  if (nil == indexPath) {
+    return;
+  }
+  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  if (kVMPythonDownloadProcessStatusOfWaiting == item.status || kVMPythonDownloadProcessStatusOfDownloading == item.status) {
+    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
+    // Pausing downloading task will make it end, so let's reset the `taskIdentifier`.
+    //   And when resume the task, will create a new task instead.
+    if (kVMPythonDownloadProcessStatusOfDownloading == item.status) {
+      item.taskIdentifier = nil;
+    }
+    cell.downloadProcessButton.status =
+    item.status = kVMPythonDownloadProcessStatusOfPaused;
+    
+  } else if (kVMPythonDownloadProcessStatusOfPaused == item.status || kVMPythonDownloadProcessStatusOfDownloadFailed == item.status) {
+    cell.downloadProcessButton.status =
+    item.status = kVMPythonDownloadProcessStatusOfWaiting;
+    
+    if (item.taskIdentifier) {
+      [[VMPythonRemoteSourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
+    } else {
+      NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+      item.taskIdentifier = taskIdentifier;
+    }
+  }
+}
+
 #pragma mark - VMPythonRemoteSourceDownloaderDelegate
 
 - (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
@@ -306,7 +341,6 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   NSInteger row;
   VMRemoteSourceOptionModel *item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
   if (item) {
-    item.taskIdentifier = nil;
     item.status = kVMPythonDownloadProcessStatusOfDownloading;
     self.currentDownloadingItem = item;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -349,6 +383,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     if (item) {
       item.taskIdentifier = nil;
       item.status = kVMPythonDownloadProcessStatusOfDownloadFailed;
+      item.progress = 0.f;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
