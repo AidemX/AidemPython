@@ -23,6 +23,7 @@ sys.stderr = vm_std()
 '''
 
 
+# Check source and return json as result
 def check_source(url, proxy=None, username=None, password=None, debug=0):
     if debug:
         info = {
@@ -48,11 +49,11 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
 
     # Print extracted URLs in JSON format in debug mode
     if debug:
-        sys.argv = ['you-get','--json','--debug',url] 
+        sys.argv = ['you-get','--json','--debug',url]
     else:
         sys.argv = ['you-get','--json',          url]
     you_get.main()
-    
+
     # Redirect again the std output to screen
     sys.stdout = old_stdout
 
@@ -67,28 +68,16 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     if debug:
         print('cmd: %s' % sys.argv)
         print('[ky_source_downloader.py]:\nJSON RESULT: %s' % result)
-    
-    return result
-	
 
+    return result
+
+
+# Download & save video to path
 def download_source(path, url, name=None, fmt=None, proxy=None, username=None, password=None, debug=0):
-    info = {
-		'url':url,
-        'format':fmt,
-		'proxy':proxy,
-		'username':username,
-		'password':password,
-        'path':path
-	}
-    result = '[ky_source_downloader.py]: Download source w/ %s\n' % info
-    #print('[ky_source_downloader.py]: Download source w/ args:\n%s\n' % info)
-    print(result)
-   
-    # Download & save video to path
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
-   
+
     # Full version: ['you-get','--debug','-F',fmt,'-o',path,url]
     argv_list = ['you-get']
     if debug:
@@ -102,11 +91,20 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
     argv_list.extend(['-o',path,url])
 
     if debug:
-        print('cmd: %s' % argv_list)
+        info = {
+            'url':url,
+            'format':fmt,
+            'proxy':proxy,
+            'username':username,
+            'password':password,
+            'path':path
+	    }
+        print('[ky_source_downloader.py] download_source(): Download source w/\ncmd: %s\ninfo: %s' % argv_list, info)
+
     sys.argv = argv_list
     you_get.main()
-    
-    return result
+
+    return '[ky_source_downloader.py]: DONE.'
 
 
 def stop_downloading(taskProgressFilePath, debug=0):
