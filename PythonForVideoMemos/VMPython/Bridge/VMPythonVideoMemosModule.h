@@ -28,6 +28,7 @@ typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullabl
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(nullable NSString *)format
+                preferredName:(nullable NSString *)preferredName
                    completion:(nullable VMPythonVideoMemosModuleDownloadingCompletion)completion;
 
 @end

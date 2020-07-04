@@ -71,7 +71,7 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     return result
 	
 
-def download_source(path, url, fmt=None, proxy=None, username=None, password=None, debug=0):
+def download_source(path, url, name=None, fmt=None, proxy=None, username=None, password=None, debug=0):
     info = {
 		'url':url,
         'format':fmt,
@@ -88,7 +88,21 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
+    
+    argv_list = ['you-get']
+    if debug:
+        argv_list.append('--debug')
+    if name:
+        argv_list.append('-O')
+        argv_list.append(name)
+    if fmt:
+        argv_list.append('-F')
+        argv_list.append(fmt)
+    argv_list.extend(['-o',path,url])
 
+    sys.argv = argv_list
+
+    '''
     if debug:
         if not fmt:
             sys.argv = ['you-get','--debug',         '-o',path,url] 
@@ -99,7 +113,7 @@ def download_source(path, url, fmt=None, proxy=None, username=None, password=Non
             sys.argv = ['you-get',         '-o',path,url] 
         else:
             sys.argv = ['you-get','-F',fmt,'-o',path,url]
-
+    '''
     you_get.main()
     
     if debug:

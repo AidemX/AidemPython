@@ -29,6 +29,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 
 @property (nonatomic, copy)           NSString *urlString;
 @property (nonatomic, copy, nullable) NSString *format;
+@property (nonatomic, copy, nullable) NSString *preferredName;
 
 @property (nonatomic, copy,   nullable) NSString *progressFilePath;
 @property (nonatomic, strong, nullable) NSTimer  *progressTimer;
@@ -54,12 +55,14 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(NSString *)format
+                    preferredName:(NSString *)preferredName
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
                  progressFilePath:(NSString *)progressFilePath
 {
   if (self = [super init]) {
-    self.urlString = urlString;
-    self.format    = format;
+    self.urlString     = urlString;
+    self.format        = format;
+    self.preferredName = preferredName;
     
     self.pythonVideoMemosModule = pythonVideoMemosModule;
     self.progressFilePath = progressFilePath;
@@ -123,6 +126,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
   };
   [self.pythonVideoMemosModule downloadWithURLString:self.urlString
                                             inFormat:self.format
+                                       preferredName:self.preferredName
                                           completion:completion];
 }
 

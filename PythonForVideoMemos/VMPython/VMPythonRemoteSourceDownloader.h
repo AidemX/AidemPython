@@ -42,7 +42,7 @@ typedef void (^VMPythonRemoteSourceDownloaderSourceCheckingCompletion)(VMRemoteS
  *
  * @return Task identifier of the downloading operation.
  */
-- (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format;
+- (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format preferredName:(nullable NSString *)preferredName;
 - (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(nullable VMRemoteSourceOptionModel *)optionItem;
 
 /*

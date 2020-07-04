@@ -215,6 +215,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(NSString *)format
+                preferredName:(NSString *)preferredName
                    completion:(VMPythonVideoMemosModuleDownloadingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
@@ -227,17 +228,18 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
   
   NSString *errorMessage = nil;
   
-  const char *url  = [urlString UTF8String];
   const char *path = [self.savePath UTF8String];
+  const char *url  = [urlString UTF8String];
+  const char *name = (nil == preferredName ? "" : [preferredName UTF8String]);
   
   PyObject *result;
   if (nil == format) {
-    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
-                                 path, url, "",        "a_proxy", "a_username", "a_pwd", self.debug);
+    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(sssssssi)",
+                                 path, url, name, "",        "a_proxy", "a_username", "a_pwd", self.debug);
   } else {
     const char *formatArg = [format UTF8String];
-    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(ssssssi)",
-                                 path, url, formatArg, "a_proxy", "a_username", "a_pwd", self.debug);
+    result = PyObject_CallMethod(self.pySourceDownloaderModule, kSourceDownloaderMethodOfDownloadSource_, "(sssssssi)",
+                                 path, url, name, formatArg, "a_proxy", "a_username", "a_pwd", self.debug);
   }
   
   if (result == NULL) {

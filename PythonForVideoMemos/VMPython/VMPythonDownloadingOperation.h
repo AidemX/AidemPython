@@ -30,6 +30,7 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
+                    preferredName:(nullable NSString *)preferredName
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
                  progressFilePath:(NSString *)progressFilePath;
 
