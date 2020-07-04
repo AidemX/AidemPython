@@ -88,7 +88,8 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
-    
+   
+    # Full version: ['you-get','--debug','-F',fmt,'-o',path,url]
     argv_list = ['you-get']
     if debug:
         argv_list.append('--debug')
@@ -100,25 +101,11 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
         argv_list.append(fmt)
     argv_list.extend(['-o',path,url])
 
-    sys.argv = argv_list
-
-    '''
     if debug:
-        if not fmt:
-            sys.argv = ['you-get','--debug',         '-o',path,url] 
-        else:
-            sys.argv = ['you-get','--debug','-F',fmt,'-o',path,url]
-    else:
-        if not fmt:
-            sys.argv = ['you-get',         '-o',path,url] 
-        else:
-            sys.argv = ['you-get','-F',fmt,'-o',path,url]
-    '''
+        print('cmd: %s' % argv_list)
+    sys.argv = argv_list
     you_get.main()
     
-    if debug:
-        print('cmd: %s' % sys.argv)
-
     return result
 
 
