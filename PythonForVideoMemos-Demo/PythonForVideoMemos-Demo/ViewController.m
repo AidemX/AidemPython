@@ -31,7 +31,6 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 >
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIButton    *pauseOrResumeCurrentButton;
 @property (nonatomic, strong) UIButton    *suspendOrResumeAllButton;
 
 @property (nonatomic, copy) NSString *urlString;
@@ -41,9 +40,6 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 @property (nonatomic, strong, nullable) TableViewDownloadingCell  *currentDownloadingCell;
 
 #ifdef DEBUG
-
-- (void)_refreshPauseOrResumeCurrentButton;
-- (void)_didPressPauseOrResumeCurrentButton;
 
 - (void)_refreshSuspendOrResumeAllButton;
 - (void)_didPressSuspendOrResumeAllButton;
@@ -87,21 +83,12 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     tableView;
   });
   
-  _pauseOrResumeCurrentButton = [UIButton buttonWithType:UIButtonTypeSystem];
-  _pauseOrResumeCurrentButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
-  _pauseOrResumeCurrentButton.layer.cornerRadius = 5.f;
-  [_pauseOrResumeCurrentButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
-  [_pauseOrResumeCurrentButton setTitle:@"Pause Current" forState:UIControlStateNormal];
-  [_pauseOrResumeCurrentButton addTarget:self action:@selector(_didPressPauseOrResumeCurrentButton) forControlEvents:UIControlEventTouchUpInside];
-  _pauseOrResumeCurrentButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_pauseOrResumeCurrentButton];
-  
   _suspendOrResumeAllButton = [UIButton buttonWithType:UIButtonTypeSystem];
   _suspendOrResumeAllButton.backgroundColor = [UIColor secondarySystemBackgroundColor];
   _suspendOrResumeAllButton.layer.cornerRadius = 5.f;
   [_suspendOrResumeAllButton setTitleColor:[UIColor labelColor] forState:UIControlStateNormal];
-  [_suspendOrResumeAllButton setTitle:@"Suspend All" forState:UIControlStateNormal];
   [_suspendOrResumeAllButton addTarget:self action:@selector(_didPressSuspendOrResumeAllButton) forControlEvents:UIControlEventTouchUpInside];
+  [self _refreshSuspendOrResumeAllButton];
   _suspendOrResumeAllButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_suspendOrResumeAllButton];
   
@@ -109,17 +96,12 @@ static CGFloat const kActionButtonHeight_ = 44.f;
    @[[_tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
      [_tableView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
      [_tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-     [_tableView.bottomAnchor constraintEqualToAnchor:_pauseOrResumeCurrentButton.topAnchor constant:-15.f],
+     [_tableView.bottomAnchor constraintEqualToAnchor:_suspendOrResumeAllButton.topAnchor constant:-15.f],
      
-     [_pauseOrResumeCurrentButton.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:15.f],
-     [_pauseOrResumeCurrentButton.rightAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:-5.f],
-     [_pauseOrResumeCurrentButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
-     [_pauseOrResumeCurrentButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
-     
-     [_suspendOrResumeAllButton.leftAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:5.f],
+     [_suspendOrResumeAllButton.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:15.f],
      [_suspendOrResumeAllButton.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-15.f],
      [_suspendOrResumeAllButton.heightAnchor constraintEqualToConstant:kActionButtonHeight_],
-     [_suspendOrResumeAllButton.bottomAnchor constraintEqualToAnchor:_pauseOrResumeCurrentButton.bottomAnchor]
+     [_suspendOrResumeAllButton.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
    ]];
 }
 
@@ -171,39 +153,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 #pragma mark - Private
 
-- (void)_refreshPauseOrResumeCurrentButton
-{
-  NSString *title;
-  if (nil == self.currentDownloadingItem) {
-    _pauseOrResumeCurrentButton.enabled = NO;
-    title = @"Pause Current";
-  } else {
-    _pauseOrResumeCurrentButton.enabled = YES;
-    title = (nil == self.currentDownloadingItem.taskIdentifier ? @"Resume Current" : @"Pause Current");
-  }
-  [_pauseOrResumeCurrentButton setTitle:title forState:UIControlStateNormal];
-}
-
-- (void)_didPressPauseOrResumeCurrentButton
-{
-  if (nil == self.currentDownloadingItem.taskIdentifier) {
-    if (nil == self.currentDownloadingItem) {
-      [self _presentAlertWithTitle:nil message:@"No selected item to resume task, please select one."];
-    } else {
-      self.currentDownloadingItem.taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
-                                                                                                                optionItem:self.currentDownloadingItem
-                                                                                                             preferredName:nil];
-    }
-  } else {
-    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:self.currentDownloadingItem.taskIdentifier];
-    self.currentDownloadingItem.taskIdentifier = nil;
-  }
-  [self _refreshPauseOrResumeCurrentButton];
-}
-
 - (void)_refreshSuspendOrResumeAllButton
 {
-  NSString *title = ([VMPythonRemoteSourceDownloader sharedInstance].suspended ? @"Resume All" : @"Suspend All");
+  NSString *title = ([VMPythonRemoteSourceDownloader sharedInstance].suspended ? @"Resume Downloading Queue" : @"Suspend Downloading Queue");
   [_suspendOrResumeAllButton setTitle:title forState:UIControlStateNormal];
 }
 
