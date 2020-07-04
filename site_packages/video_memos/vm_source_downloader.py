@@ -25,15 +25,6 @@ sys.stderr = vm_std()
 
 # Check source and return json as result
 def check_source(url, proxy=None, username=None, password=None, debug=0):
-    if debug:
-        info = {
-		    'url':url,
-		    'proxy':proxy,
-		    'username':username,
-		    'password':password
-	    }
-        print('[ky_source_downloader.py]: Check source w/ args:\n%s\n' % info)
-
     # Store the reference, in case you want to show things again in standard output
     old_stdout = sys.stdout
 
@@ -43,10 +34,6 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
 
     # Here we can call anything we like, like external modules, and everything
     #   that they will send to standard output will be stored on "temp_result"
-    #sys.argv = ['you-get','-h'] # Show help
-    #sys.argv = ['you-get','-i',url] # List available video w/ formats
-    #sys.argv = ['you-get','-i','--debug',url] # List available video w/ formats in debug mode
-
     # Print extracted URLs in JSON format in debug mode
     if debug:
         sys.argv = ['you-get','--json','--debug',url]
@@ -66,8 +53,13 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
     #sys.stdout.flush()
 
     if debug:
-        print('cmd: %s' % sys.argv)
-        print('[ky_source_downloader.py]:\nJSON RESULT: %s' % result)
+        info = {
+            'url':url,
+            'proxy':proxy,
+            'username':username,
+            'password':password
+        }
+        print('[ky_source_downloader.py] check_source(): Check source w/\ncmd: %s\ninfo: %s\nJSON RESULT: %s' % sys.argv, info, result)
 
     return result
 
