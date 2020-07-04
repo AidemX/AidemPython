@@ -59,7 +59,8 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
             'username':username,
             'password':password
         }
-        print('[ky_source_downloader.py] check_source(): Check source w/\ncmd: %s\ninfo: %s\nJSON RESULT: %s' % sys.argv, info, result)
+        print('[ky_source_downloader.py] check_source(): Check source w/\n- cmd: %s\n- info: %s' % (sys.argv, info))
+    print('[ky_source_downloader.py] check_source(): JSON RESULT: %s' % result)
 
     return result
 
@@ -91,7 +92,7 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
             'password':password,
             'path':path
 	    }
-        print('[ky_source_downloader.py] download_source(): Download source w/\ncmd: %s\ninfo: %s' % argv_list, info)
+        print('[ky_source_downloader.py] download_source(): Download source w/\n- cmd: %s\n- info: %s' % (argv_list, info))
 
     sys.argv = argv_list
     you_get.main()
