@@ -38,8 +38,11 @@
  */
 @property (nonatomic, copy) NSString *progressFilePath;
 
+@property (nonatomic, strong, nullable) NSCharacterSet *invalidFilenameCharacterSet;
+
 #ifdef DEBUG
 
+- (NSString *)_validFilenameFromName:(NSString *)name;
 - (NSString *)_filenameFromURLString:(NSString *)urlString;
 - (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
 
@@ -78,7 +81,30 @@
   return self;
 }
 
+#pragma mark - Getter
+
+- (NSCharacterSet *)invalidFilenameCharacterSet
+{
+  if (!_invalidFilenameCharacterSet) {
+    NSMutableCharacterSet *characterSet = [NSMutableCharacterSet characterSetWithCharactersInString:@":/"];
+    [characterSet formUnionWithCharacterSet:[NSCharacterSet newlineCharacterSet]];
+    [characterSet formUnionWithCharacterSet:[NSCharacterSet illegalCharacterSet]];
+    [characterSet formUnionWithCharacterSet:[NSCharacterSet controlCharacterSet]];
+    _invalidFilenameCharacterSet = characterSet;
+  }
+  return _invalidFilenameCharacterSet;
+}
+
 #pragma mark - Private
+
+- (NSString *)_validFilenameFromName:(NSString *)name
+{
+  if (nil == name) {
+    return @"";
+  } else {
+    return [[name componentsSeparatedByCharactersInSet:self.invalidFilenameCharacterSet] componentsJoinedByString:@"_"];
+  }
+}
 
 - (NSString *)_filenameFromURLString:(NSString *)urlString
 {
@@ -290,7 +316,11 @@
 
 - (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
 {
-  return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format preferredName:sourceItem.title];
+  NSString *preferredName = [self _validFilenameFromName:sourceItem.title];
+  if (nil != optionItem.format) {
+    preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
+  }
+  return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format preferredName:preferredName];
 }
 
 #pragma mark - Public (Task Management)
