@@ -290,7 +290,9 @@
   }];
 }
 
-- (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(NSString *)format preferredName:(NSString *)preferredName
+- (NSString *)downloadWithURLString:(NSString *)urlString
+                           inFormat:(NSString *)format
+                      preferredName:(NSString *)preferredName
 {
   if (!self.downloadingOperationQueue) {
     self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
@@ -314,11 +316,15 @@
   return operation.name;
 }
 
-- (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
+- (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
+                          optionItem:(VMRemoteSourceOptionModel *)optionItem
+                       preferredName:(NSString *)preferredName
 {
-  NSString *preferredName = [self _validFilenameFromName:sourceItem.title];
-  if (nil != optionItem.format) {
-    preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
+  if (nil == preferredName) {
+    preferredName = [self _validFilenameFromName:sourceItem.title];
+    if (nil != optionItem.format) {
+      preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
+    }
   }
   return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format preferredName:preferredName];
 }

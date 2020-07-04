@@ -190,7 +190,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     if (nil == self.currentDownloadingItem) {
       [self _presentAlertWithTitle:nil message:@"No selected item to resume task, please select one."];
     } else {
-      self.currentDownloadingItem.taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:self.currentDownloadingItem];
+      self.currentDownloadingItem.taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+                                                                                                                optionItem:self.currentDownloadingItem
+                                                                                                             preferredName:nil];
     }
   } else {
     [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:self.currentDownloadingItem.taskIdentifier];
@@ -285,19 +287,11 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 {
   VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+  NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+                                                                                          optionItem:item
+                                                                                       preferredName:nil];
   item.taskIdentifier = taskIdentifier;
   item.status = kVMPythonDownloadProcessStatusOfWaiting;
-  
-  /*
-  if (nil == [VMRemoteSourceDownloader sharedInstance].baseSavePathURL) {
-    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    NSURL *baseSavePathURL = [documentsDirectoryURL URLByAppendingPathComponent:kVideosFolderName_];
-    [VMRemoteSourceDownloader sharedInstance].baseSavePathURL = baseSavePathURL;
-    [VMRemoteSourceDownloader sharedInstance].debugMode = debugMode;
-  }
-  [[VMRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
-   */
 }
 
 #pragma mark - TableViewDownloadingCellDelegate
@@ -326,7 +320,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     if (item.taskIdentifier) {
       [[VMPythonRemoteSourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
     } else {
-      NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem optionItem:item];
+      NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+                                                                                              optionItem:item
+                                                                                           preferredName:nil];
       item.taskIdentifier = taskIdentifier;
     }
   }
