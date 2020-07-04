@@ -83,7 +83,7 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 2.f;
     
     _progressLayer.strokeEnd = 0.f;
     
-    CGFloat iconSizeLength = radius;
+    CGFloat iconSizeLength = ceil(radius * .8f);
     _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((size.width  - iconSizeLength) / 2,
                                                                (size.height - iconSizeLength) / 2,
                                                                iconSizeLength, iconSizeLength)];

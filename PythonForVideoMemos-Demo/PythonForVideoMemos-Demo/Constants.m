@@ -13,7 +13,7 @@ CGFloat const kTableViewCellHeight = 54.f;
 CGFloat const kTableViewCellNameLabelHeight = 20.f;
 CGFloat const kTableViewCellInfoLabelHeight = 18.f;
 CGFloat const kTableViewCellDownloadProcessButtonSizeLength = 44.f;
-CGFloat const kTableViewCellDownloadProcessButtonPadding = 6.f;
+CGFloat const kTableViewCellDownloadProcessButtonPadding = 8.f;
 
 
 @implementation Constants
