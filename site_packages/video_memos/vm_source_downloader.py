@@ -99,6 +99,7 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
     return '[ky_source_downloader.py]: DONE.'
 
 
+"""
 def stop_downloading(taskProgressFilePath, debug=0):
     you_get.common.vm_skip_downloading(debug)
     '''
@@ -125,3 +126,4 @@ def vm_skip_downloading(debug=0):
     except SystemExit:
         print("sys.exit was called but I'm proceeding anyway (so there!-).")
     print("so I'll print this, etc, etc")
+"""
