@@ -111,7 +111,16 @@ Some related repos:
 - [python-embedded](https://github.com/albertz/python-embedded/)
 
 - [iOS-Python-Project](https://github.com/clowwindy/iOS-Python-Project)
-- [rubicon-objc](https://github.com/beeware/rubicon-objc)
+
+Libs about Python + Objc
+
+- [pyobjus](https://github.com/kivy/pyobjus): Python module for accessing Objective-C classes as Python classes using Objective-C runtime reflection.  
+
+- [rubicon-objc](https://github.com/beeware/rubicon-objc):  
+
+    - Use Python to instantiate objects defined in Objective-C  
+    - Use Python to invoke methods on objects defined in Objective-C, and  
+    - Subclass and extend Objective-C classes in Python.  
 
 About Kivy:
 
@@ -142,6 +151,7 @@ Isseus about App Store Validation:
 ## About Embed Python Programming
 
 - ["Extending/Embedding FAQ"](https://python.readthedocs.io/en/latest/faq/extending.html)
+- ["Python2-CHP-20-SECT-3"](http://books.gigatux.nl/mirror/pythonprogramming/0596000855_python2-CHP-20-SECT-3.html)
 
 ---
 
@@ -154,5 +164,6 @@ Isseus about App Store Validation:
 
 ## Others
 
+- ["Running Python in Xcode: Step by Step"](https://ericasadun.com/2016/12/04/running-python-in-xcode-step-by-step/)
 - ["Changes To Embedding Python Using Xcode 5.0"](https://developer.apple.com/library/archive/technotes/tn2328/_index.html)
 
