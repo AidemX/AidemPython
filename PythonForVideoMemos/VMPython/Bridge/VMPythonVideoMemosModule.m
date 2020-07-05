@@ -199,13 +199,14 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     // Prase JSON from `result`.
     char *resultCString = NULL;
     PyArg_Parse(result, "s", &resultCString);
-    Py_DECREF(result);
     
     if (NULL == resultCString) {
       errorMessage = @"Empty Result";
     } else {
       resultJsonString = [NSString stringWithUTF8String:resultCString];
     }
+    
+    Py_DECREF(result);
   }
   //PyRun_SimpleString("print('\\n')");
   VMPythonLogDebug(@"\nReaches `-checkWithURLString:` End");

@@ -60,7 +60,7 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
             'password':password
         }
         print('[ky_source_downloader.py] check_source(): Check source w/\n- cmd: %s\n- info: %s' % (sys.argv, info))
-    print('[ky_source_downloader.py] check_source(): JSON RESULT: %s' % result)
+    #print('[ky_source_downloader.py] check_source(): JSON RESULT: %s' % result)
 
     return result
 
