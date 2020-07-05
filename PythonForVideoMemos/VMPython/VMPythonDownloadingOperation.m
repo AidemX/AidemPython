@@ -11,7 +11,7 @@
 #import "VMPythonCommon.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
-#import "VMRemoteResourceModel.h"
+#import "VMWebResourceModel.h"
 
 
 NSString * const kVMPythonDownloadingOperationPropertyOfName = @"name";

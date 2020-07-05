@@ -8,16 +8,16 @@
 
 @import Foundation;
 
-@class VMRemoteResourceModel;
-@class VMRemoteResourceOptionModel;
+@class VMWebResourceModel;
+@class VMWebResourceOptionModel;
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^VMPythonRemoteResourceDownloaderSourceCheckingCompletion)(VMRemoteResourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
+typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
 
 
-@protocol VMPythonRemoteResourceDownloaderDelegate;
+@protocol VMPythonResourceDownloaderDelegate;
 
 
 @interface VMPythonResourceDownloader : NSObject
@@ -28,11 +28,11 @@ typedef void (^VMPythonRemoteResourceDownloaderSourceCheckingCompletion)(VMRemot
 
 @property (nonatomic, assign, getter=isSuspended) BOOL suspended;
 
-@property (nonatomic, weak, nullable) id <VMPythonRemoteResourceDownloaderDelegate> delegate;
+@property (nonatomic, weak, nullable) id <VMPythonResourceDownloaderDelegate> delegate;
 
 + (instancetype)sharedInstance;
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteResourceDownloaderSourceCheckingCompletion)completion;
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderResourceCheckingCompletion)completion;
 
 /**
  * Download source w/ URL string in format.
@@ -53,7 +53,7 @@ typedef void (^VMPythonRemoteResourceDownloaderSourceCheckingCompletion)(VMRemot
  *
  * @return Task identifier of the downloading operation.
  */
-- (NSString *)downloadWithSourceItem:(VMRemoteResourceModel *)sourceItem optionItem:(nullable VMRemoteResourceOptionModel *)optionItem preferredName:(nullable NSString *)preferredName;
+- (NSString *)downloadWithSourceItem:(VMWebResourceModel *)sourceItem optionItem:(nullable VMWebResourceOptionModel *)optionItem preferredName:(nullable NSString *)preferredName;
 
 /*
  * Task Management
@@ -64,16 +64,15 @@ typedef void (^VMPythonRemoteResourceDownloaderSourceCheckingCompletion)(VMRemot
 @end
 
 
-@protocol VMPythonRemoteResourceDownloaderDelegate <NSObject>
+@protocol VMPythonResourceDownloaderDelegate <NSObject>
 
 @optional
 
-- (void)vm_pythonRemoteResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier;
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier;
 
-- (void)vm_pythonRemoteResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress;
+- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress;
 
-- (void)vm_pythonRemoteResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier
-                                                     errorMessage:(nullable NSString *)errorMessage;
+- (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(nullable NSString *)errorMessage;
 
 @end
 

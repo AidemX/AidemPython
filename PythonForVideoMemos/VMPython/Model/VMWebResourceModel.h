@@ -1,5 +1,5 @@
 //
-//  VMRemoteResourceModel.h
+//  VMWebResourceModel.h
 //  PythonForVideoMemos
 //
 //  Created by Kjuly on 26/6/2020.
@@ -7,12 +7,12 @@
 //
 
 // Model
-#import "VMRemoteResourceOptionModel.h"
+#import "VMWebResourceOptionModel.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMRemoteResourceModel : NSObject
+@interface VMWebResourceModel : NSObject
 
 @property (nonatomic, copy, nullable) NSString *title;
 @property (nonatomic, copy, nullable) NSString *site;
@@ -21,9 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *userAgent;
 @property (nonatomic, copy, nullable) NSString *referer;
 
-@property (nonatomic, copy, nullable) NSArray <VMRemoteResourceOptionModel *> *options;
+@property (nonatomic, copy, nullable) NSArray <VMWebResourceOptionModel *> *options;
 
-- (VMRemoteResourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier;
+- (VMWebResourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier;
 
 @end
 

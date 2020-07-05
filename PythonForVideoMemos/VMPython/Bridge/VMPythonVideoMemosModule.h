@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString * const kVMPythonVideoMemosModuleProgressFileName;
 
-typedef void (^VMPythonVideoMemosModuleRemoteResourceCheckingCompletion)(NSString *_Nullable jsonString, NSString *_Nullable errorMessage);
+typedef void (^VMPythonVideoMemosModuleWebResourceCheckingCompletion)(NSString *_Nullable jsonString, NSString *_Nullable errorMessage);
 
 typedef void (^VMPythonVideoMemosModuleDownloadingProgress)(float progress);
 typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullable errorMessage);
@@ -24,7 +24,7 @@ typedef void (^VMPythonVideoMemosModuleDownloadingCompletion)(NSString *_Nullabl
 @property (nonatomic, copy) NSString *savePath; ///< Path to save the downloaed source.
 @property (nonatomic, assign, getter=inDebugMode) BOOL debugMode;
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteResourceCheckingCompletion)completion;
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleWebResourceCheckingCompletion)completion;
 
 - (void)downloadWithURLString:(NSString *)urlString
                      inFormat:(nullable NSString *)format

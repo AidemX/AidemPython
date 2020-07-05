@@ -28,8 +28,8 @@
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
 		7FE3493924B1BCEE00A38530 /* VMPythonResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */; };
 		7FE3493A24B1BCEE00A38530 /* VMResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493824B1BCEE00A38530 /* VMResourceDownloader.m */; };
-		7FE3493F24B1BD2300A38530 /* VMRemoteResourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493D24B1BD2300A38530 /* VMRemoteResourceModel.m */; };
-		7FE3494024B1BD2300A38530 /* VMRemoteResourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493E24B1BD2300A38530 /* VMRemoteResourceOptionModel.m */; };
+		7FE3499624B1C5EC00A38530 /* VMWebResourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3499224B1C5EC00A38530 /* VMWebResourceOptionModel.m */; };
+		7FE3499724B1C5EC00A38530 /* VMWebResourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3499324B1C5EC00A38530 /* VMWebResourceModel.m */; };
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
 		7FFEE25124A9C74C0071144F /* VMPythonDownloadingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */; };
@@ -91,10 +91,10 @@
 		7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonResourceDownloader.m; sourceTree = "<group>"; };
 		7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMResourceDownloader.h; sourceTree = "<group>"; };
 		7FE3493824B1BCEE00A38530 /* VMResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMResourceDownloader.m; sourceTree = "<group>"; };
-		7FE3493B24B1BD2300A38530 /* VMRemoteResourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMRemoteResourceModel.h; sourceTree = "<group>"; };
-		7FE3493C24B1BD2300A38530 /* VMRemoteResourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMRemoteResourceOptionModel.h; sourceTree = "<group>"; };
-		7FE3493D24B1BD2300A38530 /* VMRemoteResourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMRemoteResourceModel.m; sourceTree = "<group>"; };
-		7FE3493E24B1BD2300A38530 /* VMRemoteResourceOptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMRemoteResourceOptionModel.m; sourceTree = "<group>"; };
+		7FE3499224B1C5EC00A38530 /* VMWebResourceOptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceOptionModel.m; sourceTree = "<group>"; };
+		7FE3499324B1C5EC00A38530 /* VMWebResourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceModel.m; sourceTree = "<group>"; };
+		7FE3499424B1C5EC00A38530 /* VMWebResourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceModel.h; sourceTree = "<group>"; };
+		7FE3499524B1C5EC00A38530 /* VMWebResourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceOptionModel.h; sourceTree = "<group>"; };
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadingOperation.h; sourceTree = "<group>"; };
@@ -275,10 +275,10 @@
 		7FFEE23B24A5EB450071144F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7FE3493B24B1BD2300A38530 /* VMRemoteResourceModel.h */,
-				7FE3493D24B1BD2300A38530 /* VMRemoteResourceModel.m */,
-				7FE3493C24B1BD2300A38530 /* VMRemoteResourceOptionModel.h */,
-				7FE3493E24B1BD2300A38530 /* VMRemoteResourceOptionModel.m */,
+				7FE3499424B1C5EC00A38530 /* VMWebResourceModel.h */,
+				7FE3499324B1C5EC00A38530 /* VMWebResourceModel.m */,
+				7FE3499524B1C5EC00A38530 /* VMWebResourceOptionModel.h */,
+				7FE3499224B1C5EC00A38530 /* VMWebResourceOptionModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -463,16 +463,16 @@
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
 				7FE3493A24B1BCEE00A38530 /* VMResourceDownloader.m in Sources */,
 				7FFEE25124A9C74C0071144F /* VMPythonDownloadingOperation.m in Sources */,
-				7FE3493F24B1BD2300A38530 /* VMRemoteResourceModel.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
 				7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */,
 				7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */,
+				7FE3499724B1C5EC00A38530 /* VMWebResourceModel.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
 				7FFEE27624AC1E840071144F /* VMPython.m in Sources */,
 				7FFEE27824AC1E840071144F /* VMPythonVideoMemosModule.m in Sources */,
-				7FE3494024B1BD2300A38530 /* VMRemoteResourceOptionModel.m in Sources */,
 				7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
+				7FE3499624B1C5EC00A38530 /* VMWebResourceOptionModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

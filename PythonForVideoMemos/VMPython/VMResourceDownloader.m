@@ -10,7 +10,7 @@
 
 #import "VMPythonCommon.h"
 // Model
-#import "VMRemoteResourceModel.h"
+#import "VMWebResourceModel.h"
 // Lib
 @import AFNetworking;
 
@@ -30,7 +30,7 @@
 
 #pragma mark - Public
 
-- (void)downloadWithSourceItem:(VMRemoteResourceModel *)sourceItem optionItem:(VMRemoteResourceOptionModel *)optionItem
+- (void)downloadWithSourceItem:(VMWebResourceModel *)sourceItem optionItem:(VMWebResourceOptionModel *)optionItem
 {
   NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
   AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
