@@ -25,6 +25,7 @@
   if (size < 1048576) item.sizeText = [NSString stringWithFormat:@"%.2f KB", (double)(size / 1024.f)];
   else                item.sizeText = [NSString stringWithFormat:@"%.2f MB", (double)(size / 1048576.f)];
   
+  /*
   NSArray *sources = (NSArray *)value[@"src"];
   if ([sources isKindOfClass:[NSArray class]]) {
     NSMutableArray *urls = [NSMutableArray array];
@@ -35,7 +36,7 @@
       }
     }
     item.urls = urls;
-  }
+  }*/
   
   item.status = kVMPythonDownloadProcessStatusNone;
   item.taskIdentifier = nil;

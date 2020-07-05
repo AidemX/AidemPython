@@ -250,7 +250,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
     }
     
     if (0 == errorMessage.length) {
-      errorMessage = [NSString stringWithFormat:@"Failed to download source w/ URL: %@", urlString];
+      errorMessage = [NSString stringWithFormat:@"Failed to Download Resource w/ URL: %@", urlString];
     }
     
   } else {

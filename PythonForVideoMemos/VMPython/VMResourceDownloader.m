@@ -35,7 +35,7 @@
   NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
   AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
   
-  NSURL *url = [NSURL URLWithString:[optionItem.urls firstObject]];
+  NSURL *url = nil;//[NSURL URLWithString:[optionItem.urls firstObject]];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:60];
   if (sourceItem.userAgent) [request addValue:sourceItem.referer forHTTPHeaderField:@"User-Agent"];
   if (sourceItem.referer)   [request addValue:sourceItem.referer forHTTPHeaderField:@"Referer"];

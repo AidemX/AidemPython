@@ -35,17 +35,17 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 - (void)checkWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderResourceCheckingCompletion)completion;
 
 /**
- * Download source w/ URL string in format.
+ * Download resource w/ URL string in format.
  *
  * @param urlString URL string
- * @param format    source format
+ * @param format    Resource format
  *
  * @return Task identifier of the downloading operation.
  */
 - (NSString *)downloadWithURLString:(NSString *)urlString inFormat:(nullable NSString *)format preferredName:(nullable NSString *)preferredName;
 
 /**
- * Download source w/ selected source option item.
+ * Download resource w/ selected source option item.
  *
  * @param sourceItem    Main resource item associated w/ an URL
  * @param optionItem    Resource item's option item in different format.
