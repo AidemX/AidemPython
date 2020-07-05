@@ -68,7 +68,7 @@ static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source"
   
   [[VMPython sharedInstance] enterPythonEnv];
   
-  static const char *moduleName = "video_memos.vm_source_downloader";
+  static const char *moduleName = "video_memos.vm_downloader";
   self.pySourceDownloaderModule = PyImport_ImportModule(moduleName);
   if (self.pySourceDownloaderModule == NULL) {
     PyErr_Print();
