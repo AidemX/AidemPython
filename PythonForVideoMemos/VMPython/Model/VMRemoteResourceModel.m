@@ -1,22 +1,22 @@
 //
-//  VMRemoteSourceModel.m
+//  VMRemoteResourceModel.m
 //  PythonForVideoMemos
 //
 //  Created by Kjuly on 26/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMRemoteSourceModel.h"
+#import "VMRemoteResourceModel.h"
 
-@implementation VMRemoteSourceModel
+@implementation VMRemoteResourceModel
 
 #pragma mark - Public
 
-- (VMRemoteSourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier
+- (VMRemoteResourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier
 {
-  VMRemoteSourceOptionModel *matchedOption = nil;
+  VMRemoteResourceOptionModel *matchedOption = nil;
   NSInteger row = 0;
-  for (VMRemoteSourceOptionModel *option in self.options) {
+  for (VMRemoteResourceOptionModel *option in self.options) {
     if (option.taskIdentifier && [option.taskIdentifier isEqualToString:taskIdentifier]) {
       matchedOption = option;
       break;

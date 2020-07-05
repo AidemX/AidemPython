@@ -1,36 +1,36 @@
 //
-//  VMRemoteSourceDownloader.m
+//  VMResourceDownloader.m
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 28/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMRemoteSourceDownloader.h"
+#import "VMResourceDownloader.h"
 
 #import "VMPythonCommon.h"
 // Model
-#import "VMRemoteSourceModel.h"
+#import "VMRemoteResourceModel.h"
 // Lib
 @import AFNetworking;
 
 
-@implementation VMRemoteSourceDownloader
+@implementation VMResourceDownloader
 
 + (instancetype)sharedInstance
 {
-  static VMRemoteSourceDownloader *_sharedVMRemoteSourceDownloader = nil;
+  static VMResourceDownloader *_sharedVMResourceDownloader = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _sharedVMRemoteSourceDownloader = [[VMRemoteSourceDownloader alloc] init];
+    _sharedVMResourceDownloader = [[VMResourceDownloader alloc] init];
   });
   
-  return _sharedVMRemoteSourceDownloader;
+  return _sharedVMResourceDownloader;
 }
 
 #pragma mark - Public
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem
+- (void)downloadWithSourceItem:(VMRemoteResourceModel *)sourceItem optionItem:(VMRemoteResourceOptionModel *)optionItem
 {
   NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
   AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];

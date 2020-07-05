@@ -1,18 +1,18 @@
 //
-//  VMRemoteSourceOptionModel.m
+//  VMRemoteResourceOptionModel.m
 //  PythonForVideoMemos
 //
 //  Created by Kjuly on 26/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMRemoteSourceOptionModel.h"
+#import "VMRemoteResourceOptionModel.h"
 
-@implementation VMRemoteSourceOptionModel
+@implementation VMRemoteResourceOptionModel
 
 + (instancetype)newWithKey:(NSString *)key andValue:(NSDictionary *)value
 {
-  VMRemoteSourceOptionModel *item = [[VMRemoteSourceOptionModel alloc] init];
+  VMRemoteResourceOptionModel *item = [[VMRemoteResourceOptionModel alloc] init];
   
   item.format = key;
   

@@ -1,5 +1,5 @@
 //
-//  VMRemoteSourceDownloader.h
+//  VMRemoteResourceDownloader.h
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 28/6/2020.
@@ -8,20 +8,20 @@
 
 @import Foundation;
 
-@class VMRemoteSourceModel;
-@class VMRemoteSourceOptionModel;
+@class VMRemoteResourceModel;
+@class VMRemoteResourceOptionModel;
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMRemoteSourceDownloader : NSObject
+@interface VMResourceDownloader : NSObject
 
 @property (nonatomic, copy) NSURL *baseSavePathURL;
 @property (nonatomic, assign, getter=isDebugMode) BOOL debugMode;
 
 + (instancetype)sharedInstance;
 
-- (void)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem optionItem:(VMRemoteSourceOptionModel *)optionItem;
+- (void)downloadWithSourceItem:(VMRemoteResourceModel *)sourceItem optionItem:(VMRemoteResourceOptionModel *)optionItem;
 
 @end
 

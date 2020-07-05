@@ -1,5 +1,5 @@
 //
-//  VMRemoteSourceOptionModel.h
+//  VMRemoteResourceOptionModel.h
 //  PythonForVideoMemos
 //
 //  Created by Kjuly on 26/6/2020.
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMRemoteSourceOptionModel : NSObject
+@interface VMRemoteResourceOptionModel : NSObject
 
 @property (nonatomic, copy) NSString *format; ///< Format, used to download as key arg
 

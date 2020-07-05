@@ -163,7 +163,7 @@ static inline NSString *_stringFromPyStringObject(PyObject *pyStringObj)
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteSourceCheckingCompletion)completion
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonVideoMemosModuleRemoteResourceCheckingCompletion)completion
 {
   [self _loadKYVideoDownloaderModuleIfNeeded];
   

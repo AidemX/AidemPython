@@ -1,21 +1,21 @@
 //
-//  VMPythonRemoteSourceDownloader.m
+//  VMPythonResourceDownloader.m
 //  PythonForVideoMemos
 //
 //  Created by Kjuly on 25/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMPythonRemoteSourceDownloader.h"
+#import "VMPythonResourceDownloader.h"
 
 #import "VMPythonCommon.h"
 // Model
 #import "VMPythonVideoMemosModule.h"
-#import "VMRemoteSourceModel.h"
+#import "VMRemoteResourceModel.h"
 #import "VMPythonDownloadingOperation.h"
 
 
-@interface VMPythonRemoteSourceDownloader ()
+@interface VMPythonResourceDownloader ()
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
@@ -44,7 +44,7 @@
 
 - (NSString *)_validFilenameFromName:(NSString *)name;
 - (NSString *)_filenameFromURLString:(NSString *)urlString;
-- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json;
+- (VMRemoteResourceModel *)_newRemoteResourceItemFromJSON:(NSDictionary *)json;
 
 - (void)_observeOperation:(NSOperation *)operation;
 
@@ -53,7 +53,7 @@
 @end
 
 
-@implementation VMPythonRemoteSourceDownloader
+@implementation VMPythonResourceDownloader
 
 - (void)dealloc
 {
@@ -64,13 +64,13 @@
 
 + (instancetype)sharedInstance
 {
-  static VMPythonRemoteSourceDownloader *_sharedVMPythonRemoteSourceDownloader = nil;
+  static VMPythonResourceDownloader *_sharedVMPythonRemoteResourceDownloader = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _sharedVMPythonRemoteSourceDownloader = [[VMPythonRemoteSourceDownloader alloc] init];
+    _sharedVMPythonRemoteResourceDownloader = [[VMPythonResourceDownloader alloc] init];
   });
   
-  return _sharedVMPythonRemoteSourceDownloader;
+  return _sharedVMPythonRemoteResourceDownloader;
 }
 
 - (instancetype)init
@@ -112,9 +112,9 @@
   return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
 }
 
-- (VMRemoteSourceModel *)_newRemoteSourceItemFromJSON:(NSDictionary *)json
+- (VMRemoteResourceModel *)_newRemoteResourceItemFromJSON:(NSDictionary *)json
 {
-  VMRemoteSourceModel *sourceItem = [[VMRemoteSourceModel alloc] init];
+  VMRemoteResourceModel *sourceItem = [[VMRemoteResourceModel alloc] init];
   sourceItem.title     = json[@"title"];
   sourceItem.site      = json[@"site"];
   sourceItem.urlString = json[@"url"];
@@ -124,9 +124,9 @@
   
   NSDictionary *streams = json[@"streams"];
   if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
-    NSMutableArray <VMRemoteSourceOptionModel *> *options = [NSMutableArray array];
+    NSMutableArray <VMRemoteResourceOptionModel *> *options = [NSMutableArray array];
     for (NSString *key in [streams allKeys]) {
-      VMRemoteSourceOptionModel *option = [VMRemoteSourceOptionModel newWithKey:key andValue:streams[key]];
+      VMRemoteResourceOptionModel *option = [VMRemoteResourceOptionModel newWithKey:key andValue:streams[key]];
       [options addObject:option];
     }
     sourceItem.options = options;
@@ -168,10 +168,10 @@
                        context:(void *)context
 {
   if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfProgress]) {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:progress:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteResourceDownloaderDidUpdateTaskWithIdentifier:progress:)]) {
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
       float progress = [change[NSKeyValueChangeNewKey] floatValue];
-      [self.delegate vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier progress:progress];
+      [self.delegate vm_pythonRemoteResourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier progress:progress];
     }
     
   } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsExecuting]) {
@@ -181,8 +181,8 @@
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
       VMPythonLogNotice(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
-      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:)]) {
-        [self.delegate vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:operationIdentifier];
+      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteResourceDownloaderDidStartTaskWithIdentifier:)]) {
+        [self.delegate vm_pythonRemoteResourceDownloaderDidStartTaskWithIdentifier:operationIdentifier];
       }
     }
     
@@ -196,8 +196,8 @@
     
     [self _unobserveOperation:(NSOperation *)object];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:errorMessage:)]) {
-      [self.delegate vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:operationIdentifier errorMessage:nil];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonRemoteResourceDownloaderDidEndTaskWithIdentifier:errorMessage:)]) {
+      [self.delegate vm_pythonRemoteResourceDownloaderDidEndTaskWithIdentifier:operationIdentifier errorMessage:nil];
     }
   }
 }
@@ -206,7 +206,7 @@
 
 - (void)setSavePath:(NSString *)savePath
 {
-  VMPythonLogNotice(@"[VMPythonRemoteSourceDownloader]: Downloaded sources will be stored at: %@", savePath);
+  VMPythonLogNotice(@"[VMPythonRemoteResourceDownloader]: Downloaded sources will be stored at: %@", savePath);
   
   _savePath = savePath;
   
@@ -238,7 +238,7 @@
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteSourceDownloaderSourceCheckingCompletion)completion
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonRemoteResourceDownloaderSourceCheckingCompletion)completion
 {
   NSString *jsonPath;
   
@@ -256,7 +256,7 @@
         [fileManager removeItemAtPath:jsonPath error:NULL];
         
       } else {
-        VMRemoteSourceModel *sourceItem = [self _newRemoteSourceItemFromJSON:json];
+        VMRemoteResourceModel *sourceItem = [self _newRemoteResourceItemFromJSON:json];
         VMPythonLogNotice(@"\nGot cached JSON file at %@", jsonPath);
         completion(sourceItem, nil);
         
@@ -283,7 +283,7 @@
         if (weakSelf.cacheJSONFile && jsonPath) {
           [jsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
-        VMRemoteSourceModel *sourceItem = [weakSelf _newRemoteSourceItemFromJSON:json];
+        VMRemoteResourceModel *sourceItem = [weakSelf _newRemoteResourceItemFromJSON:json];
         completion(sourceItem, nil);
       }
     }
@@ -316,8 +316,8 @@
   return operation.name;
 }
 
-- (NSString *)downloadWithSourceItem:(VMRemoteSourceModel *)sourceItem
-                          optionItem:(VMRemoteSourceOptionModel *)optionItem
+- (NSString *)downloadWithSourceItem:(VMRemoteResourceModel *)sourceItem
+                          optionItem:(VMRemoteResourceOptionModel *)optionItem
                        preferredName:(NSString *)preferredName
 {
   if (nil == preferredName) {

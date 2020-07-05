@@ -13,9 +13,8 @@
 // View
 #import "TableViewDownloadingCell.h"
 // Lib
-#import "VMPythonRemoteSourceDownloader.h"
-#import "VMRemoteSourceDownloader.h"
-#import "VMRemoteSourceModel.h"
+#import "VMPythonResourceDownloader.h"
+#import "VMRemoteResourceModel.h"
 
 
 static NSString * const kVideosFolderName_ = @"videos";
@@ -27,16 +26,16 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   UITableViewDataSource,
   UITableViewDelegate,
   TableViewDownloadingCellDelegate,
-  VMPythonRemoteSourceDownloaderDelegate
+  VMPythonRemoteResourceDownloaderDelegate
 >
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton    *suspendOrResumeAllButton;
 
 @property (nonatomic, copy) NSString *urlString;
-@property (nonatomic, strong, nullable) VMRemoteSourceModel *sourceItem;
+@property (nonatomic, strong, nullable) VMRemoteResourceModel *sourceItem;
 
-@property (nonatomic, strong, nullable) VMRemoteSourceOptionModel *currentDownloadingItem;
+@property (nonatomic, strong, nullable) VMRemoteResourceOptionModel *currentDownloadingItem;
 @property (nonatomic, strong, nullable) TableViewDownloadingCell  *currentDownloadingCell;
 
 #ifdef DEBUG
@@ -115,7 +114,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (![fileManager fileExistsAtPath:savePath]) {
     [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
   }
-  VMPythonRemoteSourceDownloader *downloader = [VMPythonRemoteSourceDownloader sharedInstance];
+  VMPythonResourceDownloader *downloader = [VMPythonResourceDownloader sharedInstance];
   downloader.savePath      = savePath;
   downloader.cacheJSONFile = YES;
   downloader.debugMode     = YES;
@@ -134,13 +133,13 @@ static CGFloat const kActionButtonHeight_ = 44.f;
    */
   
   // Download directly w/ default format
-  //[[VMPythonRemoteSourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:nil];
-  //[[VMPythonRemoteSourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
+  //[[VMPythonResourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:nil];
+  //[[VMPythonResourceDownloader sharedInstance] py_downloadWithURLString:self.urlString inFormat:@"dash-flv360"];
   //return;
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [downloader checkWithURLString:self.urlString completion:^(VMRemoteSourceModel *sourceItem, NSString *errorMessage) {
+  [downloader checkWithURLString:self.urlString completion:^(VMRemoteResourceModel *sourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
       VMPythonLogDebug(@"Got sourceItem.options: %@", sourceItem.options);
       weakSelf.sourceItem = sourceItem;
@@ -155,14 +154,14 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 - (void)_refreshSuspendOrResumeAllButton
 {
-  NSString *title = ([VMPythonRemoteSourceDownloader sharedInstance].suspended ? @"Resume Downloading Queue" : @"Suspend Downloading Queue");
+  NSString *title = ([VMPythonResourceDownloader sharedInstance].suspended ? @"Resume Downloading Queue" : @"Suspend Downloading Queue");
   [_suspendOrResumeAllButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (void)_didPressSuspendOrResumeAllButton
 {
-  BOOL suspended = ![VMPythonRemoteSourceDownloader sharedInstance].isSuspended;
-  [VMPythonRemoteSourceDownloader sharedInstance].suspended = suspended;
+  BOOL suspended = ![VMPythonResourceDownloader sharedInstance].isSuspended;
+  [VMPythonResourceDownloader sharedInstance].suspended = suspended;
   
   [self _refreshSuspendOrResumeAllButton];
 }
@@ -197,7 +196,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 {
   static NSString * const cellIdentifier = @"cell";
   
-  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMRemoteResourceOptionModel *item = self.sourceItem.options[indexPath.row];
   if (self.currentDownloadingItem == item) {
     return self.currentDownloadingCell;
     
@@ -237,9 +236,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 // Tells the delegate that the specified row is now selected.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMRemoteResourceOptionModel *item = self.sourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+  NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
                                                                                           optionItem:item
                                                                                        preferredName:nil];
   item.taskIdentifier = taskIdentifier;
@@ -254,9 +253,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (nil == indexPath) {
     return;
   }
-  VMRemoteSourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMRemoteResourceOptionModel *item = self.sourceItem.options[indexPath.row];
   if (kVMPythonDownloadProcessStatusOfWaiting == item.status || kVMPythonDownloadProcessStatusOfDownloading == item.status) {
-    [[VMPythonRemoteSourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
+    [[VMPythonResourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
     // Pausing downloading task will make it end, so let's reset the `taskIdentifier`.
     //   And when resume the task, will create a new task instead.
     if (kVMPythonDownloadProcessStatusOfDownloading == item.status) {
@@ -270,9 +269,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     item.status = kVMPythonDownloadProcessStatusOfWaiting;
     
     if (item.taskIdentifier) {
-      [[VMPythonRemoteSourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
+      [[VMPythonResourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
     } else {
-      NSString *taskIdentifier = [[VMPythonRemoteSourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
+      NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
                                                                                               optionItem:item
                                                                                            preferredName:nil];
       item.taskIdentifier = taskIdentifier;
@@ -280,14 +279,14 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   }
 }
 
-#pragma mark - VMPythonRemoteSourceDownloaderDelegate
+#pragma mark - VMPythonRemoteResourceDownloaderDelegate
 
-- (void)vm_pythonRemoteSourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
+- (void)vm_pythonRemoteResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
 {
-  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteResourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
   
   NSInteger row;
-  VMRemoteSourceOptionModel *item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
+  VMRemoteResourceOptionModel *item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
   if (item) {
     item.status = kVMPythonDownloadProcessStatusOfDownloading;
     self.currentDownloadingItem = item;
@@ -300,18 +299,18 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   }
 }
 
-- (void)vm_pythonRemoteSourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
+- (void)vm_pythonRemoteResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
 {
-  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteResourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
   self.currentDownloadingItem.progress = progress;
   self.currentDownloadingCell.downloadProcessButton.progress = progress;
 }
 
-- (void)vm_pythonRemoteSourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
+- (void)vm_pythonRemoteResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
 {
-  VMPythonLogDebug(@"Got Callback from VMPythonRemoteSourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
+  VMPythonLogDebug(@"Got Callback from VMPythonRemoteResourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
   
-  VMRemoteSourceOptionModel *item;
+  VMRemoteResourceOptionModel *item;
   NSInteger row = NSNotFound;
   
   if (self.currentDownloadingItem) {
