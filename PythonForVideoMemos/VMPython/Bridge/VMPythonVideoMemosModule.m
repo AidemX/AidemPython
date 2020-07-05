@@ -17,8 +17,8 @@
 //! Make sure it's equal to the one in `site_packages/video_memos/vm_downloading_progress.py`
 NSString * const kVMPythonVideoMemosModuleProgressFileName = @"vm_progress";
 
-static char * const kSourceDownloaderMethodOfCheckSource_    = "check_source";
-static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_source";
+static char * const kSourceDownloaderMethodOfCheckSource_    = "check_resource";
+static char * const kSourceDownloaderMethodOfDownloadSource_ = "download_resource";
 
 
 @interface VMPythonVideoMemosModule ()

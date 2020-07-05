@@ -23,8 +23,8 @@ sys.stderr = vm_std()
 '''
 
 
-# Check source and return json as result
-def check_source(url, proxy=None, username=None, password=None, debug=0):
+# Check resource and return json as result
+def check_resource(url, proxy=None, username=None, password=None, debug=0):
     # Store the reference, in case you want to show things again in standard output
     old_stdout = sys.stdout
 
@@ -59,14 +59,14 @@ def check_source(url, proxy=None, username=None, password=None, debug=0):
             'username':username,
             'password':password
         }
-        print('[ky_source_downloader.py] check_source(): Check source w/\n- cmd: %s\n- info: %s' % (sys.argv, info))
-    #print('[ky_source_downloader.py] check_source(): JSON RESULT: %s' % result)
+        print('[ky_downloader.py] check_resource(): Check resource w/\n- cmd: %s\n- info: %s' % (sys.argv, info))
+    #print('[ky_downloader.py] check_resource(): JSON RESULT: %s' % result)
 
     return result
 
 
 # Download & save video to path
-def download_source(path, url, name=None, fmt=None, proxy=None, username=None, password=None, debug=0):
+def download_resource(path, url, name=None, fmt=None, proxy=None, username=None, password=None, debug=0):
     #sys.argv = ['you-get','-h'] # Show help
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
@@ -92,12 +92,12 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
             'password':password,
             'path':path
 	    }
-        print('[ky_source_downloader.py] download_source(): Download source w/\n- cmd: %s\n- info: %s' % (argv_list, info))
+        print('[ky_downloader.py] download_resource(): Download resource w/\n- cmd: %s\n- info: %s' % (argv_list, info))
 
     sys.argv = argv_list
     you_get.main()
 
-    return '[ky_source_downloader.py]: DONE.'
+    return '[ky_downloader.py]: DONE.'
 
 
 """
