@@ -71,8 +71,8 @@ def download_source(path, url, name=None, fmt=None, proxy=None, username=None, p
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
 
-    # Full version: ['you-get','--debug','-F',fmt,'-o',path,url]
-    argv_list = ['you-get']
+    # Full version: ['you-get','-k''--debug','-F',fmt,'-o',path,url]
+    argv_list = ['you-get','-k'] # -k, --insecure: ignore ssl errors
     if debug:
         argv_list.append('--debug')
     if name:
