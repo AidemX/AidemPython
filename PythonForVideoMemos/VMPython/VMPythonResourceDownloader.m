@@ -316,17 +316,17 @@
   return operation.name;
 }
 
-- (NSString *)downloadWithSourceItem:(VMWebResourceModel *)sourceItem
-                          optionItem:(VMWebResourceOptionModel *)optionItem
-                       preferredName:(NSString *)preferredName
+- (NSString *)downloadWithResourceItem:(VMWebResourceModel *)resourceItem
+                            optionItem:(VMWebResourceOptionModel *)optionItem
+                         preferredName:(NSString *)preferredName
 {
   if (nil == preferredName) {
-    preferredName = [self _validFilenameFromName:sourceItem.title];
+    preferredName = [self _validFilenameFromName:resourceItem.title];
     if (nil != optionItem.format) {
       preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
     }
   }
-  return [self downloadWithURLString:sourceItem.urlString inFormat:optionItem.format preferredName:preferredName];
+  return [self downloadWithURLString:resourceItem.urlString inFormat:optionItem.format preferredName:preferredName];
 }
 
 #pragma mark - Public (Task Management)

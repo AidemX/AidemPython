@@ -33,7 +33,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 @property (nonatomic, strong) UIButton    *suspendOrResumeAllButton;
 
 @property (nonatomic, copy) NSString *urlString;
-@property (nonatomic, strong, nullable) VMWebResourceModel *sourceItem;
+@property (nonatomic, strong, nullable) VMWebResourceModel *resourceItem;
 
 @property (nonatomic, strong, nullable) VMWebResourceOptionModel *currentDownloadingItem;
 @property (nonatomic, strong, nullable) TableViewDownloadingCell *currentDownloadingCell;
@@ -139,10 +139,10 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   
   // Check source w/ URL
   typeof(self) __weak weakSelf = self;
-  [downloader checkWithURLString:self.urlString completion:^(VMWebResourceModel *sourceItem, NSString *errorMessage) {
+  [downloader checkWithURLString:self.urlString completion:^(VMWebResourceModel *resourceItem, NSString *errorMessage) {
     if (nil == errorMessage) {
-      VMPythonLogDebug(@"Got sourceItem.options: %@", sourceItem.options);
-      weakSelf.sourceItem = sourceItem;
+      VMPythonLogDebug(@"Got sourceItem.options: %@", resourceItem.options);
+      weakSelf.resourceItem = resourceItem;
       [weakSelf.tableView reloadData];
     } else {
       [weakSelf _presentAlertWithTitle:nil message:errorMessage];
@@ -188,7 +188,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 // Tells the data source to return the number of rows in a given section of a table view. (required)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [self.sourceItem.options count];
+  return [self.resourceItem.options count];
 }
 
 // Asks the data source for a cell to insert in a particular location of the table view.
@@ -196,7 +196,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 {
   static NSString * const cellIdentifier = @"cell";
   
-  VMWebResourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMWebResourceOptionModel *item = self.resourceItem.options[indexPath.row];
   if (self.currentDownloadingItem == item) {
     return self.currentDownloadingCell;
     
@@ -236,11 +236,11 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 // Tells the delegate that the specified row is now selected.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  VMWebResourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMWebResourceOptionModel *item = self.resourceItem.options[indexPath.row];
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
-  NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
-                                                                                      optionItem:item
-                                                                                   preferredName:nil];
+  NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
+                                                                                        optionItem:item
+                                                                                     preferredName:nil];
   item.taskIdentifier = taskIdentifier;
   item.status = kVMPythonDownloadProcessStatusOfWaiting;
 }
@@ -253,7 +253,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (nil == indexPath) {
     return;
   }
-  VMWebResourceOptionModel *item = self.sourceItem.options[indexPath.row];
+  VMWebResourceOptionModel *item = self.resourceItem.options[indexPath.row];
   if (kVMPythonDownloadProcessStatusOfWaiting == item.status || kVMPythonDownloadProcessStatusOfDownloading == item.status) {
     [[VMPythonResourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
     // Pausing downloading task will make it end, so let's reset the `taskIdentifier`.
@@ -271,9 +271,9 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     if (item.taskIdentifier) {
       [[VMPythonResourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
     } else {
-      NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithSourceItem:self.sourceItem
-                                                                                          optionItem:item
-                                                                                       preferredName:nil];
+      NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
+                                                                                            optionItem:item
+                                                                                         preferredName:nil];
       item.taskIdentifier = taskIdentifier;
     }
   }
@@ -286,7 +286,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
   
   NSInteger row;
-  VMWebResourceOptionModel *item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
+  VMWebResourceOptionModel *item = [self.resourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
   if (item) {
     item.status = kVMPythonDownloadProcessStatusOfDownloading;
     self.currentDownloadingItem = item;
@@ -316,14 +316,14 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (self.currentDownloadingItem) {
     if (self.currentDownloadingItem.taskIdentifier && [self.currentDownloadingItem.taskIdentifier isEqualToString:taskIdentifier]) {
       item = self.currentDownloadingItem;
-      row = [self.sourceItem.options indexOfObject:item];
+      row = [self.resourceItem.options indexOfObject:item];
     }
     self.currentDownloadingItem = nil;
   }
   self.currentDownloadingCell = nil;
   
   if (nil == item) {
-    item = [self.sourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
+    item = [self.resourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
   }
   
   if (errorMessage) {

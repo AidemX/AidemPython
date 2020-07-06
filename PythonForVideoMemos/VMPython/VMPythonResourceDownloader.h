@@ -47,13 +47,13 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 /**
  * Download resource w/ selected source option item.
  *
- * @param sourceItem    Main resource item associated w/ an URL
+ * @param resourceItem  Main resource item associated w/ an URL
  * @param optionItem    Resource item's option item in different format.
  * @param preferredName (Optioanl) preferred name for this option item.
  *
  * @return Task identifier of the downloading operation.
  */
-- (NSString *)downloadWithSourceItem:(VMWebResourceModel *)sourceItem optionItem:(nullable VMWebResourceOptionModel *)optionItem preferredName:(nullable NSString *)preferredName;
+- (NSString *)downloadWithResourceItem:(VMWebResourceModel *)resourceItem optionItem:(nullable VMWebResourceOptionModel *)optionItem preferredName:(nullable NSString *)preferredName;
 
 /*
  * Task Management
