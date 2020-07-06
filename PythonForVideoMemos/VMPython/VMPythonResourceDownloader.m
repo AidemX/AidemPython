@@ -356,4 +356,17 @@
   }
 }
 
+#pragma mark - Public (Clean)
+
+- (void)cleanCachedJSONFileWithURLString:(NSString *)urlString
+{
+  NSString *filename = [self _filenameFromURLString:urlString];
+  NSString *jsonPath = [self.savePath stringByAppendingPathComponent:[filename stringByAppendingPathExtension:@"json"]];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if ([fileManager fileExistsAtPath:jsonPath]) {
+    [fileManager removeItemAtPath:jsonPath error:NULL];
+    VMPythonLogNotice(@"Cleaned Cached JSON File w/ URL: %@", urlString);
+  }
+}
+
 @end

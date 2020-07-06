@@ -61,6 +61,11 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier;
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier;
 
+/*
+ * Clean
+ */
+- (void)cleanCachedJSONFileWithURLString:(NSString *)urlString;
+
 @end
 
 
