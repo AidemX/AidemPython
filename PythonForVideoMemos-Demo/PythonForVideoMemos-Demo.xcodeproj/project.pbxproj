@@ -95,6 +95,7 @@
 		7FE3499324B1C5EC00A38530 /* VMWebResourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceModel.m; sourceTree = "<group>"; };
 		7FE3499424B1C5EC00A38530 /* VMWebResourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceModel.h; sourceTree = "<group>"; };
 		7FE3499524B1C5EC00A38530 /* VMWebResourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceOptionModel.h; sourceTree = "<group>"; };
+		7FE349B824B32B9800A38530 /* VMPythonResourceDownloaderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloaderDelegate.h; sourceTree = "<group>"; };
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadingOperation.h; sourceTree = "<group>"; };
@@ -263,6 +264,7 @@
 				7FFEE26F24AC1E830071144F /* Bridge */,
 				7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */,
 				7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */,
+				7FE349B824B32B9800A38530 /* VMPythonResourceDownloaderDelegate.h */,
 				7FE3493524B1BCED00A38530 /* VMPythonResourceDownloader.h */,
 				7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */,
 				7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */,
