@@ -52,7 +52,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
  * @param optionItem    Resource item's option item in different format.
  * @param preferredName (Optioanl) preferred name for this option item.
  *
- * @return Task identifier of the downloading operation.
+ * @return Task identifier of the downloading operation (NOTE: it's operation name, not unique for sure).
  */
 - (NSString *)downloadWithResourceItem:(VMWebResourceModel *)resourceItem optionItem:(nullable VMWebResourceOptionModel *)optionItem preferredName:(nullable NSString *)preferredName;
 

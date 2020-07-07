@@ -262,11 +262,11 @@
 			children = (
 				7FFEE27924AEBF7C0071144F /* VMPythonCommon.h */,
 				7FFEE26F24AC1E830071144F /* Bridge */,
-				7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */,
-				7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */,
 				7FE349B824B32B9800A38530 /* VMPythonResourceDownloaderDelegate.h */,
 				7FE3493524B1BCED00A38530 /* VMPythonResourceDownloader.h */,
 				7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */,
+				7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */,
+				7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */,
 				7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */,
 				7FE3493824B1BCEE00A38530 /* VMResourceDownloader.m */,
 				7FFEE23B24A5EB450071144F /* Model */,

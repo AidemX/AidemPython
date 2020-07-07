@@ -60,6 +60,8 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
                  progressFilePath:(NSString *)progressFilePath
 {
   if (self = [super init]) {
+    self.name = (preferredName ?: [[NSUUID UUID] UUIDString]);
+    
     self.urlString     = urlString;
     self.format        = format;
     self.preferredName = preferredName;

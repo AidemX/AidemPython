@@ -19,7 +19,6 @@
 
 @property (nonatomic, strong) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
-@property (nonatomic, strong) NSMutableDictionary <NSString *, NSDictionary *> *operationsInfo;
 @property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
 
 /**
@@ -137,15 +136,6 @@
 
 - (void)_observeOperation:(NSOperation *)operation
 {
-  if (!self.operationsInfo) {
-    self.operationsInfo = [NSMutableDictionary dictionary];
-  }
-  
-  NSString *identifier = [[NSUUID UUID] UUIDString];
-  operation.name = identifier;
-//  _operationsInfo[identifier] = [NSMutableDictionary dictionaryWithObject:...
-//                                                                   forKey:...];
-  
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting options:NSKeyValueObservingOptionNew context:NULL];
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished  options:NSKeyValueObservingOptionNew context:NULL];
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled options:NSKeyValueObservingOptionNew context:NULL];
@@ -191,8 +181,8 @@
   {
     NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
     
-    VMPythonLogNotice(@"* < Operation: \"%@\" is %@.", operationIdentifier, ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
-    [_operationsInfo removeObjectForKey:operationIdentifier];
+    VMPythonLogNotice(@"* < Operation: \"%@\" is %@.", operationIdentifier,
+                      ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
     
     [self _unobserveOperation:(NSOperation *)object];
     
