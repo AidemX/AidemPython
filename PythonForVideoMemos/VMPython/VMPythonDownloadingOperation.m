@@ -56,6 +56,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(NSString *)format
                     preferredName:(NSString *)preferredName
+                         userInfo:(NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
                  progressFilePath:(NSString *)progressFilePath
 {
@@ -65,6 +66,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
     self.urlString     = urlString;
     self.format        = format;
     self.preferredName = preferredName;
+    self.userInfo      = userInfo;
     
     self.pythonVideoMemosModule = pythonVideoMemosModule;
     self.progressFilePath = progressFilePath;

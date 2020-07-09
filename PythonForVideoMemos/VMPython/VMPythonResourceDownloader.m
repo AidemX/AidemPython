@@ -171,8 +171,9 @@
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
       VMPythonLogNotice(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
-      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidStartTaskWithIdentifier:)]) {
-        [self.delegate vm_pythonResourceDownloaderDidStartTaskWithIdentifier:operationIdentifier];
+      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidStartTaskWithIdentifier:userInfo:)]) {
+        [self.delegate vm_pythonResourceDownloaderDidStartTaskWithIdentifier:operationIdentifier
+                                                                    userInfo:((VMPythonDownloadingOperation *)object).userInfo];
       }
     }
     
@@ -186,8 +187,10 @@
     
     [self _unobserveOperation:(NSOperation *)object];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidEndTaskWithIdentifier:errorMessage:)]) {
-      [self.delegate vm_pythonResourceDownloaderDidEndTaskWithIdentifier:operationIdentifier errorMessage:nil];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidEndTaskWithIdentifier:userInfo:errorMessage:)]) {
+      [self.delegate vm_pythonResourceDownloaderDidEndTaskWithIdentifier:operationIdentifier
+                                                                userInfo:((VMPythonDownloadingOperation *)object).userInfo
+                                                            errorMessage:nil];
     }
   }
 }
@@ -283,6 +286,7 @@
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(NSString *)format
                       preferredName:(NSString *)preferredName
+                           userInfo:(NSDictionary *)userInfo
 {
   if (!self.downloadingOperationQueue) {
     self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
@@ -295,6 +299,7 @@
   VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
                                                                                            inFormat:format
                                                                                       preferredName:preferredName
+                                                                                           userInfo:userInfo
                                                                              pythonVideoMemosModule:self.pythonVideoMemosModule
                                                                                    progressFilePath:self.progressFilePath];
   if (self.suspended) {
@@ -309,6 +314,7 @@
 - (NSString *)downloadWithResourceItem:(VMWebResourceModel *)resourceItem
                             optionItem:(VMWebResourceOptionModel *)optionItem
                          preferredName:(NSString *)preferredName
+                              userInfo:(NSDictionary *)userInfo
 {
   if (nil == preferredName) {
     preferredName = [self _validFilenameFromName:resourceItem.title];
@@ -316,7 +322,7 @@
       preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
     }
   }
-  return [self downloadWithURLString:resourceItem.urlString inFormat:optionItem.format preferredName:preferredName];
+  return [self downloadWithURLString:resourceItem.urlString inFormat:optionItem.format preferredName:preferredName userInfo:userInfo];
 }
 
 #pragma mark - Public (Task Management)

@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier;
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo;
 
 - (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress;
 
-- (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(nullable NSString *)errorMessage;
+- (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo errorMessage:(nullable NSString *)errorMessage;
 
 @end
 

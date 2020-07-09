@@ -27,10 +27,13 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
 @property (nonatomic, assign) float progress;
 @property (nonatomic, assign, getter=isPaused) BOOL paused;
 
+@property (nonatomic, copy, nullable) NSDictionary *userInfo; ///< (Optional) Used to store user operation associated infos.
+
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
                     preferredName:(nullable NSString *)preferredName
+                         userInfo:(nullable NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
                  progressFilePath:(NSString *)progressFilePath;
 

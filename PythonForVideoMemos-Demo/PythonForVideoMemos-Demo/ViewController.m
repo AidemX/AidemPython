@@ -240,7 +240,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   //[_downloader downloadWithURLString:self.urlString inFormat:item.format];
   NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
                                                                                         optionItem:item
-                                                                                     preferredName:nil];
+                                                                                     preferredName:nil
+                                                                                          userInfo:nil];
   item.taskIdentifier = taskIdentifier;
   item.status = kVMPythonDownloadProcessStatusOfWaiting;
 }
@@ -273,7 +274,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     } else {
       NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
                                                                                             optionItem:item
-                                                                                         preferredName:nil];
+                                                                                         preferredName:nil
+                                                                                              userInfo:nil];
       item.taskIdentifier = taskIdentifier;
     }
   }
@@ -281,7 +283,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 #pragma mark - VMPythonResourceDownloaderDelegate
 
-- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(NSDictionary *)userInfo
 {
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
   
@@ -306,7 +308,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   self.currentDownloadingCell.downloadProcessButton.progress = progress;
 }
 
-- (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier errorMessage:(NSString *)errorMessage
+- (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(NSDictionary *)userInfo errorMessage:(NSString *)errorMessage
 {
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - End Task (Identifier: %@) - errorMessage: %@", taskIdentifier, errorMessage);
   

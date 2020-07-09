@@ -38,27 +38,32 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 /**
  * Download resource w/ URL string in format.
  *
- * @param urlString URL string
- * @param format    Resource format
+ * @param urlString     URL string
+ * @param format        Resource format
+ * @param preferredName (Optional) Preferred name (w/o ext) as the saved filename
+ * @param userInfo      (Optional) Cutom user info to store if needed
  *
  * @return Task identifier of the downloading operation (NOTE: it's operation name, not unique for sure).
  */
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(nullable NSString *)format
-                      preferredName:(nullable NSString *)preferredName;
+                      preferredName:(nullable NSString *)preferredName
+                           userInfo:(nullable NSDictionary *)userInfo;
 
 /**
  * Download resource w/ selected source option item.
  *
  * @param resourceItem  Main resource item associated w/ an URL
  * @param optionItem    Resource item's option item in different format.
- * @param preferredName (Optioanl) preferred name for this option item.
+ * @param preferredName (Optioanl) Preferred name (w/o ext) as the saved filename for this option item.
+ * @param userInfo      (Optional) Cutom user info to store if needed
  *
  * @return Task identifier of the downloading operation (NOTE: it's operation name, not unique for sure).
  */
 - (NSString *)downloadWithResourceItem:(VMWebResourceModel *)resourceItem
                             optionItem:(nullable VMWebResourceOptionModel *)optionItem
-                         preferredName:(nullable NSString *)preferredName;
+                         preferredName:(nullable NSString *)preferredName
+                              userInfo:(nullable NSDictionary *)userInfo;
 
 /*
  * Task Management
