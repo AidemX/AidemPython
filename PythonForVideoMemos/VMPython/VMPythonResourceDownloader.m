@@ -231,7 +231,7 @@
 
 #pragma mark - Public
 
-- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderResourceCheckingCompletion)completion
+- (void)fetchInfoWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderFetchInfoCompletion)completion
 {
   NSString *jsonPath;
   
@@ -249,9 +249,8 @@
         [fileManager removeItemAtPath:jsonPath error:NULL];
         
       } else {
-        VMWebResourceModel *sourceItem = [self _newWebResourceItemFromJSON:json];
         VMPythonLogNotice(@"\nGot cached JSON file at %@", jsonPath);
-        completion(sourceItem, nil);
+        completion(json, nil);
         
         return;
       }
@@ -276,9 +275,32 @@
         if (weakSelf.cacheJSONFile && jsonPath) {
           [jsonString writeToFile:jsonPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
-        VMWebResourceModel *sourceItem = [weakSelf _newWebResourceItemFromJSON:json];
-        completion(sourceItem, nil);
+        completion(json, nil);
       }
+    }
+  }];
+}
+
+- (void)fetchTitleWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderFetchTitleCompletion)completion
+{
+  [self fetchInfoWithURLString:urlString completion:^(NSDictionary *json, NSString *errorMessage) {
+    if (errorMessage) {
+      completion(nil, errorMessage);
+    } else {
+      NSString *title = json[@"title"];
+      completion(title, nil);
+    }
+  }];
+}
+
+- (void)checkWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderResourceCheckingCompletion)completion
+{
+  [self fetchInfoWithURLString:urlString completion:^(NSDictionary *json, NSString *errorMessage) {
+    if (errorMessage) {
+      completion(nil, errorMessage);
+    } else {
+      VMWebResourceModel *resourceItem = [self _newWebResourceItemFromJSON:json];
+      completion(resourceItem, nil);
     }
   }];
 }
