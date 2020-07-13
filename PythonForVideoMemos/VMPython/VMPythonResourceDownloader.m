@@ -113,13 +113,13 @@
 
 - (VMWebResourceModel *)_newWebResourceItemFromJSON:(NSDictionary *)json
 {
-  VMWebResourceModel *sourceItem = [[VMWebResourceModel alloc] init];
-  sourceItem.title     = json[@"title"];
-  sourceItem.site      = json[@"site"];
-  sourceItem.urlString = json[@"url"];
+  VMWebResourceModel *resourceItem = [[VMWebResourceModel alloc] init];
+  resourceItem.title     = json[@"title"];
+  resourceItem.site      = json[@"site"];
+  resourceItem.urlString = json[@"url"];
   
-  sourceItem.userAgent = json[@"ua"];
-  sourceItem.referer   = json[@"referer"];
+  resourceItem.userAgent = json[@"ua"];
+  resourceItem.referer   = json[@"referer"];
   
   NSDictionary *streams = json[@"streams"];
   if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
@@ -128,10 +128,10 @@
       VMWebResourceOptionModel *option = [VMWebResourceOptionModel newWithKey:key andValue:streams[key]];
       [options addObject:option];
     }
-    sourceItem.options = options;
+    resourceItem.options = options;
   }
   
-  return sourceItem;
+  return resourceItem;
 }
 
 - (void)_observeOperation:(NSOperation *)operation

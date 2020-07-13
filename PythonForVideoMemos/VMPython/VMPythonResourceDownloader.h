@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^VMPythonResourceDownloaderFetchInfoCompletion)(NSDictionary *_Nullable json, NSString *_Nullable errorMessage);
 typedef void (^VMPythonResourceDownloaderFetchTitleCompletion)(NSString *_Nullable title, NSString *_Nullable errorMessage);
-typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResourceModel *_Nullable sourceItem, NSString *_Nullable errorMessage);
+typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResourceModel *_Nullable resourceItem, NSString *_Nullable errorMessage);
 
 
 @protocol VMPythonResourceDownloaderDelegate;
