@@ -12,11 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol VMPythonResourceDownloaderDelegate <NSObject>
 
-@optional
+//@optional
+@required
 
 - (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo;
 
-- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress;
+- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(unsigned long long)receivedFileSize;
 
 - (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo errorMessage:(nullable NSString *)errorMessage;
 

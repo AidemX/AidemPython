@@ -20,7 +20,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfIsExecuting = @"isExecut
 NSString * const kVMPythonDownloadingOperationPropertyOfIsFinished  = @"isFinished";
 NSString * const kVMPythonDownloadingOperationPropertyOfIsCancelled = @"isCancelled";
 
-NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
+NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"receivedFileSize";
 
 
 @interface VMPythonDownloadingOperation ()
@@ -80,10 +80,10 @@ NSString * const kVMPythonDownloadingOperationPropertyOfProgress = @"progress";
 - (void)_checkProgress
 {
   NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
-  float progress = content.floatValue;
-  VMPythonLogDebug(@"GET CONTENT \"%f\" from .progress file", progress);
-  if (self.progress != progress) {
-    self.progress = progress;
+  unsigned long long receivedFileSize = content.integerValue;
+  VMPythonLogDebug(@"GET CONTENT \"%lld\" from .progress file", receivedFileSize);
+  if (self.receivedFileSize != receivedFileSize) {
+    self.receivedFileSize = receivedFileSize;
   }
 }
 

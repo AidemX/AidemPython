@@ -301,9 +301,11 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   }
 }
 
-- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier progress:(float)progress
+- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(unsigned long long)receivedFileSize
 {
-  VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - - Task (Identifier: %@) progress: %f", taskIdentifier, progress);
+  float progress = (float)receivedFileSize / (float)self.currentDownloadingItem.size;
+  VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - - Task (Identifier: %@) receivedFileSize: %lld (progress: %f)",
+                   taskIdentifier, receivedFileSize, progress);
   self.currentDownloadingItem.progress = progress;
   self.currentDownloadingCell.downloadProcessButton.progress = progress;
 }

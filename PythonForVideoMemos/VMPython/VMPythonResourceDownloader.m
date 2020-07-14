@@ -139,7 +139,7 @@
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting options:NSKeyValueObservingOptionNew context:NULL];
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished  options:NSKeyValueObservingOptionNew context:NULL];
   [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfProgress options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfReceivedFileSize options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)_unobserveOperation:(NSOperation *)operation
@@ -147,7 +147,7 @@
   [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting];
   [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished];
   [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled];
-  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfProgress];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfReceivedFileSize];
 }
 
 #pragma mark - NSKeyValueObserving Protocol
@@ -157,11 +157,11 @@
                         change:(NSDictionary <NSString *, id> *)change
                        context:(void *)context
 {
-  if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfProgress]) {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:progress:)]) {
+  if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfReceivedFileSize]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:receivedFileSize:)]) {
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
-      float progress = [change[NSKeyValueChangeNewKey] floatValue];
-      [self.delegate vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier progress:progress];
+      unsigned long long receivedFileSize = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
+      [self.delegate vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier receivedFileSize:receivedFileSize];
     }
     
   } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsExecuting]) {

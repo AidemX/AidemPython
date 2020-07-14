@@ -19,12 +19,13 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfIsExecuting;
 extern NSString * const kVMPythonDownloadingOperationPropertyOfIsFinished;
 extern NSString * const kVMPythonDownloadingOperationPropertyOfIsCancelled;
 
-extern NSString * const kVMPythonDownloadingOperationPropertyOfProgress;
+extern NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize;
 
 
 @interface VMPythonDownloadingOperation : NSOperation
 
-@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) unsigned long long receivedFileSize; ///< Received file size in bytes
+@property (nonatomic, assign) unsigned long long totalFileSize;    ///< Total file size in bytes
 @property (nonatomic, assign, getter=isPaused) BOOL paused;
 
 @property (nonatomic, copy, nullable) NSDictionary *userInfo; ///< (Optional) Used to store user operation associated infos.
