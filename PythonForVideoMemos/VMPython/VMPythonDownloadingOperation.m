@@ -55,7 +55,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
 
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(NSString *)format
-                    totalFileSize:(unsigned long long)totalFileSize
+                    totalFileSize:(uint64_t)totalFileSize
                     preferredName:(NSString *)preferredName
                          userInfo:(NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
@@ -82,10 +82,10 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
 - (void)_checkProgress
 {
   NSString *content = [NSString stringWithContentsOfFile:self.progressFilePath encoding:NSUTF8StringEncoding error:NULL];
-  // About "unsigned long long"
+  // About NSString to "unsigned long long"
   //   unsigned long long receivedFileSize = strtoull([content UTF8String], NULL, 0);
   // REF: https://stackoverflow.com/questions/1181637/storing-and-retrieving-unsigned-long-long-value-to-from-nsstring/1181715#1181715
-  unsigned long long receivedFileSize = (unsigned long long)content.longLongValue;
+  uint64_t receivedFileSize = (uint64_t)content.longLongValue;
   VMPythonLogDebug(@"GET CONTENT \"%lld\" from .progress file", receivedFileSize);
   if (self.receivedFileSize != receivedFileSize) {
     self.receivedFileSize = receivedFileSize;

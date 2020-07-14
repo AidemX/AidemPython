@@ -283,7 +283,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 #pragma mark - VMPythonResourceDownloaderDelegate
 
-- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier totalFileSize:(unsigned long long)totalFileSize userInfo:(NSDictionary *)userInfo
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier totalFileSize:(uint64_t)totalFileSize userInfo:(NSDictionary *)userInfo
 {
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
   
@@ -301,7 +301,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   }
 }
 
-- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(unsigned long long)receivedFileSize
+- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(uint64_t)receivedFileSize
 {
   float progress = (float)receivedFileSize / (float)self.currentDownloadingItem.size;
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - - Task (Identifier: %@) receivedFileSize: %lld (progress: %f)",

@@ -24,8 +24,9 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize;
 
 @interface VMPythonDownloadingOperation : NSOperation
 
-@property (nonatomic, assign) unsigned long long receivedFileSize; ///< Received file size in bytes
-@property (nonatomic, assign) unsigned long long totalFileSize;    ///< Total file size in bytes
+@property (nonatomic, assign) uint64_t receivedFileSize; ///< Received file size in bytes
+@property (nonatomic, assign) uint64_t totalFileSize;    ///< Total file size in bytes
+
 @property (nonatomic, assign, getter=isPaused) BOOL paused;
 
 @property (nonatomic, copy, nullable) NSDictionary *userInfo; ///< (Optional) Used to store user operation associated infos.
@@ -33,7 +34,7 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize;
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
-                    totalFileSize:(unsigned long long)totalFileSize
+                    totalFileSize:(uint64_t)totalFileSize
                     preferredName:(nullable NSString *)preferredName
                          userInfo:(nullable NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule

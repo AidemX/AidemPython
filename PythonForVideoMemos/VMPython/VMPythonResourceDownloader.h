@@ -52,7 +52,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
  */
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(nullable NSString *)format
-                      totalFileSize:(unsigned long long)totalFileSize
+                      totalFileSize:(uint64_t)totalFileSize
                       preferredName:(nullable NSString *)preferredName
                            userInfo:(nullable NSDictionary *)userInfo;
 

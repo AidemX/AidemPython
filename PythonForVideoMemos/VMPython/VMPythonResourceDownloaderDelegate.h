@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier totalFileSize:(unsigned long long)totalFileSize userInfo:(nullable NSDictionary *)userInfo;
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier totalFileSize:(uint64_t)totalFileSize userInfo:(nullable NSDictionary *)userInfo;
 
-- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(unsigned long long)receivedFileSize;
+- (void)vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:(NSString *)taskIdentifier receivedFileSize:(uint64_t)receivedFileSize;
 
 - (void)vm_pythonResourceDownloaderDidEndTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo errorMessage:(nullable NSString *)errorMessage;
 

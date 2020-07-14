@@ -160,7 +160,7 @@
   if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfReceivedFileSize]) {
     if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:receivedFileSize:)]) {
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
-      unsigned long long receivedFileSize = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
+      uint64_t receivedFileSize = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
       [self.delegate vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier receivedFileSize:receivedFileSize];
     }
     
@@ -309,7 +309,7 @@
 
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(NSString *)format
-                      totalFileSize:(unsigned long long)totalFileSize
+                      totalFileSize:(uint64_t)totalFileSize
                       preferredName:(NSString *)preferredName
                            userInfo:(NSDictionary *)userInfo
 {
