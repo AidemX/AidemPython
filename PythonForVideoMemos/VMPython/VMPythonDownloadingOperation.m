@@ -66,7 +66,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
     
     self.urlString     = urlString;
     self.format        = format;
-    self.totalFileSize = (totalFileSize ?: NSIntegerMax);
+    self.totalFileSize = (totalFileSize ?: ULLONG_MAX);
     self.preferredName = preferredName;
     self.userInfo      = userInfo;
     
