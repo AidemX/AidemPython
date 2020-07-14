@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol VMPythonResourceDownloaderDelegate <NSObject>
 
-//@optional
-@required
+@optional
 
 - (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(nullable NSDictionary *)userInfo;
 
