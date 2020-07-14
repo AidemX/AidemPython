@@ -10,6 +10,7 @@
 		7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */; };
 		7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */; };
 		7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD824AF1E1700B3F5EB /* Constants.m */; };
+		7F20F21824BDAED000981F12 /* VMFileSizeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F20F21724BDAED000981F12 /* VMFileSizeCalculator.m */; };
 		7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57824A42AAB00CC0889 /* AppDelegate.m */; };
 		7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57B24A42AAB00CC0889 /* SceneDelegate.m */; };
 		7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57E24A42AAB00CC0889 /* ViewController.m */; };
@@ -62,6 +63,8 @@
 		7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDownloadingCell.m; sourceTree = "<group>"; };
 		7F08BBD724AF1E1700B3F5EB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		7F08BBD824AF1E1700B3F5EB /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		7F20F21624BDAED000981F12 /* VMFileSizeCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMFileSizeCalculator.h; sourceTree = "<group>"; };
+		7F20F21724BDAED000981F12 /* VMFileSizeCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMFileSizeCalculator.m; sourceTree = "<group>"; };
 		7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PythonForVideoMemos-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4CB57724A42AAB00CC0889 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7F4CB57824A42AAB00CC0889 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */,
 				7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */,
 				7FE3493824B1BCEE00A38530 /* VMResourceDownloader.m */,
+				7F20F21624BDAED000981F12 /* VMFileSizeCalculator.h */,
+				7F20F21724BDAED000981F12 /* VMFileSizeCalculator.m */,
 				7FFEE23B24A5EB450071144F /* Model */,
 			);
 			path = VMPython;
@@ -473,6 +478,7 @@
 				7FFEE27624AC1E840071144F /* VMPython.m in Sources */,
 				7FFEE27824AC1E840071144F /* VMPythonVideoMemosModule.m in Sources */,
 				7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */,
+				7F20F21824BDAED000981F12 /* VMFileSizeCalculator.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
 				7FE3499624B1C5EC00A38530 /* VMWebResourceOptionModel.m in Sources */,
 			);
