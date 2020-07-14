@@ -44,6 +44,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
  *
  * @param urlString     URL string
  * @param format        Resource format
+ * @param totalFileSize Total file size
  * @param preferredName (Optional) Preferred name (w/o ext) as the saved filename
  * @param userInfo      (Optional) Cutom user info to store if needed
  *
@@ -51,6 +52,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
  */
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(nullable NSString *)format
+                      totalFileSize:(unsigned long long)totalFileSize
                       preferredName:(nullable NSString *)preferredName
                            userInfo:(nullable NSDictionary *)userInfo;
 

@@ -55,6 +55,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
 
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(NSString *)format
+                    totalFileSize:(unsigned long long)totalFileSize
                     preferredName:(NSString *)preferredName
                          userInfo:(NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
@@ -65,6 +66,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
     
     self.urlString     = urlString;
     self.format        = format;
+    self.totalFileSize = totalFileSize;
     self.preferredName = preferredName;
     self.userInfo      = userInfo;
     

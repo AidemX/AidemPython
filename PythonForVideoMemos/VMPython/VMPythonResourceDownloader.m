@@ -307,6 +307,7 @@
 
 - (NSString *)downloadWithURLString:(NSString *)urlString
                            inFormat:(NSString *)format
+                      totalFileSize:(unsigned long long)totalFileSize
                       preferredName:(NSString *)preferredName
                            userInfo:(NSDictionary *)userInfo
 {
@@ -320,6 +321,7 @@
   
   VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
                                                                                            inFormat:format
+                                                                                      totalFileSize:totalFileSize
                                                                                       preferredName:preferredName
                                                                                            userInfo:userInfo
                                                                              pythonVideoMemosModule:self.pythonVideoMemosModule
@@ -344,7 +346,11 @@
       preferredName = [preferredName stringByAppendingFormat:@" - %@", optionItem.format];
     }
   }
-  return [self downloadWithURLString:resourceItem.urlString inFormat:optionItem.format preferredName:preferredName userInfo:userInfo];
+  return [self downloadWithURLString:resourceItem.urlString
+                            inFormat:optionItem.format
+                       totalFileSize:optionItem.size
+                       preferredName:preferredName
+                            userInfo:userInfo];
 }
 
 #pragma mark - Public (Task Management)

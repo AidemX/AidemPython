@@ -33,6 +33,7 @@ extern NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize;
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithURLString:(NSString *)urlString
                          inFormat:(nullable NSString *)format
+                    totalFileSize:(unsigned long long)totalFileSize
                     preferredName:(nullable NSString *)preferredName
                          userInfo:(nullable NSDictionary *)userInfo
            pythonVideoMemosModule:(VMPythonVideoMemosModule *)pythonVideoMemosModule
