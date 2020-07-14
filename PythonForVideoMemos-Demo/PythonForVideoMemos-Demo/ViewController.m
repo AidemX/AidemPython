@@ -283,7 +283,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
 
 #pragma mark - VMPythonResourceDownloaderDelegate
 
-- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier userInfo:(NSDictionary *)userInfo
+- (void)vm_pythonResourceDownloaderDidStartTaskWithIdentifier:(NSString *)taskIdentifier totalFileSize:(unsigned long long)totalFileSize userInfo:(NSDictionary *)userInfo
 {
   VMPythonLogDebug(@"Got Callback from VMPythonResourceDownloader\n  - Start Task (Identifier: %@)", taskIdentifier);
   

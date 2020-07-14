@@ -171,9 +171,11 @@
       NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
       VMPythonLogNotice(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
-      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidStartTaskWithIdentifier:userInfo:)]) {
+      if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidStartTaskWithIdentifier:totalFileSize:userInfo:)]) {
+        VMPythonDownloadingOperation *operation = (VMPythonDownloadingOperation *)object;
         [self.delegate vm_pythonResourceDownloaderDidStartTaskWithIdentifier:operationIdentifier
-                                                                    userInfo:((VMPythonDownloadingOperation *)object).userInfo];
+                                                               totalFileSize:operation.totalFileSize
+                                                                    userInfo:operation.userInfo];
       }
     }
     
