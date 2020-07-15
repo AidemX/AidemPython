@@ -43,7 +43,7 @@
 
 - (NSString *)_validFilenameFromName:(NSString *)name;
 - (NSString *)_filenameFromURLString:(NSString *)urlString;
-- (VMWebResourceModel *)_newWebResourceItemFromJSON:(NSDictionary *)json;
+- (VMWebResourceModel *)_newWebResourceItemFromJSON:(NSDictionary *)json withURLString:(NSString *)urlString;
 
 - (void)_observeOperation:(NSOperation *)operation;
 
@@ -111,12 +111,12 @@
   return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
 }
 
-- (VMWebResourceModel *)_newWebResourceItemFromJSON:(NSDictionary *)json
+- (VMWebResourceModel *)_newWebResourceItemFromJSON:(NSDictionary *)json withURLString:(NSString *)urlString
 {
   VMWebResourceModel *resourceItem = [[VMWebResourceModel alloc] init];
   resourceItem.title     = json[@"title"];
   resourceItem.site      = json[@"site"];
-  resourceItem.urlString = json[@"url"];
+  resourceItem.urlString = urlString;// `json[@"url"]` might be null, e.g. "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
   
   resourceItem.userAgent = json[@"ua"];
   resourceItem.referer   = json[@"referer"];
@@ -301,7 +301,7 @@
     if (errorMessage) {
       completion(nil, errorMessage);
     } else {
-      VMWebResourceModel *resourceItem = [self _newWebResourceItemFromJSON:json];
+      VMWebResourceModel *resourceItem = [self _newWebResourceItemFromJSON:json withURLString:urlString];
       completion(resourceItem, nil);
     }
   }];

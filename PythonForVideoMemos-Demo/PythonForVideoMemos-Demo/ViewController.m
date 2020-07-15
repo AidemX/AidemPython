@@ -120,7 +120,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   downloader.debugMode     = YES;
   downloader.delegate = self;
   
-  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
+//  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
+  self.urlString = @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
   
   /*/ Test downloading progress
   [downloader debug_downloadWithURLString:self.urlString
