@@ -8,6 +8,8 @@
 
 // Protocol to Implement by Others
 #import "VMPythonResourceDownloaderDelegate.h"
+// Constants
+#import "VMDownloadOperationConstants.h"
 
 @class VMWebResourceModel;
 @class VMWebResourceOptionModel;
@@ -74,6 +76,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 /*
  * Task Management
  */
+- (VMDownloadOperationStatus)statusOfTaskWithIdentifier:(NSString *)taskIdentifier;
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier;
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier;
 

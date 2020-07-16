@@ -27,6 +27,7 @@
 		7F4CBD5924A42CBB00CC0889 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CBD5824A42CBB00CC0889 /* python */; };
 		7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */; };
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
+		7F52B3DF24C0580D0048AE58 /* VMDownloadOperationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3DE24C0580D0048AE58 /* VMDownloadOperationConstants.m */; };
 		7FE3493924B1BCEE00A38530 /* VMPythonResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */; };
 		7FE3493A24B1BCEE00A38530 /* VMResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3493824B1BCEE00A38530 /* VMResourceDownloader.m */; };
 		7FE3499624B1C5EC00A38530 /* VMWebResourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3499224B1C5EC00A38530 /* VMWebResourceOptionModel.m */; };
@@ -90,6 +91,8 @@
 		7F4CBD5824A42CBB00CC0889 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
 		7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F4CBD5D24A42D6800CC0889 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		7F52B3DD24C0580D0048AE58 /* VMDownloadOperationConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMDownloadOperationConstants.h; sourceTree = "<group>"; };
+		7F52B3DE24C0580D0048AE58 /* VMDownloadOperationConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMDownloadOperationConstants.m; sourceTree = "<group>"; };
 		7FE3493524B1BCED00A38530 /* VMPythonResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloader.h; sourceTree = "<group>"; };
 		7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonResourceDownloader.m; sourceTree = "<group>"; };
 		7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMResourceDownloader.h; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 				7FE349B824B32B9800A38530 /* VMPythonResourceDownloaderDelegate.h */,
 				7FE3493524B1BCED00A38530 /* VMPythonResourceDownloader.h */,
 				7FE3493624B1BCED00A38530 /* VMPythonResourceDownloader.m */,
+				7F52B3DD24C0580D0048AE58 /* VMDownloadOperationConstants.h */,
+				7F52B3DE24C0580D0048AE58 /* VMDownloadOperationConstants.m */,
 				7FFEE24F24A9C74C0071144F /* VMPythonDownloadingOperation.h */,
 				7FFEE25024A9C74C0071144F /* VMPythonDownloadingOperation.m */,
 				7FE3493724B1BCEE00A38530 /* VMResourceDownloader.h */,
@@ -468,6 +473,7 @@
 			files = (
 				7FE3493924B1BCEE00A38530 /* VMPythonResourceDownloader.m in Sources */,
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
+				7F52B3DF24C0580D0048AE58 /* VMDownloadOperationConstants.m in Sources */,
 				7FE3493A24B1BCEE00A38530 /* VMResourceDownloader.m in Sources */,
 				7FFEE25124A9C74C0071144F /* VMPythonDownloadingOperation.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,

@@ -357,6 +357,21 @@
 
 #pragma mark - Public (Task Management)
 
+- (VMDownloadOperationStatus)statusOfTaskWithIdentifier:(NSString *)taskIdentifier
+{
+  VMDownloadOperationStatus status = kVMDownloadOperationStatusNone;
+  for (NSOperation *operation in self.downloadingOperationQueue.operations) {
+    if ([operation.name isEqualToString:taskIdentifier]) {
+      if      (operation.isExecuting) status = kVMDownloadOperationStatusOfExecuting;
+      else if (operation.isFinished)  status = kVMDownloadOperationStatusOfFinished;
+      else if (operation.isCancelled) status = kVMDownloadOperationStatusOfCancelled;
+      else                            status = kVMDownloadOperationStatusOfWaiting;
+      break;
+    }
+  }
+  return status;
+}
+
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier
 {
   for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
