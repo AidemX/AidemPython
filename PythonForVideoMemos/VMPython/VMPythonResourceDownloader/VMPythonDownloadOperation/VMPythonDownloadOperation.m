@@ -1,12 +1,12 @@
 //
-//  VMPythonDownloadingOperation.m
+//  VMPythonDownloadOperation.m
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 29/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMPythonDownloadingOperation.h"
+#import "VMPythonDownloadOperation.h"
 
 #import "VMPythonCommon.h"
 // Model
@@ -14,16 +14,16 @@
 #import "VMWebResourceModel.h"
 
 
-NSString * const kVMPythonDownloadingOperationPropertyOfName = @"name";
+NSString * const kVMPythonDownloadOperationPropertyOfName = @"name";
 
-NSString * const kVMPythonDownloadingOperationPropertyOfIsExecuting = @"isExecuting";
-NSString * const kVMPythonDownloadingOperationPropertyOfIsFinished  = @"isFinished";
-NSString * const kVMPythonDownloadingOperationPropertyOfIsCancelled = @"isCancelled";
+NSString * const kVMPythonDownloadOperationPropertyOfIsExecuting = @"isExecuting";
+NSString * const kVMPythonDownloadOperationPropertyOfIsFinished  = @"isFinished";
+NSString * const kVMPythonDownloadOperationPropertyOfIsCancelled = @"isCancelled";
 
-NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"receivedFileSize";
+NSString * const kVMPythonDownloadOperationPropertyOfReceivedFileSize = @"receivedFileSize";
 
 
-@interface VMPythonDownloadingOperation ()
+@interface VMPythonDownloadOperation ()
 
 @property (nonatomic, weak) VMPythonVideoMemosModule *pythonVideoMemosModule;
 
@@ -43,7 +43,7 @@ NSString * const kVMPythonDownloadingOperationPropertyOfReceivedFileSize = @"rec
 @end
 
 
-@implementation VMPythonDownloadingOperation
+@implementation VMPythonDownloadOperation
 
 - (void)dealloc
 {

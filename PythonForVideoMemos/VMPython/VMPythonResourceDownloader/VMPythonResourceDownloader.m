@@ -12,7 +12,7 @@
 // Model
 #import "VMPythonVideoMemosModule.h"
 #import "VMWebResourceModel.h"
-#import "VMPythonDownloadingOperation.h"
+#import "VMPythonDownloadOperation.h"
 
 
 @interface VMPythonResourceDownloader ()
@@ -136,18 +136,18 @@
 
 - (void)_observeOperation:(NSOperation *)operation
 {
-  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished  options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled options:NSKeyValueObservingOptionNew context:NULL];
-  [operation addObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfReceivedFileSize options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsExecuting options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsFinished  options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsCancelled options:NSKeyValueObservingOptionNew context:NULL];
+  [operation addObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfReceivedFileSize options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)_unobserveOperation:(NSOperation *)operation
 {
-  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsExecuting];
-  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsFinished];
-  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfIsCancelled];
-  [operation removeObserver:self forKeyPath:kVMPythonDownloadingOperationPropertyOfReceivedFileSize];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsExecuting];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsFinished];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfIsCancelled];
+  [operation removeObserver:self forKeyPath:kVMPythonDownloadOperationPropertyOfReceivedFileSize];
 }
 
 #pragma mark - NSKeyValueObserving Protocol
@@ -157,41 +157,41 @@
                         change:(NSDictionary <NSString *, id> *)change
                        context:(void *)context
 {
-  if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfReceivedFileSize]) {
+  if ([keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfReceivedFileSize]) {
     if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:receivedFileSize:)]) {
-      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
+      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadOperationPropertyOfName];
       uint64_t receivedFileSize = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
       [self.delegate vm_pythonResourceDownloaderDidUpdateTaskWithIdentifier:operationIdentifier receivedFileSize:receivedFileSize];
     }
     
-  } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsExecuting]) {
+  } else if ([keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfIsExecuting]) {
     // The `isExecuting` will be 1 when operation starts, and will be 0 when it ends (and `isFinished` will be 1 at same time).
     //   What we care is when it starts, so compare the `new` value w/ 1 here.
     if (1 == [change[NSKeyValueChangeNewKey] intValue]) {
-      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
+      NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadOperationPropertyOfName];
       VMPythonLogNotice(@"* > Start Executing Operation: \"%@\".", operationIdentifier);
       
       if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidStartTaskWithIdentifier:totalFileSize:userInfo:)]) {
-        VMPythonDownloadingOperation *operation = (VMPythonDownloadingOperation *)object;
+        VMPythonDownloadOperation *operation = (VMPythonDownloadOperation *)object;
         [self.delegate vm_pythonResourceDownloaderDidStartTaskWithIdentifier:operationIdentifier
                                                                totalFileSize:operation.totalFileSize
                                                                     userInfo:operation.userInfo];
       }
     }
     
-  } else if ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ||
-             [keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsCancelled])
+  } else if ([keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfIsFinished] ||
+             [keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfIsCancelled])
   {
-    NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadingOperationPropertyOfName];
+    NSString *operationIdentifier = [object valueForKey:kVMPythonDownloadOperationPropertyOfName];
     
     VMPythonLogNotice(@"* < Operation: \"%@\" is %@.", operationIdentifier,
-                      ([keyPath isEqualToString:kVMPythonDownloadingOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
+                      ([keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfIsFinished] ? @"Finished" : @"Cancelled"));
     
     [self _unobserveOperation:(NSOperation *)object];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(vm_pythonResourceDownloaderDidEndTaskWithIdentifier:userInfo:errorMessage:)]) {
       [self.delegate vm_pythonResourceDownloaderDidEndTaskWithIdentifier:operationIdentifier
-                                                                userInfo:((VMPythonDownloadingOperation *)object).userInfo
+                                                                userInfo:((VMPythonDownloadOperation *)object).userInfo
                                                             errorMessage:nil];
     }
   }
@@ -226,7 +226,7 @@
   }
   
   // Pause all operations if needed
-  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+  for (VMPythonDownloadOperation *operation in self.downloadingOperationQueue.operations) {
     [operation pause];
   }
 }
@@ -321,7 +321,7 @@
   // Set `suspended=YES` if want to pause temporary.
   //self.downloadingOperationQueue.suspended = YES;
   
-  VMPythonDownloadingOperation *operation = [[VMPythonDownloadingOperation alloc] initWithURLString:urlString
+  VMPythonDownloadOperation *operation = [[VMPythonDownloadOperation alloc] initWithURLString:urlString
                                                                                            inFormat:format
                                                                                       totalFileSize:totalFileSize
                                                                                       preferredName:preferredName
@@ -374,7 +374,7 @@
 
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier
 {
-  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+  for (VMPythonDownloadOperation *operation in self.downloadingOperationQueue.operations) {
     if ([operation.name isEqualToString:taskIdentifier]) {
       [operation resume];
       break;
@@ -384,8 +384,8 @@
 
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier
 {
-  VMPythonDownloadingOperation *matchedOperation = nil;
-  for (VMPythonDownloadingOperation *operation in self.downloadingOperationQueue.operations) {
+  VMPythonDownloadOperation *matchedOperation = nil;
+  for (VMPythonDownloadOperation *operation in self.downloadingOperationQueue.operations) {
     if ([operation.name isEqualToString:taskIdentifier]) {
       matchedOperation = operation;
       break;
