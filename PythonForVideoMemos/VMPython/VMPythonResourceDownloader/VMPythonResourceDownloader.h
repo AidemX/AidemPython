@@ -76,9 +76,14 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 /*
  * Task Management
  */
+//! Get status of a task w/ identifier provided.
 - (VMDownloadOperationStatus)statusOfTaskWithIdentifier:(NSString *)taskIdentifier;
+//! Resume a task w/ identifier provided.
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier;
+//! Pause a task w/ identifier provided.
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier;
+//! Stop a task w/ identifier provided (will also clean cached files).
+- (void)stopTaskWithIdentifier:(NSString *)taskIdentifier;
 
 /*
  * Clean

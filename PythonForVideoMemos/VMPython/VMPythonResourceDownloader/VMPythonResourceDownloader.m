@@ -397,6 +397,26 @@
   }
 }
 
+- (void)stopTaskWithIdentifier:(NSString *)taskIdentifier
+{
+  [self pauseTaskWithIdentifier:taskIdentifier];
+  
+  // Clean cached files
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSArray *filenames = [fileManager contentsOfDirectoryAtPath:self.savePath error:NULL];
+  NSString *searchFilename = [taskIdentifier stringByAppendingString:@"."];
+  for (NSString *filename in filenames) {
+    if ([filename hasPrefix:searchFilename]) {
+      NSString *filePath = [self.savePath stringByAppendingPathComponent:filename];
+      NSError *error = nil;
+      if (![fileManager removeItemAtPath:filePath error:&error]) {
+        VMPythonLogError(@"Failed to rm cached file at %@", filePath);
+      }
+      break;
+    }
+  }
+}
+
 #pragma mark - Public (Clean)
 
 - (void)cleanCachedJSONFileWithURLString:(NSString *)urlString
