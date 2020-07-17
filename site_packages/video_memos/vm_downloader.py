@@ -36,9 +36,9 @@ def check_resource(url, proxy=None, username=None, password=None, debug=0):
     #   that they will send to standard output will be stored on "temp_result"
     # Print extracted URLs in JSON format in debug mode
     if debug:
-        sys.argv = ['you-get','--json','--debug',url]
+        sys.argv = ['you-get','-t','30','--json','--debug',url]
     else:
-        sys.argv = ['you-get','--json',          url]
+        sys.argv = ['you-get','-t','30','--json',          url]
     you_get.main()
 
     # Redirect again the std output to screen
@@ -71,8 +71,10 @@ def download_resource(path, url, name=None, fmt=None, proxy=None, username=None,
     #sys.argv = ['you-get','-o',path,url] # Download & save video to path
     #sys.argv = ['you-get','--debug','-o',path,url] # Download & save video to path in debug mode
 
-    # Full version: ['you-get','-k''--debug','-F',fmt,'-o',path,url]
-    argv_list = ['you-get','-k'] # -k, --insecure: ignore ssl errors
+    # Full version: ['you-get','-k','-t','30','--debug','-F',fmt,'-o',path,url]
+    # -k, --insecure: ignore ssl errors
+    # -t, --timeout: set socket timeout
+    argv_list = ['you-get','-k','-t','30']
     if debug:
         argv_list.append('--debug')
     if name:
