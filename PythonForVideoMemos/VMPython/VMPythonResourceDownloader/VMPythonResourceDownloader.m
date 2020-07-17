@@ -355,7 +355,7 @@
   for (NSOperation *operation in self.downloadingOperationQueue.operations) {
     if ([operation.name isEqualToString:taskIdentifier]) {
       if      (operation.isCancelled) status = kVMDownloadOperationStatusOfCancelled;
-      if      (operation.isExecuting) status = kVMDownloadOperationStatusOfExecuting;
+      else if (operation.isExecuting) status = kVMDownloadOperationStatusOfExecuting;
       else if (operation.isFinished)  status = kVMDownloadOperationStatusOfFinished;
       else                            status = kVMDownloadOperationStatusOfWaiting;
       break;
