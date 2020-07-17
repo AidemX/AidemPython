@@ -120,8 +120,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   downloader.debugMode     = YES;
   downloader.delegate = self;
   
-//  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
-  self.urlString = @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
+//  self.urlString = @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
   
   /*/ Test downloading progress
   [downloader debug_downloadWithURLString:self.urlString
@@ -258,11 +258,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   VMWebResourceOptionModel *item = self.resourceItem.options[indexPath.row];
   if (kVMPythonDownloadProcessStatusOfWaiting == item.status || kVMPythonDownloadProcessStatusOfDownloading == item.status) {
     [[VMPythonResourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
-    // Pausing downloading task will make it end, so let's reset the `taskIdentifier`.
-    //   And when resume the task, will create a new task instead.
-    if (kVMPythonDownloadProcessStatusOfDownloading == item.status) {
-      item.taskIdentifier = nil;
-    }
+    item.taskIdentifier = nil;
     cell.downloadProcessButton.status =
     item.status = kVMPythonDownloadProcessStatusOfPaused;
     
@@ -270,15 +266,11 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     cell.downloadProcessButton.status =
     item.status = kVMPythonDownloadProcessStatusOfWaiting;
     
-    if (item.taskIdentifier) {
-      [[VMPythonResourceDownloader sharedInstance] resumeTaskWithIdentifier:item.taskIdentifier];
-    } else {
-      NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
-                                                                                            optionItem:item
-                                                                                         preferredName:nil
-                                                                                              userInfo:nil];
-      item.taskIdentifier = taskIdentifier;
-    }
+    NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
+                                                                                          optionItem:item
+                                                                                       preferredName:nil
+                                                                                            userInfo:nil];
+    item.taskIdentifier = taskIdentifier;
   }
 }
 

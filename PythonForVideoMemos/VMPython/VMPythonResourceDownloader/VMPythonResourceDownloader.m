@@ -224,11 +224,6 @@
   if (self.downloadingOperationQueue) {
     self.downloadingOperationQueue.suspended = self.suspended;
   }
-  
-  // Pause all operations if needed
-  for (VMPythonDownloadOperation *operation in self.downloadingOperationQueue.operations) {
-    [operation pause];
-  }
 }
 
 #pragma mark - Public
@@ -318,19 +313,16 @@
     self.downloadingOperationQueue.maxConcurrentOperationCount = 1;
     self.downloadingOperationQueue.suspended = self.suspended;
   }
-  // Set `suspended=YES` if want to pause temporary.
+  // Set `suspended=YES` if want to pause all operations temporary.
   //self.downloadingOperationQueue.suspended = YES;
   
   VMPythonDownloadOperation *operation = [[VMPythonDownloadOperation alloc] initWithURLString:urlString
-                                                                                           inFormat:format
-                                                                                      totalFileSize:totalFileSize
-                                                                                      preferredName:preferredName
-                                                                                           userInfo:userInfo
-                                                                             pythonVideoMemosModule:self.pythonVideoMemosModule
-                                                                                   progressFilePath:self.progressFilePath];
-  if (self.suspended) {
-    [operation pause];
-  }
+                                                                                     inFormat:format
+                                                                                totalFileSize:totalFileSize
+                                                                                preferredName:preferredName
+                                                                                     userInfo:userInfo
+                                                                       pythonVideoMemosModule:self.pythonVideoMemosModule
+                                                                             progressFilePath:self.progressFilePath];
   [self _observeOperation:operation];
   [self.downloadingOperationQueue addOperation:operation];
   
@@ -362,9 +354,9 @@
   VMDownloadOperationStatus status = kVMDownloadOperationStatusNone;
   for (NSOperation *operation in self.downloadingOperationQueue.operations) {
     if ([operation.name isEqualToString:taskIdentifier]) {
+      if      (operation.isCancelled) status = kVMDownloadOperationStatusOfCancelled;
       if      (operation.isExecuting) status = kVMDownloadOperationStatusOfExecuting;
       else if (operation.isFinished)  status = kVMDownloadOperationStatusOfFinished;
-      else if (operation.isCancelled) status = kVMDownloadOperationStatusOfCancelled;
       else                            status = kVMDownloadOperationStatusOfWaiting;
       break;
     }
@@ -372,6 +364,7 @@
   return status;
 }
 
+/*
 - (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier
 {
   for (VMPythonDownloadOperation *operation in self.downloadingOperationQueue.operations) {
@@ -380,7 +373,7 @@
       break;
     }
   }
-}
+}*/
 
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier
 {
@@ -393,7 +386,7 @@
   }
   
   if (matchedOperation) {
-    [matchedOperation pause];
+    [matchedOperation cancel];
   }
 }
 

@@ -97,8 +97,8 @@ NSString * const kVMPythonDownloadOperationPropertyOfReceivedFileSize = @"receiv
 - (void)main
 {
   VMPythonLogNotice(@"# Start Operation: %@", self);
-  if (self.paused) {
-    VMPythonLogNotice(@"# Paused, Do Nothing.");
+  if (self.isCancelled) {
+    VMPythonLogNotice(@"# Operation Is Cancelled, Do Nothing.");
     return;
   }
   
@@ -109,7 +109,7 @@ NSString * const kVMPythonDownloadOperationPropertyOfReceivedFileSize = @"receiv
   if (![[NSFileManager defaultManager] fileExistsAtPath:self.progressFilePath]) {
     NSData *data = [NSData data];
     [[NSFileManager defaultManager] createFileAtPath:self.progressFilePath contents:data attributes:nil];
-    VMPythonLogDebug(@"Created progressFile");
+    VMPythonLogDebug(@"Created progress file: vm_progress");
   }
   
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -139,6 +139,28 @@ NSString * const kVMPythonDownloadOperationPropertyOfReceivedFileSize = @"receiv
                                           completion:completion];
 }
 
+#pragma mark - Public (Override NSOperation)
+
+- (void)cancel
+{
+  VMPythonLogNotice(@"Cancel Operation w/ Task Identifier: %@", self.name);
+  [super cancel];
+  
+  if (self.progressTimer) {
+    [self.progressTimer invalidate];
+    self.progressTimer = nil;
+    
+    //[self.pythonVideoMemosModule stopDownloading];
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] removeItemAtPath:self.progressFilePath error:&error]) {
+      VMPythonLogNotice(@"Stop Downloading by deleting progressFile.");
+    } else {
+      VMPythonLogError(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
+    }
+  }
+}
+
+/*
 #pragma mark - Public
 
 - (void)resume
@@ -170,6 +192,6 @@ NSString * const kVMPythonDownloadOperationPropertyOfReceivedFileSize = @"receiv
       VMPythonLogError(@"Deleting progressFile at path failed: %@", [error localizedDescription]);
     }
   }
-}
+}*/
 
 @end

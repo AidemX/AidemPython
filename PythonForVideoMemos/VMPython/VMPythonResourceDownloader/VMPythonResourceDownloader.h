@@ -78,11 +78,22 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
  */
 //! Get status of a task w/ identifier provided.
 - (VMDownloadOperationStatus)statusOfTaskWithIdentifier:(NSString *)taskIdentifier;
-//! Resume a task w/ identifier provided.
-- (void)resumeTaskWithIdentifier:(NSString *)taskIdentifier;
-//! Pause a task w/ identifier provided.
+
+/**
+ * Pause a task w/ identifier provided (associated operation will be cancelled).
+ *
+ * @discussion Pausing a task just leave the downloaded cache there, the associated operation
+ *   will be cancelled. If need to resume the paused task, should create new w/ `-downloadWith...`.
+ *
+ * @param taskIdentifier Task identifier
+ */
 - (void)pauseTaskWithIdentifier:(NSString *)taskIdentifier;
-//! Stop a task w/ identifier provided (will also clean cached files).
+
+/**
+ * Stop a task w/ identifier provided (associated operation will be cancelled, and will also clean cached files).
+ *
+ * @param taskIdentifier Task identifier
+ */
 - (void)stopTaskWithIdentifier:(NSString *)taskIdentifier;
 
 /*
