@@ -56,8 +56,8 @@
 
 - (void)dealloc
 {
-  if (self.downloadingOperationQueue) {
-    [self.downloadingOperationQueue cancelAllOperations];
+  if (_downloadingOperationQueue) {
+    [_downloadingOperationQueue cancelAllOperations];
   }
 }
 
@@ -81,6 +81,19 @@
 }
 
 #pragma mark - Getter
+
+- (NSOperationQueue *)downloadingOperationQueue
+{
+  if (!_downloadingOperationQueue) {
+    _downloadingOperationQueue = [[NSOperationQueue alloc] init];
+    _downloadingOperationQueue.maxConcurrentOperationCount = 1;
+    _downloadingOperationQueue.suspended = self.suspended;
+    _downloadingOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+  }
+  // Set `suspended=YES` if want to pause all operations temporary.
+  //self.downloadingOperationQueue.suspended = YES;
+  return _downloadingOperationQueue;
+}
 
 - (NSCharacterSet *)invalidFilenameCharacterSet
 {
@@ -221,9 +234,7 @@
 {
   _suspended = suspended;
   
-  if (self.downloadingOperationQueue) {
-    self.downloadingOperationQueue.suspended = self.suspended;
-  }
+  self.downloadingOperationQueue.suspended = self.suspended;
 }
 
 #pragma mark - Public
@@ -308,14 +319,6 @@
                       preferredName:(NSString *)preferredName
                            userInfo:(NSDictionary *)userInfo
 {
-  if (!self.downloadingOperationQueue) {
-    self.downloadingOperationQueue = [[NSOperationQueue alloc] init];
-    self.downloadingOperationQueue.maxConcurrentOperationCount = 1;
-    self.downloadingOperationQueue.suspended = self.suspended;
-  }
-  // Set `suspended=YES` if want to pause all operations temporary.
-  //self.downloadingOperationQueue.suspended = YES;
-  
   VMPythonDownloadOperation *operation = [[VMPythonDownloadOperation alloc] initWithURLString:urlString
                                                                                      inFormat:format
                                                                                 totalFileSize:totalFileSize
