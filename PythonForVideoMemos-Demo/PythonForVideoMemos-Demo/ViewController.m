@@ -16,6 +16,11 @@
 #import "VMPythonResourceDownloader.h"
 #import "VMWebResourceModel.h"
 
+#define DEBUG_VMVideoNAudioMerger 1
+#ifdef DEBUG_VMVideoNAudioMerger
+  #import "VMVideoNAudioMerger.h"
+#endif // END #ifdef DEBUG_VMVideoNAudioMerger
+
 
 static NSString * const kVideosFolderName_ = @"videos";
 
@@ -114,6 +119,27 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (![fileManager fileExistsAtPath:savePath]) {
     [fileManager createDirectoryAtPath:savePath withIntermediateDirectories:NO attributes:nil error:NULL];
   }
+  
+#ifdef DEBUG_VMVideoNAudioMerger
+  /*
+  NSString *videoFilePath = [savePath stringByAppendingPathComponent:@"id=2455392162450265036[00].mp4"];
+  NSString *audioFilePath = [savePath stringByAppendingPathComponent:@"id=2455392162450265036[01].mp4"];
+  NSString *resultPath    = [savePath stringByAppendingPathComponent:@"id=2455392162450265036.mp4"];
+  [VMVideoNAudioMerger mergeVideoFileAtPath:videoFilePath withAudioFileAtPath:audioFilePath intoResultPath:resultPath];
+   */
+//  [VMVideoNAudioMerger mergeVideoNAudioFilesWithIdentifier:@"id=2455392162450265036"
+//                                              atFolderPath:savePath
+//                                                completion:^(NSString *mergedFilePath, NSString *mergingErrorMessage) {
+//  }];
+  NSArray <NSString *> *filenames = @[@"id=2455392162450265036[00].mp4", @"id=2455392162450265036[01].mp4"];
+  [VMVideoNAudioMerger mergeVideoNAudioFiles:filenames
+                                atFolderPath:savePath
+                         preferredResultName:@"id=2455392162450265036"
+                                  completion:^(NSString *mergedFilePath, NSString *mergingErrorMessage) {
+    
+  }];
+  
+#else
   VMPythonResourceDownloader *downloader = [VMPythonResourceDownloader sharedInstance];
   downloader.savePath      = savePath;
   downloader.cacheJSONFile = YES;
@@ -149,6 +175,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
       [weakSelf _presentAlertWithTitle:nil message:errorMessage];
     }
   }];
+#endif // END #ifdef DEBUG_VMVideoNAudioMerger
 }
 
 #pragma mark - Private

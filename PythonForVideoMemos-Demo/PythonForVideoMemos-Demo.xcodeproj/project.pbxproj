@@ -33,7 +33,8 @@
 		7F52B3FB24C05A440048AE58 /* VMPythonResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3EF24C05A440048AE58 /* VMPythonResourceDownloader.m */; };
 		7F52B3FC24C05A440048AE58 /* VMDownloadOperationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3F224C05A440048AE58 /* VMDownloadOperationConstants.m */; };
 		7F52B3FD24C05A440048AE58 /* VMPythonDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3F324C05A440048AE58 /* VMPythonDownloadOperation.m */; };
-		7F92A79924C1E13E00D3A15C /* VMVideoNAudioMerger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F92A79824C1E13E00D3A15C /* VMVideoNAudioMerger.m */; };
+		7F6D774E24C2F6FA00294B9F /* VMVideoNAudioMerger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */; };
+		7F6D775124C2F73F00294B9F /* VMMergingAssetTrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D775024C2F73F00294B9F /* VMMergingAssetTrackModel.m */; };
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
 		7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE25924AADB9C0071144F /* libbz2.tbd */; };
@@ -105,8 +106,10 @@
 		7F52B3F424C05A440048AE58 /* VMDownloadOperationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadOperationConstants.h; sourceTree = "<group>"; };
 		7F52B3F524C05A440048AE58 /* VMPythonResourceDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloaderDelegate.h; sourceTree = "<group>"; };
 		7F52B3F624C05A440048AE58 /* VMPythonResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloader.h; sourceTree = "<group>"; };
-		7F92A79724C1E13E00D3A15C /* VMVideoNAudioMerger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMVideoNAudioMerger.h; sourceTree = "<group>"; };
-		7F92A79824C1E13E00D3A15C /* VMVideoNAudioMerger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMVideoNAudioMerger.m; sourceTree = "<group>"; };
+		7F6D774C24C2F6FA00294B9F /* VMVideoNAudioMerger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMVideoNAudioMerger.h; sourceTree = "<group>"; };
+		7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMVideoNAudioMerger.m; sourceTree = "<group>"; };
+		7F6D774F24C2F73F00294B9F /* VMMergingAssetTrackModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMMergingAssetTrackModel.h; sourceTree = "<group>"; };
+		7F6D775024C2F73F00294B9F /* VMMergingAssetTrackModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMMergingAssetTrackModel.m; sourceTree = "<group>"; };
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE25924AADB9C0071144F /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
@@ -284,8 +287,7 @@
 			children = (
 				7F52B3E424C05A440048AE58 /* VMFileSizeCalculator.h */,
 				7F52B3E524C05A440048AE58 /* VMFileSizeCalculator.m */,
-				7F92A79724C1E13E00D3A15C /* VMVideoNAudioMerger.h */,
-				7F92A79824C1E13E00D3A15C /* VMVideoNAudioMerger.m */,
+				7F6D774B24C2F6FA00294B9F /* VMVideoNAudioMerger */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -330,6 +332,17 @@
 				7F52B3F324C05A440048AE58 /* VMPythonDownloadOperation.m */,
 			);
 			path = VMPythonDownloadOperation;
+			sourceTree = "<group>";
+		};
+		7F6D774B24C2F6FA00294B9F /* VMVideoNAudioMerger */ = {
+			isa = PBXGroup;
+			children = (
+				7F6D774C24C2F6FA00294B9F /* VMVideoNAudioMerger.h */,
+				7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */,
+				7F6D774F24C2F73F00294B9F /* VMMergingAssetTrackModel.h */,
+				7F6D775024C2F73F00294B9F /* VMMergingAssetTrackModel.m */,
+			);
+			path = VMVideoNAudioMerger;
 			sourceTree = "<group>";
 		};
 		7FFEE25824AADB9C0071144F /* Frameworks */ = {
@@ -510,9 +523,10 @@
 			files = (
 				7F52B3F924C05A440048AE58 /* VMWebResourceOptionModel.m in Sources */,
 				7F52B3FB24C05A440048AE58 /* VMPythonResourceDownloader.m in Sources */,
-				7F92A79924C1E13E00D3A15C /* VMVideoNAudioMerger.m in Sources */,
+				7F6D774E24C2F6FA00294B9F /* VMVideoNAudioMerger.m in Sources */,
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
+				7F6D775124C2F73F00294B9F /* VMMergingAssetTrackModel.m in Sources */,
 				7F52B3FD24C05A440048AE58 /* VMPythonDownloadOperation.m in Sources */,
 				7F52B3FA24C05A440048AE58 /* VMResourceDownloader.m in Sources */,
 				7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */,
