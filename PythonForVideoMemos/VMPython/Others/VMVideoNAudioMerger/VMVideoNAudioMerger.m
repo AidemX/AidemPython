@@ -134,17 +134,10 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
   NSUInteger __block countOfLoadedAssets = 0;
   BOOL       __block startMerging = NO;
   
-  NSFileManager *fileManager = [NSFileManager defaultManager];
   NSArray *requiredAssetKeys = @[kVMVideoNAudioMergerAVURLAssetPropertyOfDuration_,
                                  kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_];
-  
   for (NSString *filename in filenames) {
     NSString *filepath = [folderPath stringByAppendingPathComponent:filename];
-    if (![fileManager fileExistsAtPath:filepath]) {
-      --countOfTotalAssets;
-      continue;
-    }
-    
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
     VMTrackMergingAsset *asset = [[VMTrackMergingAsset alloc] initWithURL:fileURL options:nil];
     [asset loadValuesAsynchronouslyForKeys:requiredAssetKeys completionHandler:^{
