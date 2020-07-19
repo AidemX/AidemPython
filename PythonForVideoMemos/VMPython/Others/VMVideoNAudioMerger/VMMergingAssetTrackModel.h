@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VMMergingAssetTrackModel : NSObject
 
-@property (nonatomic, strong) AVURLAsset *asset;
 @property (nonatomic, assign) AVMediaType   mediaType;
+@property (nonatomic, strong) AVURLAsset   *asset;
 @property (nonatomic, strong) AVAssetTrack *track;
 @property (nonatomic, assign) CMTime        duration;
 

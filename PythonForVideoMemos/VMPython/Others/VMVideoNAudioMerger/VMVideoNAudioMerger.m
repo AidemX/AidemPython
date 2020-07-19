@@ -55,10 +55,8 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
       continue;
     }
     NSError *error = nil;
-    CMTimeRange timeRange = CMTimeRangeMake(kCMTimeZero, item.duration);
     AVMutableCompositionTrack *compositionTrack = [mixComposition addMutableTrackWithMediaType:item.mediaType preferredTrackID:kCMPersistentTrackID_Invalid];
-    //AVAssetTrack *track = [[item.asset tracksWithMediaType:item.mediaType] firstObject];
-    if ([compositionTrack insertTimeRange:timeRange ofTrack:item.track atTime:kCMTimeZero error:&error]) {
+    if ([compositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, item.duration) ofTrack:item.track atTime:kCMTimeZero error:&error]) {
       if (AVMediaTypeVideo == item.mediaType) videoTrackMerged = YES;
       else                                    audioTrackMerged = YES;
     } else {
@@ -161,8 +159,8 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
           AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
           if (videoTrack) {
             VMMergingAssetTrackModel *videoTrackItem = [[VMMergingAssetTrackModel alloc] init];
-            videoTrackItem.asset     = asset;
             videoTrackItem.mediaType = AVMediaTypeVideo;
+            videoTrackItem.asset     = asset;
             videoTrackItem.track     = videoTrack;
             videoTrackItem.duration  = asset.duration;
             [validTrackItems insertObject:videoTrackItem atIndex:0];
@@ -171,8 +169,8 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
           AVAssetTrack *audioTrack = [[asset tracksWithMediaType:AVMediaTypeAudio] firstObject];
           if (audioTrack) {
             VMMergingAssetTrackModel *audioTrackItem = [[VMMergingAssetTrackModel alloc] init];
-            audioTrackItem.asset     = asset;
             audioTrackItem.mediaType = AVMediaTypeAudio;
+            audioTrackItem.asset     = asset;
             audioTrackItem.track     = audioTrack;
             audioTrackItem.duration  = asset.duration;
             [validTrackItems addObject:audioTrackItem];
