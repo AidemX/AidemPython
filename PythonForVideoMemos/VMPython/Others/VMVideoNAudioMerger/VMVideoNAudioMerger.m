@@ -10,7 +10,7 @@
 
 #import "VMPythonCommon.h"
 // Model
-#import "VMMergingAssetTrackModel.h"
+#import "VMTrackMergingAsset.h"
 // Lib
 //@import AVFoundation;
 @import CoreServices.UTType;
@@ -24,10 +24,10 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
 
 @interface VMVideoNAudioMerger ()
 
-+ (void)_mergeWithValidTrackItems:(NSArray <VMMergingAssetTrackModel *> *)trackItems
-                   withFolderPath:(NSString *)folderPath
-              preferredResultName:(NSString *)preferredResultName
-                       completion:(VMVideoNAudioMergerCompletion)completion;
++ (void)_mergeWithTrackMergingAssets:(NSArray <VMTrackMergingAsset *> *)trackMergingAssets
+                      withFolderPath:(NSString *)folderPath
+                 preferredResultName:(NSString *)preferredResultName
+                          completion:(VMVideoNAudioMergerCompletion)completion;
 
 @end
 
@@ -38,27 +38,29 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
 
 #pragma mark - Private
 
-+ (void)_mergeWithValidTrackItems:(NSArray <VMMergingAssetTrackModel *> *)trackItems
-                   withFolderPath:(NSString *)folderPath
-              preferredResultName:(NSString *)preferredResultName
-                       completion:(VMVideoNAudioMergerCompletion)completion
++ (void)_mergeWithTrackMergingAssets:(NSArray <VMTrackMergingAsset *> *)trackMergingAssets
+                      withFolderPath:(NSString *)folderPath
+                 preferredResultName:(NSString *)preferredResultName
+                          completion:(VMVideoNAudioMergerCompletion)completion
 {
   AVMutableComposition *mixComposition = [AVMutableComposition composition];
   BOOL videoTrackMerged = NO;
   BOOL audioTrackMerged = NO;
-  for (VMMergingAssetTrackModel *item in trackItems) {
+  for (VMTrackMergingAsset *asset in trackMergingAssets) {
     if (videoTrackMerged && audioTrackMerged) {
       break;
     }
     
-    if ((videoTrackMerged && AVMediaTypeVideo == item.mediaType) || (audioTrackMerged && AVMediaTypeAudio == item.mediaType)) {
+    if ((videoTrackMerged && AVMediaTypeVideo == asset.interestedTrackMediaType) ||
+        (audioTrackMerged && AVMediaTypeAudio == asset.interestedTrackMediaType))
+    {
       continue;
     }
     NSError *error = nil;
-    AVMutableCompositionTrack *compositionTrack = [mixComposition addMutableTrackWithMediaType:item.mediaType preferredTrackID:kCMPersistentTrackID_Invalid];
-    if ([compositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, item.duration) ofTrack:item.track atTime:kCMTimeZero error:&error]) {
-      if (AVMediaTypeVideo == item.mediaType) videoTrackMerged = YES;
-      else                                    audioTrackMerged = YES;
+    AVMutableCompositionTrack *compositionTrack = [mixComposition addMutableTrackWithMediaType:asset.interestedTrackMediaType preferredTrackID:kCMPersistentTrackID_Invalid];
+    if ([compositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, asset.duration) ofTrack:asset.interestedTrack atTime:kCMTimeZero error:&error]) {
+      if (AVMediaTypeVideo == asset.interestedTrackMediaType) videoTrackMerged = YES;
+      else                                                    audioTrackMerged = YES;
     } else {
       VMPythonLogError(@"%@", [error localizedDescription]);
     }
@@ -126,7 +128,7 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
           preferredResultName:(NSString *)preferredResultName
                    completion:(VMVideoNAudioMergerCompletion)completion
 {
-  NSMutableArray <VMMergingAssetTrackModel *> *validTrackItems = [NSMutableArray array];
+  NSMutableArray <VMTrackMergingAsset *> *trackMergingAssets = [NSMutableArray array];
   
   NSUInteger         countOfTotalAssets  = [filenames count];
   NSUInteger __block countOfLoadedAssets = 0;
@@ -144,7 +146,7 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
     }
     
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
+    VMTrackMergingAsset *asset = [[VMTrackMergingAsset alloc] initWithURL:fileURL options:nil];
     [asset loadValuesAsynchronouslyForKeys:requiredAssetKeys completionHandler:^{
       if (startMerging) {
         return;
@@ -158,22 +160,16 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
         if (AVKeyValueStatusLoaded == tracksValueStatus) {
           AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
           if (videoTrack) {
-            VMMergingAssetTrackModel *videoTrackItem = [[VMMergingAssetTrackModel alloc] init];
-            videoTrackItem.mediaType = AVMediaTypeVideo;
-            videoTrackItem.asset     = asset;
-            videoTrackItem.track     = videoTrack;
-            videoTrackItem.duration  = asset.duration;
-            [validTrackItems insertObject:videoTrackItem atIndex:0];
+            asset.interestedTrackMediaType = AVMediaTypeVideo;
+            asset.interestedTrack          = videoTrack;
+            [trackMergingAssets insertObject:asset atIndex:0];
           }
           
           AVAssetTrack *audioTrack = [[asset tracksWithMediaType:AVMediaTypeAudio] firstObject];
           if (audioTrack) {
-            VMMergingAssetTrackModel *audioTrackItem = [[VMMergingAssetTrackModel alloc] init];
-            audioTrackItem.mediaType = AVMediaTypeAudio;
-            audioTrackItem.asset     = asset;
-            audioTrackItem.track     = audioTrack;
-            audioTrackItem.duration  = asset.duration;
-            [validTrackItems addObject:audioTrackItem];
+            asset.interestedTrackMediaType = AVMediaTypeAudio;
+            asset.interestedTrack          = audioTrack;
+            [trackMergingAssets addObject:asset];
           }
           
         } else if (AVKeyValueStatusFailed == tracksValueStatus) {
@@ -185,7 +181,7 @@ static NSString * const kVMVideoNAudioMergerAVURLAssetPropertyOfTracks_   = @"tr
       
       if (countOfLoadedAssets >= countOfTotalAssets) {
         startMerging = YES;
-        [self _mergeWithValidTrackItems:validTrackItems withFolderPath:folderPath preferredResultName:preferredResultName completion:completion];
+        [self _mergeWithTrackMergingAssets:trackMergingAssets withFolderPath:folderPath preferredResultName:preferredResultName completion:completion];
       }
     }];
   }
