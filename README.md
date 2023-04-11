@@ -37,7 +37,7 @@ Python iOS framework for Video Memos app.
 7. Update Project Settings:
 
     - **HEADER_SEARCH_PATHS**:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
-    - **LIBRARY_SEARCH_PATHS((: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
+    - **LIBRARY_SEARCH_PATHS**: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
 
 8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in project settings.
 
