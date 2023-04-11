@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,8 +37,8 @@
 		7FD063C529E59EA400787EB2 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD0631E29E59EA300787EB2 /* libffi.a */; };
 		7FD063C729E59EBE00787EB2 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 7FD063C629E59EBE00787EB2 /* python */; };
 		7FD063CD29E59FF700787EB2 /* VMDownloadProcessButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD063CB29E59FF700787EB2 /* VMDownloadProcessButton.m */; };
-		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
-		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
+		7FD063D029E5A07C00787EB2 /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7FD063CF29E5A07C00787EB2 /* MBProgressHUD */; };
+		7FD063D329E5A12F00787EB2 /* AFNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7FD063D229E5A12F00787EB2 /* AFNetworking */; };
 		7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE25924AADB9C0071144F /* libbz2.tbd */; };
 /* End PBXBuildFile section */
 
@@ -115,8 +115,6 @@
 		7FD063C629E59EBE00787EB2 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
 		7FD063CB29E59FF700787EB2 /* VMDownloadProcessButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMDownloadProcessButton.m; sourceTree = "<group>"; };
 		7FD063CC29E59FF700787EB2 /* VMDownloadProcessButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadProcessButton.h; sourceTree = "<group>"; };
-		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
-		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE25924AADB9C0071144F /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -127,13 +125,13 @@
 			files = (
 				7FD063C429E59EA400787EB2 /* libssl.a in Frameworks */,
 				7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */,
-				7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */,
+				7FD063D029E5A07C00787EB2 /* MBProgressHUD in Frameworks */,
 				7FD0631F29E59EA300787EB2 /* libcrypto.a in Frameworks */,
 				7FD0632B29E59EA300787EB2 /* libpython3.a in Frameworks */,
 				7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */,
 				7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */,
 				7FD063C529E59EA400787EB2 /* libffi.a in Frameworks */,
-				7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */,
+				7FD063D329E5A12F00787EB2 /* AFNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,8 +226,6 @@
 		7F4CBD5A24A42D6200CC0889 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7FFEE24924A883E10071144F /* MBProgressHUD.framework */,
-				7FFEE24524A883DE0071144F /* AFNetworking.framework */,
 				7F4CBD5D24A42D6800CC0889 /* libz.tbd */,
 				7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */,
 			);
@@ -381,6 +377,10 @@
 			dependencies = (
 			);
 			name = "PythonForVideoMemos-Demo";
+			packageProductDependencies = (
+				7FD063CF29E5A07C00787EB2 /* MBProgressHUD */,
+				7FD063D229E5A12F00787EB2 /* AFNetworking */,
+			);
 			productName = "PythonForVideoMemos-Demo";
 			productReference = 7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -452,6 +452,10 @@
 				Base,
 			);
 			mainGroup = 7F4CB56B24A42AAB00CC0889;
+			packageReferences = (
+				7FD063CE29E5A07C00787EB2 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
+				7FD063D129E5A12F00787EB2 /* XCRemoteSwiftPackageReference "AFNetworking" */,
+			);
 			productRefGroup = 7F4CB57524A42AAB00CC0889 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -879,6 +883,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7FD063CE29E5A07C00787EB2 /* XCRemoteSwiftPackageReference "MBProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jdg/MBProgressHUD.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		7FD063D129E5A12F00787EB2 /* XCRemoteSwiftPackageReference "AFNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AFNetworking/AFNetworking";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7FD063CF29E5A07C00787EB2 /* MBProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7FD063CE29E5A07C00787EB2 /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
+			productName = MBProgressHUD;
+		};
+		7FD063D229E5A12F00787EB2 /* AFNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7FD063D129E5A12F00787EB2 /* XCRemoteSwiftPackageReference "AFNetworking" */;
+			productName = AFNetworking;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7F4CB56C24A42AAB00CC0889 /* Project object */;
 }
