@@ -16,7 +16,7 @@
 #import "VMPythonResourceDownloader.h"
 #import "VMWebResourceModel.h"
 
-#define DEBUG_VMVideoNAudioMerger 1
+//#define DEBUG_VMVideoNAudioMerger 1
 #ifdef DEBUG_VMVideoNAudioMerger
   #import "VMVideoNAudioMerger.h"
 #endif // END #ifdef DEBUG_VMVideoNAudioMerger
