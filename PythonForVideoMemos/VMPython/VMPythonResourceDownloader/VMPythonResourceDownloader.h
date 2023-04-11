@@ -33,7 +33,7 @@ typedef void (^VMPythonResourceDownloaderResourceCheckingCompletion)(VMWebResour
 
 @property (nonatomic, assign, getter=isSuspended) BOOL suspended;
 
-@property (nonatomic, weak, nullable) id <VMPythonResourceDownloaderDelegate> delegate;
+@property (nonatomic, weak, nullable) id<VMPythonResourceDownloaderDelegate> delegate;
 
 + (instancetype)sharedInstance;
 

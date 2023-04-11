@@ -8,9 +8,13 @@
 
 #import "VMPythonResourceDownloader.h"
 
+#define VMPYTHON_ENABLED_ 1
+
 #import "VMPythonCommon.h"
 // Model
-#import "VMPythonVideoMemosModule.h"
+#ifdef VMPYTHON_ENABLED_
+  #import "VMPythonVideoMemosModule.h"
+#endif // END #ifdef VMPYTHON_ENABLED_
 #import "VMWebResourceModel.h"
 #import "VMPythonDownloadOperation.h"
 
@@ -22,7 +26,7 @@
 @property (nonatomic, strong) NSOperationQueue *downloadingOperationQueue;
 
 /**
- * The path of an unique progress file that reflect current downloading operation progress.
+ * The path of a unique progress file that reflect current downloading operation progress.
  *
  * @discussion
  * Whenever a new operation starts, will make sure this file created, and it'll be deleted
@@ -75,7 +79,9 @@
 - (instancetype)init
 {
   if (self = [super init]) {
+#ifdef VMPYTHON_ENABLED_
     _pythonVideoMemosModule = [[VMPythonVideoMemosModule alloc] init];
+#endif // END #ifdef VMPYTHON_ENABLED_
   }
   return self;
 }
@@ -120,6 +126,9 @@
 
 - (NSString *)_filenameFromURLString:(NSString *)urlString
 {
+  if (urlString == nil) {
+    return @"_";
+  }
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z0-9_]+" options:0 error:nil];
   return [regex stringByReplacingMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) withTemplate:@"_"];
 }
@@ -136,7 +145,7 @@
   
   NSDictionary *streams = json[@"streams"];
   if (nil != streams && [streams isKindOfClass:[NSDictionary class]]) {
-    NSMutableArray <VMWebResourceOptionModel *> *options = [NSMutableArray array];
+    NSMutableArray<VMWebResourceOptionModel *> *options = [NSMutableArray array];
     for (NSString *key in [streams allKeys]) {
       VMWebResourceOptionModel *option = [VMWebResourceOptionModel newWithKey:key andValue:streams[key]];
       [options addObject:option];
@@ -167,7 +176,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary <NSString *, id> *)change
+                        change:(NSDictionary<NSString *, id> *)change
                        context:(void *)context
 {
   if ([keyPath isEqualToString:kVMPythonDownloadOperationPropertyOfReceivedFileSize]) {
@@ -218,16 +227,20 @@
   
   _savePath = savePath;
   
+#ifdef VMPYTHON_ENABLED_
   self.progressFilePath = [savePath stringByAppendingPathComponent:kVMPythonVideoMemosModuleProgressFileName];
   
   self.pythonVideoMemosModule.savePath = savePath;
+#endif // END #ifdef VMPYTHON_ENABLED_
 }
 
 - (void)setDebugMode:(BOOL)debugMode
 {
   _debugMode = debugMode;
   
+#ifdef VMPYTHON_ENABLED_
   self.pythonVideoMemosModule.debugMode = debugMode;
+#endif // END #ifdef VMPYTHON_ENABLED_
 }
 
 - (void)setSuspended:(BOOL)suspended
@@ -265,6 +278,7 @@
     }
   }
   
+#ifdef VMPYTHON_ENABLED_
   typeof(self) __weak weakSelf = self;
   [self.pythonVideoMemosModule checkWithURLString:urlString completion:^(NSString *jsonString, NSString *errorMessage) {
     if (errorMessage) {
@@ -287,6 +301,7 @@
       }
     }
   }];
+#endif // END #ifdef VMPYTHON_ENABLED_
 }
 
 - (void)fetchTitleWithURLString:(NSString *)urlString completion:(VMPythonResourceDownloaderFetchTitleCompletion)completion

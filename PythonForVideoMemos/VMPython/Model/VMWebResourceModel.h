@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *userAgent;
 @property (nonatomic, copy, nullable) NSString *referer;
 
-@property (nonatomic, copy, nullable) NSArray <VMWebResourceOptionModel *> *options;
+@property (nonatomic, copy, nullable) NSArray<VMWebResourceOptionModel *> *options;
 
 - (VMWebResourceOptionModel *)matchedOptionAtRow:(NSInteger *)matchedRow withTaskIdentifier:(NSString *)taskIdentifier;
 

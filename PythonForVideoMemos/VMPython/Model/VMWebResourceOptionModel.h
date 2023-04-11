@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger size;          ///< Media size
 @property (nonatomic, copy)   NSString *sizeText;      ///< Media size in text
 
-//@property (nonatomic, copy) NSArray <NSString *> *urls; ///< Urls in string
+//@property (nonatomic, copy) NSArray<NSString *> *urls; ///< Urls in string
 
 @property (nonatomic, assign) VMPythonDownloadProcessStatus status; ///< Item status
 @property (nonatomic, copy, nullable) NSString *taskIdentifier; ///< Associated task's identifier
