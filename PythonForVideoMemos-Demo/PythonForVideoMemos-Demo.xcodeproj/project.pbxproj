@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */; };
 		7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */; };
 		7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08BBD824AF1E1700B3F5EB /* Constants.m */; };
 		7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB57824A42AAB00CC0889 /* AppDelegate.m */; };
@@ -19,27 +18,28 @@
 		7F4CB58A24A42AAD00CC0889 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB58924A42AAD00CC0889 /* main.m */; };
 		7F4CB59424A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59324A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m */; };
 		7F4CB59F24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59E24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m */; };
-		7F4CB9E424A42CAE00CC0889 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */; };
-		7F4CB9E524A42CAE00CC0889 /* libpython3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CB5B024A42CAA00CC0889 /* libpython3.a */; };
-		7F4CBD5624A42CAF00CC0889 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CB9E224A42CAE00CC0889 /* libssl.a */; };
-		7F4CBD5724A42CAF00CC0889 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CB9E324A42CAE00CC0889 /* libffi.a */; };
-		7F4CBD5924A42CBB00CC0889 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CBD5824A42CBB00CC0889 /* python */; };
 		7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */; };
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
-		7F52B3F724C05A440048AE58 /* VMFileSizeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3E524C05A440048AE58 /* VMFileSizeCalculator.m */; };
-		7F52B3F824C05A440048AE58 /* VMWebResourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3E824C05A440048AE58 /* VMWebResourceModel.m */; };
-		7F52B3F924C05A440048AE58 /* VMWebResourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3E924C05A440048AE58 /* VMWebResourceOptionModel.m */; };
-		7F52B3FA24C05A440048AE58 /* VMResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3ED24C05A440048AE58 /* VMResourceDownloader.m */; };
-		7F52B3FB24C05A440048AE58 /* VMPythonResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3EF24C05A440048AE58 /* VMPythonResourceDownloader.m */; };
-		7F52B3FC24C05A440048AE58 /* VMDownloadOperationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3F224C05A440048AE58 /* VMDownloadOperationConstants.m */; };
-		7F52B3FD24C05A440048AE58 /* VMPythonDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F52B3F324C05A440048AE58 /* VMPythonDownloadOperation.m */; };
-		7F6D774E24C2F6FA00294B9F /* VMVideoNAudioMerger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */; };
-		7F8940AC24C464EE000B2CBF /* VMTrackMergingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8940AB24C464EE000B2CBF /* VMTrackMergingAsset.m */; };
+		7FD0631F29E59EA300787EB2 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD061C529E59EA100787EB2 /* libcrypto.a */; };
+		7FD0632029E59EA300787EB2 /* VMPythonResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061C829E59EA100787EB2 /* VMPythonResourceDownloader.m */; };
+		7FD0632129E59EA300787EB2 /* VMDownloadOperationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061CB29E59EA100787EB2 /* VMDownloadOperationConstants.m */; };
+		7FD0632229E59EA300787EB2 /* VMPythonDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061CC29E59EA100787EB2 /* VMPythonDownloadOperation.m */; };
+		7FD0632329E59EA300787EB2 /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D229E59EA100787EB2 /* VMPython.m */; };
+		7FD0632429E59EA300787EB2 /* VMPythonVideoMemosModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */; };
+		7FD0632529E59EA300787EB2 /* VMTrackMergingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D829E59EA100787EB2 /* VMTrackMergingAsset.m */; };
+		7FD0632629E59EA300787EB2 /* VMVideoNAudioMerger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D929E59EA100787EB2 /* VMVideoNAudioMerger.m */; };
+		7FD0632729E59EA300787EB2 /* VMFileSizeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061DC29E59EA100787EB2 /* VMFileSizeCalculator.m */; };
+		7FD0632829E59EA300787EB2 /* VMWebResourceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061E029E59EA100787EB2 /* VMWebResourceModel.m */; };
+		7FD0632929E59EA300787EB2 /* VMWebResourceOptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061E129E59EA100787EB2 /* VMWebResourceOptionModel.m */; };
+		7FD0632A29E59EA300787EB2 /* VMResourceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061E529E59EA100787EB2 /* VMResourceDownloader.m */; };
+		7FD0632B29E59EA300787EB2 /* libpython3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD061E629E59EA100787EB2 /* libpython3.a */; };
+		7FD063C429E59EA400787EB2 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD0631D29E59EA300787EB2 /* libssl.a */; };
+		7FD063C529E59EA400787EB2 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD0631E29E59EA300787EB2 /* libffi.a */; };
+		7FD063C729E59EBE00787EB2 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 7FD063C629E59EBE00787EB2 /* python */; };
+		7FD063CD29E59FF700787EB2 /* VMDownloadProcessButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD063CB29E59FF700787EB2 /* VMDownloadProcessButton.m */; };
 		7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24524A883DE0071144F /* AFNetworking.framework */; };
 		7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE24924A883E10071144F /* MBProgressHUD.framework */; };
 		7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEE25924AADB9C0071144F /* libbz2.tbd */; };
-		7FFEE27624AC1E840071144F /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE27224AC1E830071144F /* VMPython.m */; };
-		7FFEE27824AC1E840071144F /* VMPythonVideoMemosModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEE27424AC1E830071144F /* VMPythonVideoMemosModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +60,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7F08BBD124AF0F6000B3F5EB /* VMDownloadProcessButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMDownloadProcessButton.h; sourceTree = "<group>"; };
-		7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VMDownloadProcessButton.m; sourceTree = "<group>"; };
 		7F08BBD424AF1D4B00B3F5EB /* TableViewDownloadingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewDownloadingCell.h; sourceTree = "<group>"; };
 		7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDownloadingCell.m; sourceTree = "<group>"; };
 		7F08BBD724AF1E1700B3F5EB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -84,40 +82,42 @@
 		7F4CB59A24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PythonForVideoMemos-DemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4CB59E24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PythonForVideoMemos_DemoUITests.m; sourceTree = "<group>"; };
 		7F4CB5A024A42AAD00CC0889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		7F4CB5B024A42CAA00CC0889 /* libpython3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpython3.a; sourceTree = "<group>"; };
-		7F4CB9E224A42CAE00CC0889 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		7F4CB9E324A42CAE00CC0889 /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libffi.a; sourceTree = "<group>"; };
-		7F4CBD5824A42CBB00CC0889 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
 		7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F4CBD5D24A42D6800CC0889 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		7F52B3E424C05A440048AE58 /* VMFileSizeCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMFileSizeCalculator.h; sourceTree = "<group>"; };
-		7F52B3E524C05A440048AE58 /* VMFileSizeCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMFileSizeCalculator.m; sourceTree = "<group>"; };
-		7F52B3E724C05A440048AE58 /* VMWebResourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceOptionModel.h; sourceTree = "<group>"; };
-		7F52B3E824C05A440048AE58 /* VMWebResourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceModel.m; sourceTree = "<group>"; };
-		7F52B3E924C05A440048AE58 /* VMWebResourceOptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceOptionModel.m; sourceTree = "<group>"; };
-		7F52B3EA24C05A440048AE58 /* VMWebResourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceModel.h; sourceTree = "<group>"; };
-		7F52B3EC24C05A440048AE58 /* VMResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMResourceDownloader.h; sourceTree = "<group>"; };
-		7F52B3ED24C05A440048AE58 /* VMResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMResourceDownloader.m; sourceTree = "<group>"; };
-		7F52B3EF24C05A440048AE58 /* VMPythonResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonResourceDownloader.m; sourceTree = "<group>"; };
-		7F52B3F124C05A440048AE58 /* VMPythonDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadOperation.h; sourceTree = "<group>"; };
-		7F52B3F224C05A440048AE58 /* VMDownloadOperationConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMDownloadOperationConstants.m; sourceTree = "<group>"; };
-		7F52B3F324C05A440048AE58 /* VMPythonDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonDownloadOperation.m; sourceTree = "<group>"; };
-		7F52B3F424C05A440048AE58 /* VMDownloadOperationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadOperationConstants.h; sourceTree = "<group>"; };
-		7F52B3F524C05A440048AE58 /* VMPythonResourceDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloaderDelegate.h; sourceTree = "<group>"; };
-		7F52B3F624C05A440048AE58 /* VMPythonResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloader.h; sourceTree = "<group>"; };
-		7F6D774C24C2F6FA00294B9F /* VMVideoNAudioMerger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMVideoNAudioMerger.h; sourceTree = "<group>"; };
-		7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMVideoNAudioMerger.m; sourceTree = "<group>"; };
-		7F8940AA24C464EE000B2CBF /* VMTrackMergingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMTrackMergingAsset.h; sourceTree = "<group>"; };
-		7F8940AB24C464EE000B2CBF /* VMTrackMergingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMTrackMergingAsset.m; sourceTree = "<group>"; };
+		7FD061C529E59EA100787EB2 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		7FD061C829E59EA100787EB2 /* VMPythonResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonResourceDownloader.m; sourceTree = "<group>"; };
+		7FD061CA29E59EA100787EB2 /* VMPythonDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonDownloadOperation.h; sourceTree = "<group>"; };
+		7FD061CB29E59EA100787EB2 /* VMDownloadOperationConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMDownloadOperationConstants.m; sourceTree = "<group>"; };
+		7FD061CC29E59EA100787EB2 /* VMPythonDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonDownloadOperation.m; sourceTree = "<group>"; };
+		7FD061CD29E59EA100787EB2 /* VMDownloadOperationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadOperationConstants.h; sourceTree = "<group>"; };
+		7FD061CE29E59EA100787EB2 /* VMPythonResourceDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloaderDelegate.h; sourceTree = "<group>"; };
+		7FD061CF29E59EA100787EB2 /* VMPythonResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloader.h; sourceTree = "<group>"; };
+		7FD061D129E59EA100787EB2 /* VMPythonVideoMemosModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonVideoMemosModule.h; sourceTree = "<group>"; };
+		7FD061D229E59EA100787EB2 /* VMPython.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
+		7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonVideoMemosModule.m; sourceTree = "<group>"; };
+		7FD061D429E59EA100787EB2 /* VMPython.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
+		7FD061D729E59EA100787EB2 /* VMVideoNAudioMerger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMVideoNAudioMerger.h; sourceTree = "<group>"; };
+		7FD061D829E59EA100787EB2 /* VMTrackMergingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMTrackMergingAsset.m; sourceTree = "<group>"; };
+		7FD061D929E59EA100787EB2 /* VMVideoNAudioMerger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMVideoNAudioMerger.m; sourceTree = "<group>"; };
+		7FD061DA29E59EA100787EB2 /* VMTrackMergingAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMTrackMergingAsset.h; sourceTree = "<group>"; };
+		7FD061DB29E59EA100787EB2 /* VMFileSizeCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMFileSizeCalculator.h; sourceTree = "<group>"; };
+		7FD061DC29E59EA100787EB2 /* VMFileSizeCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMFileSizeCalculator.m; sourceTree = "<group>"; };
+		7FD061DD29E59EA100787EB2 /* VMPythonCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonCommon.h; sourceTree = "<group>"; };
+		7FD061DF29E59EA100787EB2 /* VMWebResourceOptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceOptionModel.h; sourceTree = "<group>"; };
+		7FD061E029E59EA100787EB2 /* VMWebResourceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceModel.m; sourceTree = "<group>"; };
+		7FD061E129E59EA100787EB2 /* VMWebResourceOptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMWebResourceOptionModel.m; sourceTree = "<group>"; };
+		7FD061E229E59EA100787EB2 /* VMWebResourceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMWebResourceModel.h; sourceTree = "<group>"; };
+		7FD061E429E59EA100787EB2 /* VMResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMResourceDownloader.h; sourceTree = "<group>"; };
+		7FD061E529E59EA100787EB2 /* VMResourceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMResourceDownloader.m; sourceTree = "<group>"; };
+		7FD061E629E59EA100787EB2 /* libpython3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpython3.a; sourceTree = "<group>"; };
+		7FD0631D29E59EA300787EB2 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		7FD0631E29E59EA300787EB2 /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libffi.a; sourceTree = "<group>"; };
+		7FD063C629E59EBE00787EB2 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
+		7FD063CB29E59FF700787EB2 /* VMDownloadProcessButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMDownloadProcessButton.m; sourceTree = "<group>"; };
+		7FD063CC29E59FF700787EB2 /* VMDownloadProcessButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadProcessButton.h; sourceTree = "<group>"; };
 		7FFEE24524A883DE0071144F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
 		7FFEE24924A883E10071144F /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = ../Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		7FFEE25924AADB9C0071144F /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
-		7FFEE27124AC1E830071144F /* VMPythonVideoMemosModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonVideoMemosModule.h; sourceTree = "<group>"; };
-		7FFEE27224AC1E830071144F /* VMPython.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
-		7FFEE27424AC1E830071144F /* VMPythonVideoMemosModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonVideoMemosModule.m; sourceTree = "<group>"; };
-		7FFEE27524AC1E830071144F /* VMPython.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
-		7FFEE27924AEBF7C0071144F /* VMPythonCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VMPythonCommon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,15 +125,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FD063C429E59EA400787EB2 /* libssl.a in Frameworks */,
 				7FFEE25A24AADB9D0071144F /* libbz2.tbd in Frameworks */,
 				7FFEE24A24A883E10071144F /* MBProgressHUD.framework in Frameworks */,
+				7FD0631F29E59EA300787EB2 /* libcrypto.a in Frameworks */,
+				7FD0632B29E59EA300787EB2 /* libpython3.a in Frameworks */,
 				7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */,
 				7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */,
+				7FD063C529E59EA400787EB2 /* libffi.a in Frameworks */,
 				7FFEE24624A883DE0071144F /* AFNetworking.framework in Frameworks */,
-				7F4CB9E424A42CAE00CC0889 /* libcrypto.a in Frameworks */,
-				7F4CB9E524A42CAE00CC0889 /* libpython3.a in Frameworks */,
-				7F4CBD5624A42CAF00CC0889 /* libssl.a in Frameworks */,
-				7F4CBD5724A42CAF00CC0889 /* libffi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,15 +154,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7F08BBD024AF0F1600B3F5EB /* VMDownloadProcessButton */ = {
-			isa = PBXGroup;
-			children = (
-				7F08BBD124AF0F6000B3F5EB /* VMDownloadProcessButton.h */,
-				7F08BBD224AF0F6000B3F5EB /* VMDownloadProcessButton.m */,
-			);
-			path = VMDownloadProcessButton;
-			sourceTree = "<group>";
-		};
 		7F4CB56B24A42AAB00CC0889 = {
 			isa = PBXGroup;
 			children = (
@@ -197,8 +188,8 @@
 				7F4CB57E24A42AAB00CC0889 /* ViewController.m */,
 				7F08BBD424AF1D4B00B3F5EB /* TableViewDownloadingCell.h */,
 				7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */,
+				7FD061C329E59E8E00787EB2 /* Libs */,
 				7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */,
-				7F4CB5AD24A42C7E00CC0889 /* Libs */,
 				7F4CBD5A24A42D6200CC0889 /* Frameworks */,
 			);
 			path = "PythonForVideoMemos-Demo";
@@ -234,29 +225,6 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		7F4CB5AD24A42C7E00CC0889 /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				7F4CB5AE24A42CAA00CC0889 /* PythonForVideoMemos */,
-			);
-			path = Libs;
-			sourceTree = "<group>";
-		};
-		7F4CB5AE24A42CAA00CC0889 /* PythonForVideoMemos */ = {
-			isa = PBXGroup;
-			children = (
-				7F08BBD024AF0F1600B3F5EB /* VMDownloadProcessButton */,
-				7F4CBD5F24A43DAF00CC0889 /* VMPython */,
-				7F4CBD5824A42CBB00CC0889 /* python */,
-				7F4CB5B024A42CAA00CC0889 /* libpython3.a */,
-				7F4CB5AF24A42CAA00CC0889 /* libcrypto.a */,
-				7F4CB9E224A42CAE00CC0889 /* libssl.a */,
-				7F4CB9E324A42CAE00CC0889 /* libffi.a */,
-			);
-			name = PythonForVideoMemos;
-			path = ../../../PythonForVideoMemos;
-			sourceTree = "<group>";
-		};
 		7F4CBD5A24A42D6200CC0889 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,80 +237,123 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		7F4CBD5F24A43DAF00CC0889 /* VMPython */ = {
+		7FD061C329E59E8E00787EB2 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				7FFEE27924AEBF7C0071144F /* VMPythonCommon.h */,
-				7FFEE26F24AC1E830071144F /* Bridge */,
-				7F52B3EE24C05A440048AE58 /* VMPythonResourceDownloader */,
-				7F52B3EB24C05A440048AE58 /* VMResourceDownloader */,
-				7F52B3E624C05A440048AE58 /* Model */,
-				7F52B3E324C05A440048AE58 /* Others */,
+				7FD061C429E59EA100787EB2 /* PythonForVideoMemos */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		7FD061C429E59EA100787EB2 /* PythonForVideoMemos */ = {
+			isa = PBXGroup;
+			children = (
+				7FD063CA29E59FF700787EB2 /* VMDownloadProcessButton */,
+				7FD061C629E59EA100787EB2 /* VMPython */,
+				7FD063C629E59EBE00787EB2 /* python */,
+				7FD061C529E59EA100787EB2 /* libcrypto.a */,
+				7FD061E629E59EA100787EB2 /* libpython3.a */,
+				7FD0631D29E59EA300787EB2 /* libssl.a */,
+				7FD0631E29E59EA300787EB2 /* libffi.a */,
+			);
+			name = PythonForVideoMemos;
+			path = ../../../PythonForVideoMemos;
+			sourceTree = "<group>";
+		};
+		7FD061C629E59EA100787EB2 /* VMPython */ = {
+			isa = PBXGroup;
+			children = (
+				7FD061DD29E59EA100787EB2 /* VMPythonCommon.h */,
+				7FD061D029E59EA100787EB2 /* Bridge */,
+				7FD061C729E59EA100787EB2 /* VMPythonResourceDownloader */,
+				7FD061E329E59EA100787EB2 /* VMResourceDownloader */,
+				7FD061DE29E59EA100787EB2 /* Model */,
+				7FD061D529E59EA100787EB2 /* Others */,
 			);
 			path = VMPython;
 			sourceTree = "<group>";
 		};
-		7F52B3E324C05A440048AE58 /* Others */ = {
+		7FD061C729E59EA100787EB2 /* VMPythonResourceDownloader */ = {
 			isa = PBXGroup;
 			children = (
-				7F52B3E424C05A440048AE58 /* VMFileSizeCalculator.h */,
-				7F52B3E524C05A440048AE58 /* VMFileSizeCalculator.m */,
-				7F6D774B24C2F6FA00294B9F /* VMVideoNAudioMerger */,
-			);
-			path = Others;
-			sourceTree = "<group>";
-		};
-		7F52B3E624C05A440048AE58 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7F52B3EA24C05A440048AE58 /* VMWebResourceModel.h */,
-				7F52B3E824C05A440048AE58 /* VMWebResourceModel.m */,
-				7F52B3E724C05A440048AE58 /* VMWebResourceOptionModel.h */,
-				7F52B3E924C05A440048AE58 /* VMWebResourceOptionModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		7F52B3EB24C05A440048AE58 /* VMResourceDownloader */ = {
-			isa = PBXGroup;
-			children = (
-				7F52B3EC24C05A440048AE58 /* VMResourceDownloader.h */,
-				7F52B3ED24C05A440048AE58 /* VMResourceDownloader.m */,
-			);
-			path = VMResourceDownloader;
-			sourceTree = "<group>";
-		};
-		7F52B3EE24C05A440048AE58 /* VMPythonResourceDownloader */ = {
-			isa = PBXGroup;
-			children = (
-				7F52B3F524C05A440048AE58 /* VMPythonResourceDownloaderDelegate.h */,
-				7F52B3F624C05A440048AE58 /* VMPythonResourceDownloader.h */,
-				7F52B3EF24C05A440048AE58 /* VMPythonResourceDownloader.m */,
-				7F52B3F024C05A440048AE58 /* VMPythonDownloadOperation */,
+				7FD061CE29E59EA100787EB2 /* VMPythonResourceDownloaderDelegate.h */,
+				7FD061CF29E59EA100787EB2 /* VMPythonResourceDownloader.h */,
+				7FD061C829E59EA100787EB2 /* VMPythonResourceDownloader.m */,
+				7FD061C929E59EA100787EB2 /* VMPythonDownloadOperation */,
 			);
 			path = VMPythonResourceDownloader;
 			sourceTree = "<group>";
 		};
-		7F52B3F024C05A440048AE58 /* VMPythonDownloadOperation */ = {
+		7FD061C929E59EA100787EB2 /* VMPythonDownloadOperation */ = {
 			isa = PBXGroup;
 			children = (
-				7F52B3F424C05A440048AE58 /* VMDownloadOperationConstants.h */,
-				7F52B3F224C05A440048AE58 /* VMDownloadOperationConstants.m */,
-				7F52B3F124C05A440048AE58 /* VMPythonDownloadOperation.h */,
-				7F52B3F324C05A440048AE58 /* VMPythonDownloadOperation.m */,
+				7FD061CD29E59EA100787EB2 /* VMDownloadOperationConstants.h */,
+				7FD061CB29E59EA100787EB2 /* VMDownloadOperationConstants.m */,
+				7FD061CA29E59EA100787EB2 /* VMPythonDownloadOperation.h */,
+				7FD061CC29E59EA100787EB2 /* VMPythonDownloadOperation.m */,
 			);
 			path = VMPythonDownloadOperation;
 			sourceTree = "<group>";
 		};
-		7F6D774B24C2F6FA00294B9F /* VMVideoNAudioMerger */ = {
+		7FD061D029E59EA100787EB2 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				7F6D774C24C2F6FA00294B9F /* VMVideoNAudioMerger.h */,
-				7F6D774D24C2F6FA00294B9F /* VMVideoNAudioMerger.m */,
-				7F8940AA24C464EE000B2CBF /* VMTrackMergingAsset.h */,
-				7F8940AB24C464EE000B2CBF /* VMTrackMergingAsset.m */,
+				7FD061D429E59EA100787EB2 /* VMPython.h */,
+				7FD061D229E59EA100787EB2 /* VMPython.m */,
+				7FD061D129E59EA100787EB2 /* VMPythonVideoMemosModule.h */,
+				7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		7FD061D529E59EA100787EB2 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				7FD061DB29E59EA100787EB2 /* VMFileSizeCalculator.h */,
+				7FD061DC29E59EA100787EB2 /* VMFileSizeCalculator.m */,
+				7FD061D629E59EA100787EB2 /* VMVideoNAudioMerger */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		7FD061D629E59EA100787EB2 /* VMVideoNAudioMerger */ = {
+			isa = PBXGroup;
+			children = (
+				7FD061D729E59EA100787EB2 /* VMVideoNAudioMerger.h */,
+				7FD061D929E59EA100787EB2 /* VMVideoNAudioMerger.m */,
+				7FD061DA29E59EA100787EB2 /* VMTrackMergingAsset.h */,
+				7FD061D829E59EA100787EB2 /* VMTrackMergingAsset.m */,
 			);
 			path = VMVideoNAudioMerger;
+			sourceTree = "<group>";
+		};
+		7FD061DE29E59EA100787EB2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7FD061E229E59EA100787EB2 /* VMWebResourceModel.h */,
+				7FD061E029E59EA100787EB2 /* VMWebResourceModel.m */,
+				7FD061DF29E59EA100787EB2 /* VMWebResourceOptionModel.h */,
+				7FD061E129E59EA100787EB2 /* VMWebResourceOptionModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7FD061E329E59EA100787EB2 /* VMResourceDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				7FD061E429E59EA100787EB2 /* VMResourceDownloader.h */,
+				7FD061E529E59EA100787EB2 /* VMResourceDownloader.m */,
+			);
+			path = VMResourceDownloader;
+			sourceTree = "<group>";
+		};
+		7FD063CA29E59FF700787EB2 /* VMDownloadProcessButton */ = {
+			isa = PBXGroup;
+			children = (
+				7FD063CC29E59FF700787EB2 /* VMDownloadProcessButton.h */,
+				7FD063CB29E59FF700787EB2 /* VMDownloadProcessButton.m */,
+			);
+			path = VMDownloadProcessButton;
 			sourceTree = "<group>";
 		};
 		7FFEE25824AADB9C0071144F /* Frameworks */ = {
@@ -351,17 +362,6 @@
 				7FFEE25924AADB9C0071144F /* libbz2.tbd */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7FFEE26F24AC1E830071144F /* Bridge */ = {
-			isa = PBXGroup;
-			children = (
-				7FFEE27524AC1E830071144F /* VMPython.h */,
-				7FFEE27224AC1E830071144F /* VMPython.m */,
-				7FFEE27124AC1E830071144F /* VMPythonVideoMemosModule.h */,
-				7FFEE27424AC1E830071144F /* VMPythonVideoMemosModule.m */,
-			);
-			path = Bridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,7 +468,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4CBD5924A42CBB00CC0889 /* python in Resources */,
+				7FD063C729E59EBE00787EB2 /* python in Resources */,
 				7F4CB58724A42AAD00CC0889 /* LaunchScreen.storyboard in Resources */,
 				7F4CB58424A42AAD00CC0889 /* Assets.xcassets in Resources */,
 				7F4CB58224A42AAB00CC0889 /* Main.storyboard in Resources */,
@@ -521,23 +521,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F52B3F924C05A440048AE58 /* VMWebResourceOptionModel.m in Sources */,
-				7F52B3FB24C05A440048AE58 /* VMPythonResourceDownloader.m in Sources */,
-				7F6D774E24C2F6FA00294B9F /* VMVideoNAudioMerger.m in Sources */,
 				7F4CB57F24A42AAB00CC0889 /* ViewController.m in Sources */,
+				7FD0632A29E59EA300787EB2 /* VMResourceDownloader.m in Sources */,
+				7FD0632529E59EA300787EB2 /* VMTrackMergingAsset.m in Sources */,
+				7FD0632029E59EA300787EB2 /* VMPythonResourceDownloader.m in Sources */,
+				7FD0632129E59EA300787EB2 /* VMDownloadOperationConstants.m in Sources */,
 				7F4CB57924A42AAB00CC0889 /* AppDelegate.m in Sources */,
-				7F52B3FD24C05A440048AE58 /* VMPythonDownloadOperation.m in Sources */,
-				7F52B3FA24C05A440048AE58 /* VMResourceDownloader.m in Sources */,
 				7F08BBD924AF1E1700B3F5EB /* Constants.m in Sources */,
 				7F08BBD624AF1D4B00B3F5EB /* TableViewDownloadingCell.m in Sources */,
+				7FD0632329E59EA300787EB2 /* VMPython.m in Sources */,
+				7FD0632929E59EA300787EB2 /* VMWebResourceOptionModel.m in Sources */,
+				7FD0632229E59EA300787EB2 /* VMPythonDownloadOperation.m in Sources */,
+				7FD0632729E59EA300787EB2 /* VMFileSizeCalculator.m in Sources */,
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
-				7FFEE27624AC1E840071144F /* VMPython.m in Sources */,
-				7F52B3FC24C05A440048AE58 /* VMDownloadOperationConstants.m in Sources */,
-				7F52B3F824C05A440048AE58 /* VMWebResourceModel.m in Sources */,
-				7F8940AC24C464EE000B2CBF /* VMTrackMergingAsset.m in Sources */,
-				7FFEE27824AC1E840071144F /* VMPythonVideoMemosModule.m in Sources */,
-				7F52B3F724C05A440048AE58 /* VMFileSizeCalculator.m in Sources */,
-				7F08BBD324AF0F6000B3F5EB /* VMDownloadProcessButton.m in Sources */,
+				7FD0632629E59EA300787EB2 /* VMVideoNAudioMerger.m in Sources */,
+				7FD0632829E59EA300787EB2 /* VMWebResourceModel.m in Sources */,
+				7FD0632429E59EA300787EB2 /* VMPythonVideoMemosModule.m in Sources */,
+				7FD063CD29E59FF700787EB2 /* VMDownloadProcessButton.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
