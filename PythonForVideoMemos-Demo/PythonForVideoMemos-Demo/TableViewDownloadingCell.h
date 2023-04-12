@@ -9,7 +9,7 @@
 @import UIKit;
 
 // View
-#import "VMDownloadProcessButton.h"
+#import "VMPythonDownloadProcessButton.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *infoLabel;
-@property (nonatomic, strong) VMDownloadProcessButton *downloadProcessButton;
+@property (nonatomic, strong) VMPythonDownloadProcessButton *downloadProcessButton;
 
 @property (nonatomic, weak) id <TableViewDownloadingCellDelegate> delegate;
 

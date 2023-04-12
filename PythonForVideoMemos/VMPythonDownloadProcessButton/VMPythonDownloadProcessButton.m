@@ -1,18 +1,18 @@
 //
-//  VMDownloadProcessButton.m
+//  VMPythonDownloadProcessButton.m
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 3/7/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.
 //
 
-#import "VMDownloadProcessButton.h"
+#import "VMPythonDownloadProcessButton.h"
 
 
 static CGFloat const kVMDownloadProcessLineWidth_ = 2.f;
 
 
-@interface VMDownloadProcessButton ()
+@interface VMPythonDownloadProcessButton ()
 
 @property (nonatomic, strong) CAShapeLayer *progressBackgroundLayer;
 @property (nonatomic, strong) CAShapeLayer *progressLayer;
@@ -22,7 +22,7 @@ static CGFloat const kVMDownloadProcessLineWidth_ = 2.f;
 @end
 
 
-@implementation VMDownloadProcessButton
+@implementation VMPythonDownloadProcessButton
 
 - (instancetype)initWithSize:(CGSize)size padding:(CGFloat)padding tintColor:(UIColor *)tintColor
 {

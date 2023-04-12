@@ -31,7 +31,7 @@
     [contentView addSubview:_infoLabel];
     
     CGSize size = CGSizeMake(kTableViewCellDownloadProcessButtonSizeLength, kTableViewCellDownloadProcessButtonSizeLength);
-    _downloadProcessButton = [[VMDownloadProcessButton alloc] initWithSize:size padding:kTableViewCellDownloadProcessButtonPadding tintColor:nil];
+    _downloadProcessButton = [[VMPythonDownloadProcessButton alloc] initWithSize:size padding:kTableViewCellDownloadProcessButtonPadding tintColor:nil];
     [_downloadProcessButton addTarget:self action:@selector(_didPressDownloadProcessButton) forControlEvents:UIControlEventTouchUpInside];
     _downloadProcessButton.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_downloadProcessButton];

@@ -1,5 +1,5 @@
 //
-//  VMDownloadProcessButton.h
+//  VMPythonDownloadProcessButton.h
 //  PythonForVideoMemos-Demo
 //
 //  Created by Kjuly on 3/7/2020.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VMDownloadProcessButton : UIControl
+@interface VMPythonDownloadProcessButton : UIControl
 
 @property (nonatomic, assign) VMPythonDownloadProcessStatus status;
 @property (nonatomic, assign) float progress;
