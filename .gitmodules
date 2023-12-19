@@ -6,4 +6,4 @@
 	url = https://github.com/AFNetworking/AFNetworking.git
 [submodule "site_packages/you-get"]
 	path = site_packages/you-get
-	url = git@github.com:Kjuly/you-get-for-aidem.git
+	url = git@github.com:AidemX/you-get.git
