@@ -35,7 +35,7 @@
 
 #pragma mark - Private
 
-void load_custom_builtin_importer() {
+void load_custom_builtin_importer(void) {
   static const char *custom_builtin_importer = \
   "import sys, imp, types\n" \
   "from os import environ\n" \
