@@ -22,12 +22,12 @@ profile
 *~.xib
 *~.nib
 
-PythonForVideoMemos-Demo/PythonForVideoMemos-Demo.xcodeproj/project.xcworkspace/xcuserdata
+AidemPythonDemo/AidemPythonDemo.xcodeproj/project.xcworkspace/xcuserdata
 
 Carthage/Build/*
 
-PythonForVideoMemos/python/lib/python3.8/site-packages/video_memos/*
-PythonForVideoMemos/python/lib/python3.8/site-packages/you_get/*
+AidemPython/python/lib/python3.8/site-packages/video_memos/*
+AidemPython/python/lib/python3.8/site-packages/you_get/*
 site_packages_backups/*
 python_backups/*
 
