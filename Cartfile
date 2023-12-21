@@ -20,8 +20,8 @@
 #
 
 #
-# Frameworks for PythonForVideoMemos-Demo
+# Frameworks for AidemPythonDemo
 #
-github "AFNetworking/AFNetworking" ~> 4.0
-github "jdg/MBProgressHUD" ~> 1.2.0
+#github "AFNetworking/AFNetworking" ~> 4.0
+#github "jdg/MBProgressHUD" ~> 1.2.0
 
