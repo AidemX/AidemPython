@@ -52,8 +52,8 @@ echo
 echo -e 2. Deleting files at destination \"${cyan}$DEST_ROOT${nc}\" ...
 
 #trash $backup_from
-trash "$DEST_ROOT/video_memos"
-trash "$DEST_ROOT/you-get"
+trash "$DEST_ROOT/aidem"
+trash "$DEST_ROOT/you_get"
 echo -e ${g}Delete Succeed.${nc}
 echo
 
@@ -63,9 +63,9 @@ echo
 echo -e 3. Copying latest site packages from \"${cyan}$SRC_ROOT${nc}\" to \"${cyan}$DEST_ROOT${nc}\" ...
 
 #
-# 3.1. Copy pkg: "video_memos"
+# 3.1. Copy pkg: "aidem"
 #
-pkg_name="video_memos"
+pkg_name="aidem"
 echo -e  - Copying pkg: ${y}$pkg_name${nc} ...
 
 pkg_dest="$DEST_ROOT/$pkg_name"
