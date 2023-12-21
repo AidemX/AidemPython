@@ -1,6 +1,6 @@
 //
 //  VMResourceDownloader.m
-//  PythonForVideoMemos-Demo
+//  AidemPythonDemo
 //
 //  Created by Kjuly on 28/6/2020.
 //  Copyright © 2020 Kjuly. All rights reserved.

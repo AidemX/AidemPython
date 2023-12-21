@@ -16,8 +16,8 @@
 		7F4CB58424A42AAD00CC0889 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CB58324A42AAD00CC0889 /* Assets.xcassets */; };
 		7F4CB58724A42AAD00CC0889 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CB58524A42AAD00CC0889 /* LaunchScreen.storyboard */; };
 		7F4CB58A24A42AAD00CC0889 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB58924A42AAD00CC0889 /* main.m */; };
-		7F4CB59424A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59324A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m */; };
-		7F4CB59F24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59E24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m */; };
+		7F4CB59424A42AAD00CC0889 /* AidemPythonDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59324A42AAD00CC0889 /* AidemPythonDemoTests.m */; };
+		7F4CB59F24A42AAD00CC0889 /* AidemPythonDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4CB59E24A42AAD00CC0889 /* AidemPythonDemoUITests.m */; };
 		7F4CBD5C24A42D6200CC0889 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */; };
 		7F4CBD5E24A42D6800CC0889 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4CBD5D24A42D6800CC0889 /* libz.tbd */; };
 		7FD0631F29E59EA300787EB2 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD061C529E59EA100787EB2 /* libcrypto.a */; };
@@ -64,7 +64,7 @@
 		7F08BBD524AF1D4B00B3F5EB /* TableViewDownloadingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDownloadingCell.m; sourceTree = "<group>"; };
 		7F08BBD724AF1E1700B3F5EB /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		7F08BBD824AF1E1700B3F5EB /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PythonForVideoMemos-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F4CB57424A42AAB00CC0889 /* AidemPythonDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AidemPythonDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4CB57724A42AAB00CC0889 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7F4CB57824A42AAB00CC0889 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7F4CB57A24A42AAB00CC0889 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -76,11 +76,11 @@
 		7F4CB58624A42AAD00CC0889 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F4CB58824A42AAD00CC0889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F4CB58924A42AAD00CC0889 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7F4CB58F24A42AAD00CC0889 /* PythonForVideoMemos-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PythonForVideoMemos-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F4CB59324A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PythonForVideoMemos_DemoTests.m; sourceTree = "<group>"; };
+		7F4CB58F24A42AAD00CC0889 /* AidemPythonDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AidemPythonDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F4CB59324A42AAD00CC0889 /* AidemPythonDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AidemPythonDemoTests.m; sourceTree = "<group>"; };
 		7F4CB59524A42AAD00CC0889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F4CB59A24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PythonForVideoMemos-DemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F4CB59E24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PythonForVideoMemos_DemoUITests.m; sourceTree = "<group>"; };
+		7F4CB59A24A42AAD00CC0889 /* AidemPythonDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AidemPythonDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F4CB59E24A42AAD00CC0889 /* AidemPythonDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AidemPythonDemoUITests.m; sourceTree = "<group>"; };
 		7F4CB5A024A42AAD00CC0889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F4CBD5B24A42D6200CC0889 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F4CBD5D24A42D6800CC0889 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -155,9 +155,9 @@
 		7F4CB56B24A42AAB00CC0889 = {
 			isa = PBXGroup;
 			children = (
-				7F4CB57624A42AAB00CC0889 /* PythonForVideoMemos-Demo */,
-				7F4CB59224A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */,
-				7F4CB59D24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */,
+				7F4CB57624A42AAB00CC0889 /* AidemPythonDemo */,
+				7F4CB59224A42AAD00CC0889 /* AidemPythonDemoTests */,
+				7F4CB59D24A42AAD00CC0889 /* AidemPythonDemoUITests */,
 				7F4CB57524A42AAB00CC0889 /* Products */,
 				7FFEE25824AADB9C0071144F /* Frameworks */,
 			);
@@ -166,14 +166,14 @@
 		7F4CB57524A42AAB00CC0889 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */,
-				7F4CB58F24A42AAD00CC0889 /* PythonForVideoMemos-DemoTests.xctest */,
-				7F4CB59A24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests.xctest */,
+				7F4CB57424A42AAB00CC0889 /* AidemPythonDemo.app */,
+				7F4CB58F24A42AAD00CC0889 /* AidemPythonDemoTests.xctest */,
+				7F4CB59A24A42AAD00CC0889 /* AidemPythonDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7F4CB57624A42AAB00CC0889 /* PythonForVideoMemos-Demo */ = {
+		7F4CB57624A42AAB00CC0889 /* AidemPythonDemo */ = {
 			isa = PBXGroup;
 			children = (
 				7F4CB57724A42AAB00CC0889 /* AppDelegate.h */,
@@ -190,25 +190,25 @@
 				7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */,
 				7F4CBD5A24A42D6200CC0889 /* Frameworks */,
 			);
-			path = "PythonForVideoMemos-Demo";
+			path = AidemPythonDemo;
 			sourceTree = "<group>";
 		};
-		7F4CB59224A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */ = {
+		7F4CB59224A42AAD00CC0889 /* AidemPythonDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				7F4CB59324A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m */,
+				7F4CB59324A42AAD00CC0889 /* AidemPythonDemoTests.m */,
 				7F4CB59524A42AAD00CC0889 /* Info.plist */,
 			);
-			path = "PythonForVideoMemos-DemoTests";
+			path = AidemPythonDemoTests;
 			sourceTree = "<group>";
 		};
-		7F4CB59D24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */ = {
+		7F4CB59D24A42AAD00CC0889 /* AidemPythonDemoUITests */ = {
 			isa = PBXGroup;
 			children = (
-				7F4CB59E24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m */,
+				7F4CB59E24A42AAD00CC0889 /* AidemPythonDemoUITests.m */,
 				7F4CB5A024A42AAD00CC0889 /* Info.plist */,
 			);
-			path = "PythonForVideoMemos-DemoUITests";
+			path = AidemPythonDemoUITests;
 			sourceTree = "<group>";
 		};
 		7F4CB5AC24A42BFB00CC0889 /* SupportingFiles */ = {
@@ -363,9 +363,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7F4CB57324A42AAB00CC0889 /* PythonForVideoMemos-Demo */ = {
+		7F4CB57324A42AAB00CC0889 /* AidemPythonDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F4CB5A324A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-Demo" */;
+			buildConfigurationList = 7F4CB5A324A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemo" */;
 			buildPhases = (
 				7F4CB57024A42AAB00CC0889 /* Sources */,
 				7F4CB57124A42AAB00CC0889 /* Frameworks */,
@@ -376,18 +376,18 @@
 			);
 			dependencies = (
 			);
-			name = "PythonForVideoMemos-Demo";
+			name = AidemPythonDemo;
 			packageProductDependencies = (
 				7FD063CF29E5A07C00787EB2 /* MBProgressHUD */,
 				7FD063D229E5A12F00787EB2 /* AFNetworking */,
 			);
 			productName = "PythonForVideoMemos-Demo";
-			productReference = 7F4CB57424A42AAB00CC0889 /* PythonForVideoMemos-Demo.app */;
+			productReference = 7F4CB57424A42AAB00CC0889 /* AidemPythonDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7F4CB58E24A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */ = {
+		7F4CB58E24A42AAD00CC0889 /* AidemPythonDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F4CB5A624A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-DemoTests" */;
+			buildConfigurationList = 7F4CB5A624A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemoTests" */;
 			buildPhases = (
 				7F4CB58B24A42AAD00CC0889 /* Sources */,
 				7F4CB58C24A42AAD00CC0889 /* Frameworks */,
@@ -398,14 +398,14 @@
 			dependencies = (
 				7F4CB59124A42AAD00CC0889 /* PBXTargetDependency */,
 			);
-			name = "PythonForVideoMemos-DemoTests";
+			name = AidemPythonDemoTests;
 			productName = "PythonForVideoMemos-DemoTests";
-			productReference = 7F4CB58F24A42AAD00CC0889 /* PythonForVideoMemos-DemoTests.xctest */;
+			productReference = 7F4CB58F24A42AAD00CC0889 /* AidemPythonDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7F4CB59924A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */ = {
+		7F4CB59924A42AAD00CC0889 /* AidemPythonDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F4CB5A924A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-DemoUITests" */;
+			buildConfigurationList = 7F4CB5A924A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemoUITests" */;
 			buildPhases = (
 				7F4CB59624A42AAD00CC0889 /* Sources */,
 				7F4CB59724A42AAD00CC0889 /* Frameworks */,
@@ -416,9 +416,9 @@
 			dependencies = (
 				7F4CB59C24A42AAD00CC0889 /* PBXTargetDependency */,
 			);
-			name = "PythonForVideoMemos-DemoUITests";
+			name = AidemPythonDemoUITests;
 			productName = "PythonForVideoMemos-DemoUITests";
-			productReference = 7F4CB59A24A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests.xctest */;
+			productReference = 7F4CB59A24A42AAD00CC0889 /* AidemPythonDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -443,7 +443,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7F4CB56F24A42AAB00CC0889 /* Build configuration list for PBXProject "PythonForVideoMemos-Demo" */;
+			buildConfigurationList = 7F4CB56F24A42AAB00CC0889 /* Build configuration list for PBXProject "AidemPythonDemo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -460,9 +460,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7F4CB57324A42AAB00CC0889 /* PythonForVideoMemos-Demo */,
-				7F4CB58E24A42AAD00CC0889 /* PythonForVideoMemos-DemoTests */,
-				7F4CB59924A42AAD00CC0889 /* PythonForVideoMemos-DemoUITests */,
+				7F4CB57324A42AAB00CC0889 /* AidemPythonDemo */,
+				7F4CB58E24A42AAD00CC0889 /* AidemPythonDemoTests */,
+				7F4CB59924A42AAD00CC0889 /* AidemPythonDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -550,7 +550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4CB59424A42AAD00CC0889 /* PythonForVideoMemos_DemoTests.m in Sources */,
+				7F4CB59424A42AAD00CC0889 /* AidemPythonDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +558,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4CB59F24A42AAD00CC0889 /* PythonForVideoMemos_DemoUITests.m in Sources */,
+				7F4CB59F24A42AAD00CC0889 /* AidemPythonDemoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,12 +567,12 @@
 /* Begin PBXTargetDependency section */
 		7F4CB59124A42AAD00CC0889 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7F4CB57324A42AAB00CC0889 /* PythonForVideoMemos-Demo */;
+			target = 7F4CB57324A42AAB00CC0889 /* AidemPythonDemo */;
 			targetProxy = 7F4CB59024A42AAD00CC0889 /* PBXContainerItemProxy */;
 		};
 		7F4CB59C24A42AAD00CC0889 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7F4CB57324A42AAB00CC0889 /* PythonForVideoMemos-Demo */;
+			target = 7F4CB57324A42AAB00CC0889 /* AidemPythonDemo */;
 			targetProxy = 7F4CB59B24A42AAD00CC0889 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -738,12 +738,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "PythonForVideoMemos-Demo/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemo/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -756,12 +756,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "PythonForVideoMemos-Demo/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemo/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -773,17 +773,17 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-DemoTests/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-DemoTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PythonForVideoMemos-Demo.app/PythonForVideoMemos-Demo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AidemPythonDemo.app/AidemPythonDemo";
 			};
 			name = Debug;
 		};
@@ -793,17 +793,17 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-DemoTests/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-DemoTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PythonForVideoMemos-Demo.app/PythonForVideoMemos-Demo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AidemPythonDemo.app/AidemPythonDemo";
 			};
 			name = Release;
 		};
@@ -812,16 +812,16 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-DemoUITests/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-DemoUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "PythonForVideoMemos-Demo";
+				TEST_TARGET_NAME = AidemPythonDemo;
 			};
 			name = Debug;
 		};
@@ -830,23 +830,23 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QDYF4HH8B8;
-				INFOPLIST_FILE = "PythonForVideoMemos-DemoUITests/Info.plist";
+				INFOPLIST_FILE = AidemPythonDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kjuly.PythonForVideoMemos-DemoUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kjuly.AidemPythonDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "PythonForVideoMemos-Demo";
+				TEST_TARGET_NAME = AidemPythonDemo;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7F4CB56F24A42AAB00CC0889 /* Build configuration list for PBXProject "PythonForVideoMemos-Demo" */ = {
+		7F4CB56F24A42AAB00CC0889 /* Build configuration list for PBXProject "AidemPythonDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F4CB5A124A42AAD00CC0889 /* Debug */,
@@ -855,7 +855,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F4CB5A324A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-Demo" */ = {
+		7F4CB5A324A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F4CB5A424A42AAD00CC0889 /* Debug */,
@@ -864,7 +864,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F4CB5A624A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-DemoTests" */ = {
+		7F4CB5A624A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F4CB5A724A42AAD00CC0889 /* Debug */,
@@ -873,7 +873,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F4CB5A924A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "PythonForVideoMemos-DemoUITests" */ = {
+		7F4CB5A924A42AAD00CC0889 /* Build configuration list for PBXNativeTarget "AidemPythonDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F4CB5AA24A42AAD00CC0889 /* Debug */,

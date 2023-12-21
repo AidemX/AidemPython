@@ -101,7 +101,7 @@ void load_custom_builtin_importer(void) {
   }
   
   // Change the executing path to YourApp
-  //chdir("PythonForVideoMemos-Demo");
+  //chdir("AidemPythonDemo");
   
   // Special environment to prefer .pyo, and don't write bytecode if .py are found
   // because the process will not have a write attribute on the device.
