@@ -1,38 +1,47 @@
 # AidemPython
 
-Python iOS framework for Video Memos app.
+The Python framework used in Aidem X.
 
 ## Usage
 
 1. Pull all submodules.
 
-    $ git submodule init
-    $ git submodule update --recursive
+```bash
+$ git submodule init
+$ git submodule update --recursive
+```
 
-    **NOTE**: For 3rd party package repos in folder `/site_packages`, make sure their branch is `aidem`.
+> [!NOTE]
+> For 3rd party package repos in the folder "/site_packages", make sure their branch is `aidem`.
 
-2. Use script to copy latest Python site pkgs from "site_packages" to "AidemPython/python/lib/python3.8/site-packages":
+2. Use the script to copy the latest Python site pkgs from "site_packages" to "AidemPython/python/lib/python3.8/site-packages":
 
-        $ ./apply_latest_site_packages.sh
+```bash
+$ ./apply_latest_site_packages.sh
+```
 
-    Make sure you've installed `trash` cmd via `$ brew install trash`.
+> [!NOTE]
+> Make sure you have `trash` cmd installed.
+>
+>     $ brew install trash
 
-3. Add libs folder "AidemPython" to Xcode project w/ "**Create groups**" option.
 
-4. Extend the added group, remove references of the "python" folder from "AidemPython".
+3. Add the lib folder "AidemPython" to the Xcode project using the "**Create groups**" option.
+
+4. Extend the added group and remove the references to the "python" folder from "AidemPython".
 
     Files left:  
     - **VMDownloadProcessButton** folder  
     - **VMPython** folder  
     - ***.a** files  
 
-5. Re-add "python" folder back w/ "**Create folder references**" option.
+5. Re-add the "python" folder back using the "**Create folder references**" option.
 
-    Tips:
-    - This step makes sure those included lib files will be grouped under compiled app package.
-    - Make sure no *.pyc files added.
+> [!TIP]
+> - This step ensures that these included lib files will be grouped under the compiled app package.
+> - Make sure no *.pyc files are added.
 
-6. Add required ***.tbd** files:
+6. Add the required ***.tbd** files:
 
     6.1. Select project target  
     6.2. Select "Build Phases"  
@@ -44,13 +53,12 @@ Python iOS framework for Video Memos app.
     - **HEADER_SEARCH_PATHS**:  Add '$(PROJECT_DIR)/path/to/AidemPython/python' (recursive)
     - **LIBRARY_SEARCH_PATHS**: Add '$(PROJECT_DIR)/path/to/AidemPython'    (non-recursive)
 
-8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in project settings.
+8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in the project settings.
 
-    **Note**: For iOS apps, bitcode is the default, but optional. For watchOS and tvOS apps, bitcode
-    is required. If you provide bitcode, all apps and frameworks in the app bundle (all targets 
-    in the project) need to include bitcode.
+> [!NOTE]
+> For iOS apps, bitcode is the default but optional. For watchOS and tvOS apps, bitcode is required. If you provide bitcode, all apps and frameworks in the app bundle (all targets in the project) need to include the bitcode.
 
-9. Edit Info.plist to add "App Transport Security Settings" w/ "Allow Arbitrary Loads" value YES.
+9. Edit Info.plist to add "App Transport Security Settings" with "Allow Arbitrary Loads" value to YES.
 
 10. (Optional) Add [AFNetworking](https://github.com/AFNetworking/AFNetworking#installation-with-carthage) framework if need to use VMRemoteSourceDownloader to download source.
 
@@ -58,7 +66,7 @@ Python iOS framework for Video Memos app.
 
 ## 3rd Party Packages for Python
 
-If need to add 3rd party packages for Python, just add it under
+If you need to add a 3rd party package for Python, just add it to this folder:
 
 > AidemPython/python/lib/python3.8/site-packages/
 
@@ -67,10 +75,12 @@ README.txt under "site-packages" folder:
 > This directory exists so that 3rd party packages can be installed here.
 > Read the source for site.py for more details. 
 
-And if need to test Python package, suggest using `venv`:
+And if you need to test Python packages, it is recommended to use `venv`:
 
-    $ python3 -m venv venv  
-    $ . venv/bin/activate  
+```bash
+$ python3 -m venv venv  
+$ . venv/bin/activate
+```
 
 ---
 
