@@ -146,7 +146,8 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   downloader.debugMode     = YES;
   downloader.delegate = self;
   
-  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
+  self.urlString = @"https://www.youtube.com/watch?v=N7RzWwENXwc";
+//  self.urlString = @"https://www.bilibili.com/video/BV1kW411p7B3";
 //  self.urlString = @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
   
   /*/ Test downloading progress
@@ -271,7 +272,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
                                                                                      preferredName:nil
                                                                                           userInfo:nil];
   item.taskIdentifier = taskIdentifier;
-  item.status = kVMPythonDownloadProcessStatusOfWaiting;
+  item.status = VMPythonDownloadProcessStatusWaiting;
 }
 
 #pragma mark - TableViewDownloadingCellDelegate
@@ -283,15 +284,15 @@ static CGFloat const kActionButtonHeight_ = 44.f;
     return;
   }
   VMWebResourceOptionModel *item = self.resourceItem.options[indexPath.row];
-  if (kVMPythonDownloadProcessStatusOfWaiting == item.status || kVMPythonDownloadProcessStatusOfDownloading == item.status) {
+  if (VMPythonDownloadProcessStatusWaiting == item.status || VMPythonDownloadProcessStatusDownloading == item.status) {
     [[VMPythonResourceDownloader sharedInstance] pauseTaskWithIdentifier:item.taskIdentifier];
     item.taskIdentifier = nil;
     cell.downloadProcessButton.status =
-    item.status = kVMPythonDownloadProcessStatusOfPaused;
+    item.status = VMPythonDownloadProcessStatusPaused;
     
-  } else if (kVMPythonDownloadProcessStatusOfPaused == item.status || kVMPythonDownloadProcessStatusOfDownloadFailed == item.status) {
+  } else if (VMPythonDownloadProcessStatusPaused == item.status || VMPythonDownloadProcessStatusDownloadFailed == item.status) {
     cell.downloadProcessButton.status =
-    item.status = kVMPythonDownloadProcessStatusOfWaiting;
+    item.status = VMPythonDownloadProcessStatusWaiting;
     
     NSString *taskIdentifier = [[VMPythonResourceDownloader sharedInstance] downloadWithResourceItem:self.resourceItem
                                                                                           optionItem:item
@@ -310,7 +311,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   NSInteger row;
   VMWebResourceOptionModel *item = [self.resourceItem matchedOptionAtRow:&row withTaskIdentifier:taskIdentifier];
   if (item) {
-    item.status = kVMPythonDownloadProcessStatusOfDownloading;
+    item.status = VMPythonDownloadProcessStatusDownloading;
     self.currentDownloadingItem = item;
     dispatch_async(dispatch_get_main_queue(), ^{
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
@@ -353,7 +354,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   if (errorMessage) {
     if (item) {
       item.taskIdentifier = nil;
-      item.status = kVMPythonDownloadProcessStatusOfDownloadFailed;
+      item.status = VMPythonDownloadProcessStatusDownloadFailed;
       item.progress = 0.f;
     }
     
@@ -364,7 +365,7 @@ static CGFloat const kActionButtonHeight_ = 44.f;
   } else {
     if (item) {
       item.taskIdentifier = nil;
-      item.status = kVMPythonDownloadProcessStatusOfDownloadSucceeded;
+      item.status = VMPythonDownloadProcessStatusDownloadSucceeded;
     }
   }
   

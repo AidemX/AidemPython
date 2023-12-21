@@ -4,13 +4,18 @@ Python iOS framework for Video Memos app.
 
 ## Usage
 
-1. Enter folder "site_packages" to pull latest source for each package.
+1. Pull all submodules.
 
-    **NOTE**: For 3rd party package repos, make sure their branch is `video_memos_ios`.
+    $ git submodule init
+    $ git submodule update --recursive
+
+    **NOTE**: For 3rd party package repos in folder `/site_packages`, make sure their branch is `video_memos_ios`.
 
 2. Use script to copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages":
 
         $ ./apply_latest_site_packages.sh
+
+    Make sure you've installed `trash` cmd via `$ brew install trash`.
 
 3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "**Create groups**" option.
 

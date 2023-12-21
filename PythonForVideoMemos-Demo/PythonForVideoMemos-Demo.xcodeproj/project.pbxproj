@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,7 +25,7 @@
 		7FD0632129E59EA300787EB2 /* VMDownloadOperationConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061CB29E59EA100787EB2 /* VMDownloadOperationConstants.m */; };
 		7FD0632229E59EA300787EB2 /* VMPythonDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061CC29E59EA100787EB2 /* VMPythonDownloadOperation.m */; };
 		7FD0632329E59EA300787EB2 /* VMPython.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D229E59EA100787EB2 /* VMPython.m */; };
-		7FD0632429E59EA300787EB2 /* VMPythonVideoMemosModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */; };
+		7FD0632429E59EA300787EB2 /* VMPythonAidemModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D329E59EA100787EB2 /* VMPythonAidemModule.m */; };
 		7FD0632529E59EA300787EB2 /* VMTrackMergingAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D829E59EA100787EB2 /* VMTrackMergingAsset.m */; };
 		7FD0632629E59EA300787EB2 /* VMVideoNAudioMerger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061D929E59EA100787EB2 /* VMVideoNAudioMerger.m */; };
 		7FD0632729E59EA300787EB2 /* VMFileSizeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD061DC29E59EA100787EB2 /* VMFileSizeCalculator.m */; };
@@ -92,9 +92,9 @@
 		7FD061CD29E59EA100787EB2 /* VMDownloadOperationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMDownloadOperationConstants.h; sourceTree = "<group>"; };
 		7FD061CE29E59EA100787EB2 /* VMPythonResourceDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloaderDelegate.h; sourceTree = "<group>"; };
 		7FD061CF29E59EA100787EB2 /* VMPythonResourceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonResourceDownloader.h; sourceTree = "<group>"; };
-		7FD061D129E59EA100787EB2 /* VMPythonVideoMemosModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonVideoMemosModule.h; sourceTree = "<group>"; };
+		7FD061D129E59EA100787EB2 /* VMPythonAidemModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPythonAidemModule.h; sourceTree = "<group>"; };
 		7FD061D229E59EA100787EB2 /* VMPython.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPython.m; sourceTree = "<group>"; };
-		7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonVideoMemosModule.m; sourceTree = "<group>"; };
+		7FD061D329E59EA100787EB2 /* VMPythonAidemModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMPythonAidemModule.m; sourceTree = "<group>"; };
 		7FD061D429E59EA100787EB2 /* VMPython.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMPython.h; sourceTree = "<group>"; };
 		7FD061D729E59EA100787EB2 /* VMVideoNAudioMerger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMVideoNAudioMerger.h; sourceTree = "<group>"; };
 		7FD061D829E59EA100787EB2 /* VMTrackMergingAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMTrackMergingAsset.m; sourceTree = "<group>"; };
@@ -236,12 +236,12 @@
 		7FD061C329E59E8E00787EB2 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				7FD061C429E59EA100787EB2 /* PythonForVideoMemos */,
+				7FD061C429E59EA100787EB2 /* AidemPython */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
 		};
-		7FD061C429E59EA100787EB2 /* PythonForVideoMemos */ = {
+		7FD061C429E59EA100787EB2 /* AidemPython */ = {
 			isa = PBXGroup;
 			children = (
 				7FD063CA29E59FF700787EB2 /* VMPythonDownloadProcessButton */,
@@ -252,8 +252,8 @@
 				7FD0631D29E59EA300787EB2 /* libssl.a */,
 				7FD0631E29E59EA300787EB2 /* libffi.a */,
 			);
-			name = PythonForVideoMemos;
-			path = ../../../PythonForVideoMemos;
+			name = AidemPython;
+			path = ../../../AidemPython;
 			sourceTree = "<group>";
 		};
 		7FD061C629E59EA100787EB2 /* VMPython */ = {
@@ -296,8 +296,8 @@
 			children = (
 				7FD061D429E59EA100787EB2 /* VMPython.h */,
 				7FD061D229E59EA100787EB2 /* VMPython.m */,
-				7FD061D129E59EA100787EB2 /* VMPythonVideoMemosModule.h */,
-				7FD061D329E59EA100787EB2 /* VMPythonVideoMemosModule.m */,
+				7FD061D129E59EA100787EB2 /* VMPythonAidemModule.h */,
+				7FD061D329E59EA100787EB2 /* VMPythonAidemModule.m */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -540,7 +540,7 @@
 				7F4CB58A24A42AAD00CC0889 /* main.m in Sources */,
 				7FD0632629E59EA300787EB2 /* VMVideoNAudioMerger.m in Sources */,
 				7FD0632829E59EA300787EB2 /* VMWebResourceModel.m in Sources */,
-				7FD0632429E59EA300787EB2 /* VMPythonVideoMemosModule.m in Sources */,
+				7FD0632429E59EA300787EB2 /* VMPythonAidemModule.m in Sources */,
 				7FD063CD29E59FF700787EB2 /* VMPythonDownloadProcessButton.m in Sources */,
 				7F4CB57C24A42AAB00CC0889 /* SceneDelegate.m in Sources */,
 			);
@@ -653,12 +653,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../PythonForVideoMemos/python/**",
+					"$(PROJECT_DIR)/../AidemPython/python/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../PythonForVideoMemos",
+					"$(PROJECT_DIR)/../AidemPython",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -717,12 +717,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../PythonForVideoMemos/python/**",
+					"$(PROJECT_DIR)/../AidemPython/python/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../PythonForVideoMemos",
+					"$(PROJECT_DIR)/../AidemPython",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
