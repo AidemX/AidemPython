@@ -8,7 +8,7 @@
 #
 #   to
 #
-#   ./PythonForVideoMemos/python/lib/python3.8/site-packages
+#   ./AidemPython/python/lib/python3.8/site-packages
 #
 # So, wheneven updated data in ./site_packages, should execute
 #   this script.
@@ -23,7 +23,7 @@ y='\033[1;33m'    # Yellow
 cyan='\033[1;36m' # Cyan
 
 SRC_ROOT="./site_packages"
-DEST_ROOT="./PythonForVideoMemos/python/lib/python3.8/site-packages"
+DEST_ROOT="./AidemPython/python/lib/python3.8/site-packages"
 BACKUP_ROOT="./site_packages_backups"
 
 #

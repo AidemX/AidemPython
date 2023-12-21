@@ -1,4 +1,4 @@
-# PythonForVideoMemos
+# AidemPython
 
 Python iOS framework for Video Memos app.
 
@@ -9,17 +9,17 @@ Python iOS framework for Video Memos app.
     $ git submodule init
     $ git submodule update --recursive
 
-    **NOTE**: For 3rd party package repos in folder `/site_packages`, make sure their branch is `video_memos_ios`.
+    **NOTE**: For 3rd party package repos in folder `/site_packages`, make sure their branch is `aidem`.
 
-2. Use script to copy latest Python site pkgs from "site_packages" to "PythonForVideoMemos/python/lib/python3.8/site-packages":
+2. Use script to copy latest Python site pkgs from "site_packages" to "AidemPython/python/lib/python3.8/site-packages":
 
         $ ./apply_latest_site_packages.sh
 
     Make sure you've installed `trash` cmd via `$ brew install trash`.
 
-3. Add libs folder "PythonForVideoMemos" to Xcode project w/ "**Create groups**" option.
+3. Add libs folder "AidemPython" to Xcode project w/ "**Create groups**" option.
 
-4. Extend the added group, remove references of the "python" folder from "PythonForVideoMemos".
+4. Extend the added group, remove references of the "python" folder from "AidemPython".
 
     Files left:  
     - **VMDownloadProcessButton** folder  
@@ -41,8 +41,8 @@ Python iOS framework for Video Memos app.
 
 7. Update Project Settings:
 
-    - **HEADER_SEARCH_PATHS**:  Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos/python' (recursive)
-    - **LIBRARY_SEARCH_PATHS**: Add '$(PROJECT_DIR)/path/to/PythonForVideoMemos'    (non-recursive)
+    - **HEADER_SEARCH_PATHS**:  Add '$(PROJECT_DIR)/path/to/AidemPython/python' (recursive)
+    - **LIBRARY_SEARCH_PATHS**: Add '$(PROJECT_DIR)/path/to/AidemPython'    (non-recursive)
 
 8. Disable bitcode for iOS target: Set `ENABLE_BITCODE` to NO in project settings.
 
@@ -60,7 +60,7 @@ Python iOS framework for Video Memos app.
 
 If need to add 3rd party packages for Python, just add it under
 
-> PythonForVideoMemos/python/lib/python3.8/site-packages/
+> AidemPython/python/lib/python3.8/site-packages/
 
 README.txt under "site-packages" folder:
 
