@@ -1,6 +1,6 @@
 # AidemPython
 
-The Python framework used in Aidem X.
+The Python framework used in Aidem X (an experimental extension to the [Aidem](https://github.com/AidemX) app).
 
 ## Usage
 
