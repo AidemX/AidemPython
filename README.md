@@ -98,9 +98,10 @@ These static libs will be compile-time-linked.
 
 - [libcrypto.a & libssl.a](https://wiki.openssl.org/index.php/Libcrypto_API): OpenSSL provides two primary libraries: libssl and libcrypto. The libcrypto library provides the fundamental cryptographic routines used by libssl. You can however use libcrypto without using libssl.
 
-Tips: If want to take look at *.a file, use cmd (refer to ["Contents of a static library"](https://stackoverflow.com/questions/3757108/contents-of-a-static-library)):
-
-    $ nm libxxx.a | less
+> [!TIP]
+> If want to view *.a files, use cmd (refer to ["Contents of a static library"](https://stackoverflow.com/questions/3757108/contents-of-a-static-library)):
+>
+>     $ nm libxxx.a | less
 
 ### About *.tbd file
 
